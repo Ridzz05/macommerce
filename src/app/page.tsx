@@ -67,7 +67,7 @@ export default function Home() {
                                     transition={{ duration: 0.3 }}
                                 >
                                     <div className="bg-[#5C4B37] text-white text-sm px-3 py-1 rounded-full shadow-md">
-                                        Hilang dalam {countdown} detik
+                                       Pesan akan ini akan hilang dalam {countdown} detik
                                     </div>
                                 </motion.div>
 
