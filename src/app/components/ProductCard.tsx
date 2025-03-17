@@ -39,27 +39,27 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
         setShowPurchaseModal(false);
     };
 
-    const marketplaceIcons = {
-        shopee: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.8c1.325 0 2.4 1.075 2.4 2.4S13.325 9.6 12 9.6 9.6 8.525 9.6 7.2 10.675 4.8 12 4.8zM12 21.6c-3.314 0-6-2.686-6-6h12c0 3.314-2.686 6-6 6z"/>
-            </svg>
-        ),
-        tokopedia: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.8c1.325 0 2.4 1.075 2.4 2.4S13.325 9.6 12 9.6 9.6 8.525 9.6 7.2 10.675 4.8 12 4.8zM12 21.6c-3.314 0-6-2.686-6-6h12c0 3.314-2.686 6-6 6z"/>
-            </svg>
-        ),
-        lazada: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.8c1.325 0 2.4 1.075 2.4 2.4S13.325 9.6 12 9.6 9.6 8.525 9.6 7.2 10.675 4.8 12 4.8zM12 21.6c-3.314 0-6-2.686-6-6h12c0 3.314-2.686 6-6 6z"/>
-            </svg>
-        ),
-        tiktokshop: (
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.8c1.325 0 2.4 1.075 2.4 2.4S13.325 9.6 12 9.6 9.6 8.525 9.6 7.2 10.675 4.8 12 4.8zM12 21.6c-3.314 0-6-2.686-6-6h12c0 3.314-2.686 6-6 6z"/>
-            </svg>
-        ),
+    const marketplaceImages = {
+        shopee: {
+            src: '/images/marketplace/shopee.webp',
+            alt: 'Shopee Logo',
+            bg: 'bg-[#FE5621]'
+        },
+        tokopedia: {
+            src: '/images/marketplace/tokopedia.webp',
+            alt: 'Tokopedia Logo',
+            bg: 'bg-[#03AC0E]'
+        },
+        lazada: {
+            src: '/images/marketplace/lazada.webp',
+            alt: 'Lazada Logo',
+            bg: 'bg-[#0F146D]'
+        },
+        tiktokshop: {
+            src: '/images/marketplace/tiktokshop.webp',
+            alt: 'TikTok Shop Logo',
+            bg: 'bg-black'
+        }
     };
 
     return (
@@ -68,7 +68,7 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="group bg-[#FDF6E3] rounded-xl border border-[#EDE3CD] overflow-hidden hover:border-[#D8C8A7] transition-all duration-300"
+                className="group bg-[#FDF6E3] rounded-xl border border-[#EDE3CD] overflow-hidden hover:border-[#D8C8A7] transition-all duration-300 flex flex-col min-h-[320px]"
             >
                 <div className="relative h-36 sm:h-48 w-full overflow-hidden">
                     <Image
@@ -78,18 +78,18 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                 </div>
-                <div className="p-3 sm:p-4 flex flex-col min-h-[100px] sm:min-h-[120px]">
-                    <div className="flex-grow space-y-1.5 sm:space-y-2">
+                <div className="p-3 sm:p-4 flex flex-col flex-1">
+                    <div className="flex-1">
                         {category && (
                             <motion.span 
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="inline-block px-2 py-0.5 text-[10px] sm:text-xs font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full mb-1 sm:mb-2 font-lexend"
+                                className="inline-block px-2 py-0.5 text-[10px] sm:text-xs font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full mb-2 font-lexend"
                             >
                                 {category}
                             </motion.span>
                         )}
-                        <h3 className="text-xs sm:text-sm font-medium text-[#5C4B37] line-clamp-2 group-hover:text-[#3D3224] font-raleway">
+                        <h3 className="text-xs sm:text-sm font-medium text-[#5C4B37] line-clamp-2 group-hover:text-[#3D3224] font-raleway mb-1">
                             {name}
                         </h3>
                         <p className="text-xs sm:text-sm font-medium text-[#8B7355] font-lexend">
@@ -97,15 +97,15 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                         </p>
                     </div>
                     
-                    <div className="flex justify-end gap-1.5 sm:gap-2 mt-3 pt-2 border-t border-[#EDE3CD]">
+                    <div className="flex justify-end items-center gap-2 pt-3 mt-auto border-t border-[#EDE3CD]">
                         <motion.button 
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-2 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-colors font-lexend inline-flex items-center"
+                            className="px-2.5 py-1.5 text-[11px] sm:text-xs font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-colors font-lexend inline-flex items-center"
                             onClick={handleDetailClick}
                         >
                             <svg 
-                                className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-1.5" 
+                                className="w-3 h-3 mr-1" 
                                 fill="none" 
                                 stroke="currentColor" 
                                 viewBox="0 0 24 24"
@@ -122,11 +122,11 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                         <motion.button 
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-2 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-sm font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-colors font-lexend inline-flex items-center"
+                            className="px-2.5 py-1.5 text-[11px] sm:text-xs font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-colors font-lexend inline-flex items-center"
                             onClick={handleBeli}
                         >
                             <svg 
-                                className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-1.5" 
+                                className="w-3 h-3 mr-1" 
                                 fill="none" 
                                 stroke="currentColor" 
                                 viewBox="0 0 24 24"
@@ -274,9 +274,16 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="flex flex-col items-center p-4 rounded-lg bg-[#FE5621] text-white hover:bg-opacity-90 transition-all"
+                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.shopee.bg} text-white hover:bg-opacity-90 transition-all`}
                                     >
-                                        {marketplaceIcons.shopee}
+                                        <div className="relative w-8 h-8">
+                                            <Image
+                                                src={marketplaceImages.shopee.src}
+                                                alt={marketplaceImages.shopee.alt}
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
                                         <span className="mt-2 text-sm font-medium">Shopee</span>
                                     </motion.a>
                                 )}
@@ -288,9 +295,16 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="flex flex-col items-center p-4 rounded-lg bg-[#03AC0E] text-white hover:bg-opacity-90 transition-all"
+                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.tokopedia.bg} text-white hover:bg-opacity-90 transition-all`}
                                     >
-                                        {marketplaceIcons.tokopedia}
+                                        <div className="relative w-8 h-8">
+                                            <Image
+                                                src={marketplaceImages.tokopedia.src}
+                                                alt={marketplaceImages.tokopedia.alt}
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
                                         <span className="mt-2 text-sm font-medium">Tokopedia</span>
                                     </motion.a>
                                 )}
@@ -302,9 +316,16 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="flex flex-col items-center p-4 rounded-lg bg-[#0F146D] text-white hover:bg-opacity-90 transition-all"
+                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.lazada.bg} text-white hover:bg-opacity-90 transition-all`}
                                     >
-                                        {marketplaceIcons.lazada}
+                                        <div className="relative w-8 h-8">
+                                            <Image
+                                                src={marketplaceImages.lazada.src}
+                                                alt={marketplaceImages.lazada.alt}
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
                                         <span className="mt-2 text-sm font-medium">Lazada</span>
                                     </motion.a>
                                 )}
@@ -316,9 +337,16 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="flex flex-col items-center p-4 rounded-lg bg-black text-white hover:bg-opacity-90 transition-all"
+                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.tiktokshop.bg} text-white hover:bg-opacity-90 transition-all`}
                                     >
-                                        {marketplaceIcons.tiktokshop}
+                                        <div className="relative w-8 h-8">
+                                            <Image
+                                                src={marketplaceImages.tiktokshop.src}
+                                                alt={marketplaceImages.tiktokshop.alt}
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
                                         <span className="mt-2 text-sm font-medium">TikTok Shop</span>
                                     </motion.a>
                                 )}
