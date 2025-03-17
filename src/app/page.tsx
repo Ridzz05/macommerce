@@ -5,10 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ProductGrid from './components/ProductGrid';
 import CategoryFilter from './components/CategoryFilter';
 import { products } from './data/products';
+import { useSearch } from './context/SearchContext';
 
 export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [showWelcome, setShowWelcome] = useState(true);
+    const { searchQuery } = useSearch();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -17,6 +19,13 @@ export default function Home() {
 
         return () => clearTimeout(timer);
     }, []);
+
+    // Reset kategori ke default ketika pencarian dihapus
+    useEffect(() => {
+        if (searchQuery === '') {
+            setSelectedCategory(null);
+        }
+    }, [searchQuery]);
 
     return (
         <div className="pt-20 bg-[#FFFBF2]">

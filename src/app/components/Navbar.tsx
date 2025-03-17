@@ -15,6 +15,11 @@ const Navbar = () => {
         setSearchQuery(value);
     };
 
+    const handleClearSearch = () => {
+        setLocalSearchQuery('');
+        setSearchQuery('');
+    };
+
     const handleSearchSubmit = () => {
         if (localSearchQuery.trim()) {
             setShowSearchModal(false);
@@ -307,7 +312,7 @@ const Navbar = () => {
                                                     scale: 0.9,
                                                     transition: { duration: 0.1 }
                                                 }}
-                                                onClick={() => setLocalSearchQuery('')}
+                                                onClick={() => handleClearSearch()}
                                                 className="absolute right-3 p-1.5 rounded-full hover:bg-[#EDE3CD] text-[#8B7355] hover:text-[#5C4B37] transition-colors duration-300"
                                             >
                                                 <motion.svg 
