@@ -31,7 +31,7 @@ const CategorySidebar = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px] lg:bg-black/20"
+                        className="fixed inset-0 z-40 bg-black/20"
                         onClick={onClose}
                     />
                     
@@ -41,21 +41,20 @@ const CategorySidebar = ({
                         animate={{ x: 0 }}
                         exit={{ x: '-100%' }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed left-0 top-0 bottom-0 w-[300px] z-50 bg-[#FDF6E3]/80 backdrop-blur-md shadow-xl overflow-y-auto"
+                        className="fixed left-0 top-0 bottom-0 w-[85%] sm:w-[320px] z-50 bg-[#FDF6E3] overflow-y-auto"
                     >
-                        <div className="p-6">
-                            <div className="flex items-center justify-between mb-8">
-                                <h3 className="text-xl font-medium text-[#5C4B37]">
+                        <div className="p-4 sm:p-6">
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="text-lg font-medium text-[#5C4B37]">
                                     Pilih Kategori
                                 </h3>
                                 <motion.button 
                                     onClick={onClose}
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    className="p-2 hover:bg-[#EDE3CD]/50 rounded-lg transition-colors"
+                                    whileTap={{ scale: 0.95 }}
+                                    className="p-2"
                                 >
                                     <svg 
-                                        className="w-6 h-6 text-[#5C4B37]" 
+                                        className="w-5 h-5 text-[#5C4B37]" 
                                         fill="none" 
                                         stroke="currentColor" 
                                         viewBox="0 0 24 24"
@@ -70,20 +69,19 @@ const CategorySidebar = ({
                                 </motion.button>
                             </div>
 
-                            <div className="space-y-3">
+                            <div className="space-y-2">
                                 <motion.button
-                                    whileHover={{ scale: 1.02, backgroundColor: '#EDE3CD80' }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => handleSelect(null)}
-                                    className={`w-full p-4 text-left rounded-xl transition-all duration-200 ${
+                                    className={`w-full p-3 text-left rounded-lg transition-all ${
                                         !selectedCategory 
-                                            ? 'bg-[#5C4B37] text-white shadow-lg' 
-                                            : 'bg-white/50 text-[#5C4B37] hover:shadow-md backdrop-blur-sm'
+                                            ? 'bg-[#5C4B37] text-white' 
+                                            : 'text-[#5C4B37] bg-[#EDE3CD]'
                                     }`}
                                 >
                                     <div className="flex items-center">
                                         <svg 
-                                            className="w-6 h-6 mr-4" 
+                                            className="w-5 h-5 mr-3" 
                                             fill="none" 
                                             stroke="currentColor" 
                                             viewBox="0 0 24 24"
@@ -95,10 +93,10 @@ const CategorySidebar = ({
                                                 d="M4 6h16M4 12h16M4 18h16"
                                             />
                                         </svg>
-                                        <span className="text-base font-medium">Semua Kategori</span>
+                                        <span className="text-sm font-medium">Semua Kategori</span>
                                         {!selectedCategory && (
                                             <motion.svg 
-                                                className="ml-auto h-5 w-5" 
+                                                className="ml-auto h-4 w-4" 
                                                 fill="none" 
                                                 viewBox="0 0 24 24" 
                                                 stroke="currentColor"
@@ -114,18 +112,17 @@ const CategorySidebar = ({
                                 {categoryInfo.map(({ name, icon }) => (
                                     <motion.button
                                         key={name}
-                                        whileHover={{ scale: 1.02, backgroundColor: '#EDE3CD80' }}
                                         whileTap={{ scale: 0.98 }}
                                         onClick={() => handleSelect(name)}
-                                        className={`w-full p-4 text-left rounded-xl transition-all duration-200 ${
+                                        className={`w-full p-3 text-left rounded-lg transition-all ${
                                             selectedCategory === name 
-                                                ? 'bg-[#5C4B37] text-white shadow-lg' 
-                                                : 'bg-white/50 text-[#5C4B37] hover:shadow-md backdrop-blur-sm'
+                                                ? 'bg-[#5C4B37] text-white' 
+                                                : 'text-[#5C4B37] bg-[#EDE3CD]'
                                         }`}
                                     >
                                         <div className="flex items-center">
                                             <svg 
-                                                className="w-6 h-6 mr-4" 
+                                                className="w-5 h-5 mr-3" 
                                                 fill="none" 
                                                 stroke="currentColor" 
                                                 viewBox="0 0 24 24"
@@ -137,10 +134,10 @@ const CategorySidebar = ({
                                                     d={icon}
                                                 />
                                             </svg>
-                                            <span className="text-base font-medium">{name}</span>
+                                            <span className="text-sm font-medium">{name}</span>
                                             {selectedCategory === name && (
                                                 <motion.svg 
-                                                    className="ml-auto h-5 w-5" 
+                                                    className="ml-auto h-4 w-4" 
                                                     fill="none" 
                                                     viewBox="0 0 24 24" 
                                                     stroke="currentColor"
