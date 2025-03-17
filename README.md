@@ -1,6 +1,6 @@
 # JASAKU - Platform Marketplace Jasa dan Produk
 
-![JASAKU Logo](public/images/logoipsum.svg)
+![JASAKU Logo](public/images/logo/logoipsum.png)
 
 JASAKU adalah platform marketplace modern yang dibangun menggunakan Next.js 13 dan Tailwind CSS. Platform ini menyediakan tempat bagi penjual untuk menawarkan berbagai jasa dan produk kepada pembeli dengan antarmuka yang elegan dan responsif.
 
