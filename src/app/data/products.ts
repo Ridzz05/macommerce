@@ -70,5 +70,17 @@ export const products: Product[] = [
             shopee: "https://shopee.co.id/product/456",
             tokopedia: "https://tokopedia.com/product/456"
         }
+    },
+    {
+        id: 3,
+        name: "Jasa Urut Keliling",
+        price: 200000,
+        imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+        category: "Jasa",
+        demoUrl: "https://demo.jasaku.com/website",
+        marketplace: {
+            shopee: "https://shopee.co.id/product/456",
+            tokopedia: "https://tokopedia.com/product/456"
+        }
     }
 ];
