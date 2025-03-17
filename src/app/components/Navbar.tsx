@@ -294,9 +294,6 @@ const Navbar = () => {
                                     </motion.button>
                                 )}
                             </div>
-                            <div className="text-center mt-4 text-sm text-[#8B7355]">
-                                Tekan Enter untuk mencari atau Esc untuk menutup
-                            </div>
                         </motion.div>
                     </motion.div>
                 )}
