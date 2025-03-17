@@ -101,4 +101,4 @@ Untuk informasi lebih lanjut, hubungi kami melalui:
 - Email: info@jasaku.com
 
 ---
-Dibuat dengan ❤️ oleh Tim JASAKU
+Made with ❤️ By Rizki
