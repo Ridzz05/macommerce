@@ -42,6 +42,7 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://macommerce.com'),
   title: {
     template: '%s | MaCommerce - Marketplace Indonesia',
     default: 'MaCommerce - Marketplace Indonesia Terpercaya',

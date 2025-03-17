@@ -1,3 +1,5 @@
+'use client'
+
 import { Product } from '../data/products'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -41,7 +43,11 @@ export default function ProductDetail({ product }: ProductDetailProps) {
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="relative aspect-square">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative aspect-square"
+          >
             <Image
               src={product.imageUrl}
               alt={product.name}
@@ -49,23 +55,21 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               className="object-cover rounded-lg"
               priority
             />
-          </div>
+          </motion.div>
           <div className="space-y-4">
-            <motion.h1 
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-2xl font-bold text-[#5C4B37]"
+              className="space-y-2"
             >
-              {product.name}
-            </motion.h1>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-xl font-bold text-[#8B7355]"
-            >
-              {formattedPrice}
+              <h1 className="text-2xl font-bold text-[#5C4B37]">
+                {product.name}
+              </h1>
+              <div className="text-xl font-bold text-[#8B7355]">
+                {formattedPrice}
+              </div>
             </motion.div>
+            
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -74,6 +78,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             >
               {product.description}
             </motion.p>
+            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -83,7 +88,14 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               <h2 className="font-medium text-[#5C4B37]">Fitur Utama:</h2>
               <ul className="list-disc list-inside text-[#8B7355] space-y-1">
                 {product.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
+                  <motion.li 
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 + (index * 0.1) }}
+                  >
+                    {feature}
+                  </motion.li>
                 ))}
               </ul>
             </motion.div>
