@@ -28,11 +28,13 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
         setShowPurchaseModal(true);
     };
 
-    const nextImage = () => {
+    const nextImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
     };
 
-    const prevImage = () => {
+    const prevImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
     };
 
@@ -86,23 +88,26 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                             exit={{ y: 100, opacity: 0 }}
                             transition={{ type: "spring", duration: 0.5 }}
                             className="bg-[#FDF6E3] rounded-t-xl sm:rounded-xl overflow-hidden w-full sm:max-w-lg mx-auto shadow-lg"
+                            onClick={(e) => e.stopPropagation()}
                         >
                             {/* Image Carousel */}
-                            <div className="relative aspect-square w-full">
+                            <div className="relative w-full h-[280px] sm:h-[320px] bg-[#EDE3CD]">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={currentImageIndex}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
+                                        initial={{ opacity: 0, x: 100 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -100 }}
+                                        transition={{ duration: 0.3 }}
                                         className="absolute inset-0"
                                     >
                                         <Image
                                             src={allImages[currentImageIndex]}
                                             alt={`${name} - Gambar ${currentImageIndex + 1}`}
                                             fill
-                                            className="object-cover"
+                                            className="object-contain"
+                                            sizes="(max-width: 640px) 100vw, 640px"
+                                            priority
                                         />
                                     </motion.div>
                                 </AnimatePresence>
@@ -111,22 +116,16 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 {allImages.length > 1 && (
                                     <>
                                         <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                prevImage();
-                                            }}
-                                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors"
+                                            onClick={prevImage}
+                                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
                                         >
                                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                                             </svg>
                                         </button>
                                         <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                nextImage();
-                                            }}
-                                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors"
+                                            onClick={nextImage}
+                                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
                                         >
                                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -134,7 +133,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         </button>
 
                                         {/* Dots Indicator */}
-                                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
                                             {allImages.map((_, index) => (
                                                 <button
                                                     key={index}
