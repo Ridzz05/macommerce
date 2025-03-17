@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Category } from '../data/products';
-import CategoryModal from './CategoryModal';
+import CategorySidebar from './CategorySidebar';
 
 interface CategoryFilterClientProps {
     selectedCategory: string | null;
@@ -12,14 +12,14 @@ interface CategoryFilterClientProps {
 }
 
 export function CategoryFilterClient({ selectedCategory, onCategoryChange, categories }: CategoryFilterClientProps) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
         <div className="flex justify-start sm:justify-end w-full">
             <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => setIsSidebarOpen(true)}
                 className="group w-full sm:w-auto px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-[#FDF6E3] border-2 border-[#EDE3CD] rounded-xl hover:bg-[#EDE3CD] hover:border-[#D8C8A7] shadow-sm transition-all duration-300 inline-flex items-center justify-between sm:justify-start"
             >
                 <span className="flex items-center">
@@ -40,9 +40,9 @@ export function CategoryFilterClient({ selectedCategory, onCategoryChange, categ
                 </svg>
             </motion.button>
 
-            <CategoryModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+            <CategorySidebar
+                isOpen={isSidebarOpen}
+                onClose={() => setIsSidebarOpen(false)}
                 categories={categories}
                 selectedCategory={selectedCategory as Category}
                 onSelectCategory={onCategoryChange}
