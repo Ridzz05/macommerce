@@ -161,7 +161,7 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                             transition={{ type: "spring", duration: 0.5 }}
                             className="bg-[#FDF6E3] rounded-xl overflow-hidden max-w-2xl w-full mx-auto shadow-lg"
                         >
-                            <div className="relative h-64 sm:h-72 w-full">
+                            <div className="relative h-48 sm:h-64 w-full">
                                 <Image
                                     src={imageUrl}
                                     alt={name}
@@ -170,24 +170,24 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                                 />
                             </div>
                             
-                            <div className="p-6">
-                                <div className="flex items-start justify-between mb-4">
+                            <div className="p-4 sm:p-6">
+                                <div className="flex items-start justify-between mb-3 sm:mb-4">
                                     <div>
                                         {category && (
-                                            <span className="inline-block px-2 py-1 text-xs font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full mb-2 font-lexend">
+                                            <span className="inline-block px-2 py-0.5 text-xs font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full mb-1.5 sm:mb-2 font-lexend">
                                                 {category}
                                             </span>
                                         )}
-                                        <h2 className="text-xl font-medium text-[#5C4B37] font-lexend">
+                                        <h2 className="text-lg sm:text-xl font-medium text-[#5C4B37] font-lexend">
                                             {name}
                                         </h2>
                                     </div>
-                                    <p className="text-xl font-bold text-[#8B7355] font-lexend">
+                                    <p className="text-lg sm:text-xl font-bold text-[#8B7355] font-lexend">
                                         {formattedPrice}
                                     </p>
                                 </div>
 
-                                <div className="space-y-4">
+                                <div className="space-y-3 sm:space-y-4">
                                     <div>
                                         <h3 className="text-sm font-medium text-[#5C4B37] mb-1">
                                             Deskripsi Produk
@@ -201,7 +201,7 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                                         <h3 className="text-sm font-medium text-[#5C4B37] mb-1">
                                             Fitur Utama
                                         </h3>
-                                        <ul className="text-sm text-[#8B7355] list-disc list-inside space-y-1">
+                                        <ul className="text-sm text-[#8B7355] list-disc list-inside space-y-0.5 sm:space-y-1">
                                             <li>Pengerjaan Cepat</li>
                                             <li>Hasil Berkualitas</li>
                                             <li>Revisi Tanpa Batas</li>
@@ -210,7 +210,7 @@ const ProductCard = ({ name, price, imageUrl, category, demoUrl, marketplace }: 
                                     </div>
                                 </div>
 
-                                <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-[#EDE3CD]">
+                                <div className="flex justify-end gap-2 sm:gap-3 mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-[#EDE3CD]">
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
