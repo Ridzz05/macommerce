@@ -6,9 +6,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
 
-const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketplace, description, features }: ProductCardProps) => {
+const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, marketplace, description, features }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    
+    const allImages = [imageUrl, ...images];
     
     // Format price to IDR currency
     const formattedPrice = new Intl.NumberFormat('id-ID', {
@@ -18,15 +21,19 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
 
     const handleDetailClick = () => {
         setShowDetailModal(true);
+        setCurrentImageIndex(0);
     };
 
     const handleBeli = () => {
         setShowPurchaseModal(true);
     };
 
-    const handleConfirm = () => {
-        window.open('https://t.me/admin_username', '_blank', 'noopener,noreferrer');
-        setShowPurchaseModal(false);
+    const nextImage = () => {
+        setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+    };
+
+    const prevImage = () => {
+        setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
     };
 
     const marketplaceImages = {
@@ -80,13 +87,69 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
                             transition={{ type: "spring", duration: 0.5 }}
                             className="bg-[#FDF6E3] rounded-t-xl sm:rounded-xl overflow-hidden w-full sm:max-w-lg mx-auto shadow-lg"
                         >
-                            <div className="relative h-40 sm:h-48 w-full">
-                                <Image
-                                    src={imageUrl}
-                                    alt={name}
-                                    fill
-                                    className="object-cover"
-                                />
+                            {/* Image Carousel */}
+                            <div className="relative aspect-square w-full">
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={currentImageIndex}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute inset-0"
+                                    >
+                                        <Image
+                                            src={allImages[currentImageIndex]}
+                                            alt={`${name} - Gambar ${currentImageIndex + 1}`}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </motion.div>
+                                </AnimatePresence>
+
+                                {/* Navigation Buttons */}
+                                {allImages.length > 1 && (
+                                    <>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                prevImage();
+                                            }}
+                                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors"
+                                        >
+                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                nextImage();
+                                            }}
+                                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors"
+                                        >
+                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+
+                                        {/* Dots Indicator */}
+                                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                                            {allImages.map((_, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setCurrentImageIndex(index);
+                                                    }}
+                                                    className={`w-2 h-2 rounded-full transition-colors ${
+                                                        index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
                             </div>
                             
                             <div className="p-3 sm:p-4">

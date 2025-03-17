@@ -10,6 +10,7 @@ export interface Product {
     name: string;
     price: number;
     imageUrl: string;
+    images: string[];  // Array of additional product images
     category: Category;
     description: string;
     features: string[];
@@ -52,7 +53,12 @@ export const products: Product[] = [
         id: 1,
         name: "Paket Skincare Glowing",
         price: 500000,
-        imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+        imageUrl: "https://images.unsplash.com/photo-1612817288484-6f916006741a",
+        images: [
+            "https://images.unsplash.com/photo-1556228720-195a672e8a03",
+            "https://images.unsplash.com/photo-1571875257727-256c39da42af",
+            "https://images.unsplash.com/photo-1570554886111-e80b8c3bb248"
+        ],
         category: "Produk Kecantikan",
         description: "Paket lengkap skincare untuk mencerahkan dan merawat kulit wajah Anda. Terdiri dari cleanser, toner, serum, moisturizer, dan sunscreen yang diformulasikan khusus untuk kulit Indonesia.",
         features: [
@@ -73,7 +79,12 @@ export const products: Product[] = [
         id: 2,
         name: "Jasa Pembuatan Website",
         price: 2600000,
-        imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+        imageUrl: "https://images.unsplash.com/photo-1547658719-da2b51169166",
+        images: [
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+            "https://images.unsplash.com/photo-1522542550221-31fd19575a2d",
+            "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e"
+        ],
         category: "Jasa",
         description: "Layanan pembuatan website profesional dengan teknologi terkini. Kami menyediakan solusi website yang responsif, cepat, dan SEO-friendly untuk bisnis Anda.",
         features: [
@@ -91,22 +102,27 @@ export const products: Product[] = [
     },
     {
         id: 3,
-        name: "Jasa Urut Keliling",
-        price: 200000,
-        imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-        category: "Jasa",
-        description: "Layanan pijat profesional yang datang ke lokasi Anda. Terapis berpengalaman dan tersertifikasi akan membantu meredakan ketegangan otot dan memberikan relaksasi maksimal.",
-        features: [
-            "Terapis berpengalaman & tersertifikasi",
-            "Peralatan pijat steril",
-            "Bisa request terapis pria/wanita",
-            "Tersedia berbagai jenis pijat",
-            "Booking fleksibel 24 jam"
+        name: "Sepatu Sneakers Premium",
+        price: 899000,
+        imageUrl: "https://images.unsplash.com/photo-1549298916-b41d501d3772",
+        images: [
+            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a",
+            "https://images.unsplash.com/photo-1584735175315-9d5df23860e6",
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
         ],
-        demoUrl: "https://demo.jasaku.com/website",
+        category: "Sepatu",
+        description: "Sepatu sneakers premium dengan desain modern dan bahan berkualitas tinggi. Nyaman digunakan untuk aktivitas sehari-hari maupun berolahraga.",
+        features: [
+            "Bahan premium import",
+            "Sol anti-slip",
+            "Desain ergonomis",
+            "Tersedia berbagai ukuran",
+            "Garansi produk 6 bulan"
+        ],
         marketplace: {
-            shopee: "https://shopee.co.id/product/456",
-            tokopedia: "https://tokopedia.com/product/456"
+            shopee: "https://shopee.co.id/product/789",
+            tokopedia: "https://tokopedia.com/product/789",
+            lazada: "https://lazada.co.id/product/789"
         }
     }
 ];

@@ -9,8 +9,8 @@ export function ProductCardServer({ name, price, imageUrl, category, onDetailCli
     }).format(price);
 
     return (
-        <div className="group bg-[#FDF6E3] rounded-xl border border-[#EDE3CD] overflow-hidden hover:border-[#D8C8A7] transition-all duration-300 flex flex-col min-h-[320px]">
-            <div className="relative h-36 sm:h-48 w-full overflow-hidden">
+        <div className="group bg-[#FDF6E3] rounded-xl border border-[#EDE3CD] overflow-hidden hover:border-[#D8C8A7] transition-all duration-300 flex flex-col">
+            <div className="relative aspect-square w-full overflow-hidden">
                 <Image
                     src={imageUrl}
                     alt={name}
