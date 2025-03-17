@@ -41,20 +41,20 @@ const CategorySidebar = ({
                         animate={{ x: 0 }}
                         exit={{ x: '-100%' }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed left-0 top-0 bottom-0 w-[85%] sm:w-[320px] z-50 bg-[#FDF6E3] overflow-y-auto"
+                        className="fixed left-0 top-0 bottom-0 w-[75%] sm:w-[280px] z-50 bg-[#FDF6E3] overflow-y-auto"
                     >
-                        <div className="p-4 sm:p-6">
-                            <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-lg font-medium text-[#5C4B37]">
+                        <div className="p-3">
+                            <div className="flex items-center justify-between mb-3">
+                                <h3 className="text-base font-medium text-[#5C4B37]">
                                     Pilih Kategori
                                 </h3>
                                 <motion.button 
                                     onClick={onClose}
                                     whileTap={{ scale: 0.95 }}
-                                    className="p-2"
+                                    className="p-1.5"
                                 >
                                     <svg 
-                                        className="w-5 h-5 text-[#5C4B37]" 
+                                        className="w-4 h-4 text-[#5C4B37]" 
                                         fill="none" 
                                         stroke="currentColor" 
                                         viewBox="0 0 24 24"
@@ -69,11 +69,11 @@ const CategorySidebar = ({
                                 </motion.button>
                             </div>
 
-                            <div className="space-y-2">
+                            <div className="space-y-1.5">
                                 <motion.button
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => handleSelect(null)}
-                                    className={`w-full p-3 text-left rounded-lg transition-all ${
+                                    className={`w-full p-2.5 text-left rounded-lg transition-all ${
                                         !selectedCategory 
                                             ? 'bg-[#5C4B37] text-white' 
                                             : 'text-[#5C4B37] bg-[#EDE3CD]'
@@ -81,7 +81,7 @@ const CategorySidebar = ({
                                 >
                                     <div className="flex items-center">
                                         <svg 
-                                            className="w-5 h-5 mr-3" 
+                                            className="w-4 h-4 mr-2.5" 
                                             fill="none" 
                                             stroke="currentColor" 
                                             viewBox="0 0 24 24"
@@ -93,7 +93,7 @@ const CategorySidebar = ({
                                                 d="M4 6h16M4 12h16M4 18h16"
                                             />
                                         </svg>
-                                        <span className="text-sm font-medium">Semua Kategori</span>
+                                        <span className="text-sm">Semua Kategori</span>
                                         {!selectedCategory && (
                                             <motion.svg 
                                                 className="ml-auto h-4 w-4" 
@@ -114,7 +114,7 @@ const CategorySidebar = ({
                                         key={name}
                                         whileTap={{ scale: 0.98 }}
                                         onClick={() => handleSelect(name)}
-                                        className={`w-full p-3 text-left rounded-lg transition-all ${
+                                        className={`w-full p-2.5 text-left rounded-lg transition-all ${
                                             selectedCategory === name 
                                                 ? 'bg-[#5C4B37] text-white' 
                                                 : 'text-[#5C4B37] bg-[#EDE3CD]'
@@ -122,7 +122,7 @@ const CategorySidebar = ({
                                     >
                                         <div className="flex items-center">
                                             <svg 
-                                                className="w-5 h-5 mr-3" 
+                                                className="w-4 h-4 mr-2.5" 
                                                 fill="none" 
                                                 stroke="currentColor" 
                                                 viewBox="0 0 24 24"
@@ -134,7 +134,7 @@ const CategorySidebar = ({
                                                     d={icon}
                                                 />
                                             </svg>
-                                            <span className="text-sm font-medium">{name}</span>
+                                            <span className="text-sm">{name}</span>
                                             {selectedCategory === name && (
                                                 <motion.svg 
                                                     className="ml-auto h-4 w-4" 
