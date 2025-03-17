@@ -10,14 +10,23 @@ import { useSearch } from './context/SearchContext';
 export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [showWelcome, setShowWelcome] = useState(true);
+    const [countdown, setCountdown] = useState(5);
     const { searchQuery } = useSearch();
 
     useEffect(() => {
-        const timer = setTimeout(() => {
+        const welcomeTimer = setTimeout(() => {
             setShowWelcome(false);
-        }, 5000); // Pesan akan hilang setelah 5 detik
+        }, 5000);
 
-        return () => clearTimeout(timer);
+        // Countdown timer
+        const countdownInterval = setInterval(() => {
+            setCountdown(prev => prev - 1);
+        }, 1000);
+
+        return () => {
+            clearTimeout(welcomeTimer);
+            clearInterval(countdownInterval);
+        };
     }, []);
 
     // Reset kategori ke default ketika pencarian dihapus
@@ -31,19 +40,47 @@ export default function Home() {
         <div className="pt-20 bg-[#FFFBF2]">
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-                    <AnimatePresence>
+                    <AnimatePresence mode="wait">
                         {showWelcome && (
                             <motion.div 
-                                className="space-y-3"
-                                initial={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.5 }}
+                                className="space-y-3 relative"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ 
+                                    opacity: 0, 
+                                    y: -20,
+                                    transition: {
+                                        duration: 0.6,
+                                        ease: "easeInOut"
+                                    }
+                                }}
+                                transition={{ 
+                                    duration: 0.7,
+                                    ease: "easeOut"
+                                }}
                             >
+                                <motion.div 
+                                    className="absolute -top-8 right-0"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <div className="bg-[#5C4B37] text-white text-sm px-3 py-1 rounded-full shadow-md">
+                                        Hilang dalam {countdown} detik
+                                    </div>
+                                </motion.div>
+
                                 <motion.div 
                                     className="space-y-1"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ 
+                                        duration: 0.5,
+                                        delay: 0.1,
+                                        ease: "easeOut"
+                                    }}
                                 >
                                     <p className="text-sm font-medium text-[#8B7355]">Selamat datang di marketplace kami</p>
                                     <h1 className="text-2xl md:text-3xl font-semibold text-[#5C4B37] font-lexend">
@@ -52,9 +89,14 @@ export default function Home() {
                                 </motion.div>
                                 <motion.p 
                                     className="text-[#8B7355] text-sm md:text-base max-w-xl leading-relaxed"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.6 }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ 
+                                        duration: 0.5,
+                                        delay: 0.2,
+                                        ease: "easeOut"
+                                    }}
                                 >
                                     Jelajahi koleksi lengkap kami mulai dari produk kecantikan, fashion, sepatu, hingga layanan digital dan jasa profesional. Semua kebutuhan Anda tersedia dalam satu platform.
                                 </motion.p>
