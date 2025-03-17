@@ -12,8 +12,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // Get all category slugs
-  const categories = [...new Set(products.map(product => product.category))]
+  // Get all unique categories using filter
+  const categories = products
+    .map(product => product.category)
+    .filter((category, index, self) => self.indexOf(category) === index)
+
   const categoryUrls = categories.map((category) => ({
     url: `${baseUrl}/category/${category.toLowerCase().replace(/ /g, '-')}`,
     lastModified: new Date(),
