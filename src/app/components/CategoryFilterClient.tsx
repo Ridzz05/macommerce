@@ -15,15 +15,18 @@ export function CategoryFilterClient({ selectedCategory, onCategoryChange, categ
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
-        <div className="flex justify-end">
+        <div className="flex justify-start sm:justify-end w-full">
             <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setIsModalOpen(true)}
-                className="group px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-[#FDF6E3] border-2 border-[#EDE3CD] rounded-xl hover:bg-[#EDE3CD] hover:border-[#D8C8A7] shadow-sm transition-all duration-300 inline-flex items-center"
+                className="group w-full sm:w-auto px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-[#FDF6E3] border-2 border-[#EDE3CD] rounded-xl hover:bg-[#EDE3CD] hover:border-[#D8C8A7] shadow-sm transition-all duration-300 inline-flex items-center justify-between sm:justify-start"
             >
+                <span className="flex items-center">
+                    {selectedCategory || 'Pilih Kategori'}
+                </span>
                 <svg 
-                    className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-180" 
+                    className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:rotate-180" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -35,7 +38,6 @@ export function CategoryFilterClient({ selectedCategory, onCategoryChange, categ
                         d="M19 9l-7 7-7-7"
                     />
                 </svg>
-                {selectedCategory || 'Pilih Kategori'}
             </motion.button>
 
             <CategoryModal

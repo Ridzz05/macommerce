@@ -177,18 +177,20 @@ const Navbar = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                        className="flex items-center px-3 py-1.5 text-sm rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300"
+                                        className="group p-2 rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300"
                                     >
-                                        <span>Hubungi Kami</span>
-                                        <svg
-                                            className={`ml-1.5 h-3.5 w-3.5 transition-transform duration-300 ${
-                                                isDropdownOpen ? 'transform rotate-180' : ''
-                                            }`}
-                                            fill="none"
+                                        <svg 
+                                            className="w-4 h-4"
+                                            fill="none" 
+                                            stroke="currentColor" 
                                             viewBox="0 0 24 24"
-                                            stroke="currentColor"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                                            <path 
+                                                strokeLinecap="round" 
+                                                strokeLinejoin="round" 
+                                                strokeWidth={2} 
+                                                d="M4 6h16M4 12h16M4 18h16"
+                                            />
                                         </svg>
                                     </motion.button>
 
@@ -255,44 +257,76 @@ const Navbar = () => {
                             transition={{ type: "spring", duration: 0.5 }}
                             className="w-full max-w-lg mt-24 mx-4"
                         >
-                            <div className="relative">
-                                <input
-                                    type="text"
-                                    placeholder="Cari produk..."
-                                    value={localSearchQuery}
-                                    onChange={(e) => handleSearch(e.target.value)}
-                                    onKeyDown={handleKeyDown}
-                                    autoFocus
-                                    className="w-full px-5 py-3 pl-12 text-base rounded-xl bg-[#FDF6E3] border-2 border-[#EDE3CD] text-[#5C4B37] placeholder-[#8B7355] focus:outline-none focus:border-[#8B7355] transition-all duration-300 shadow-lg"
-                                />
-                                <svg
-                                    className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8B7355]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    />
-                                </svg>
-                                {localSearchQuery && (
-                                    <motion.button
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.8 }}
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        onClick={() => setLocalSearchQuery('')}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full text-[#8B7355] hover:text-[#5C4B37] transition-colors duration-300"
-                                    >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            <div className="relative bg-[#FDF6E3] rounded-xl shadow-lg">
+                                <div className="relative flex items-center bg-[#FDF6E3] rounded-xl border-2 border-[#EDE3CD] focus-within:border-[#8B7355] transition-all duration-300">
+                                    {/* Search Icon */}
+                                    <div className="absolute left-4 text-[#8B7355]">
+                                        <svg
+                                            className="w-5 h-5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                            />
                                         </svg>
-                                    </motion.button>
-                                )}
+                                    </div>
+                                    
+                                    {/* Search Input */}
+                                    <input
+                                        type="text"
+                                        placeholder="Cari produk..."
+                                        value={localSearchQuery}
+                                        onChange={(e) => handleSearch(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                        autoFocus
+                                        className="w-full py-3 pl-12 pr-12 text-base bg-transparent text-[#5C4B37] placeholder-[#8B7355] focus:outline-none"
+                                    />
+
+                                    {/* Clear Button */}
+                                    <AnimatePresence>
+                                        {localSearchQuery && (
+                                            <motion.button
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                exit={{ opacity: 0, scale: 0.8 }}
+                                                transition={{
+                                                    type: "spring",
+                                                    stiffness: 300,
+                                                    damping: 20
+                                                }}
+                                                whileHover={{ 
+                                                    scale: 1.1,
+                                                    transition: { duration: 0.2 }
+                                                }}
+                                                whileTap={{ 
+                                                    scale: 0.9,
+                                                    transition: { duration: 0.1 }
+                                                }}
+                                                onClick={() => setLocalSearchQuery('')}
+                                                className="absolute right-3 p-1.5 rounded-full hover:bg-[#EDE3CD] text-[#8B7355] hover:text-[#5C4B37] transition-colors duration-300"
+                                            >
+                                                <motion.svg 
+                                                    className="w-4 h-4" 
+                                                    fill="none" 
+                                                    stroke="currentColor" 
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path 
+                                                        strokeLinecap="round" 
+                                                        strokeLinejoin="round" 
+                                                        strokeWidth="2" 
+                                                        d="M6 18L18 6M6 6l12 12"
+                                                    />
+                                                </motion.svg>
+                                            </motion.button>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>
