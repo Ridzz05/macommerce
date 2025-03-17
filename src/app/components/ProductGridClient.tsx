@@ -55,34 +55,64 @@ export function ProductGridClient({ products, filteredCategory }: ProductGridCli
         );
     }
 
+    // Group products by category
+    const groupedProducts = filteredProducts.reduce((acc, product) => {
+        const category = product.category;
+        if (!acc[category]) {
+            acc[category] = [];
+        }
+        acc[category].push(product);
+        return acc;
+    }, {} as Record<string, Product[]>);
+
     return (
-        <motion.div 
-            layout
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5"
-        >
-            <AnimatePresence>
-                {filteredProducts.map((product) => (
-                    <motion.div
-                        key={product.id}
-                        layout
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.3 }}
+        <div className="space-y-8">
+            {Object.entries(groupedProducts).map(([category, products]) => (
+                <motion.div 
+                    key={category}
+                    layout
+                    className="space-y-4"
+                >
+                    <motion.h2 
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="text-xl font-medium text-[#5C4B37] border-b border-[#EDE3CD] pb-2"
                     >
-                        <ProductCardClient
-                            name={product.name}
-                            price={product.price}
-                            imageUrl={product.imageUrl}
-                            category={product.category}
-                            description={product.description}
-                            features={product.features}
-                            demoUrl={product.demoUrl}
-                            marketplace={product.marketplace}
-                        />
+                        {category}
+                        <span className="text-sm font-normal text-[#8B7355] ml-2">
+                            ({products.length} Produk)
+                        </span>
+                    </motion.h2>
+                    <motion.div 
+                        layout
+                        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5"
+                    >
+                        <AnimatePresence>
+                            {products.map((product) => (
+                                <motion.div
+                                    key={product.id}
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <ProductCardClient
+                                        name={product.name}
+                                        price={product.price}
+                                        imageUrl={product.imageUrl}
+                                        category={product.category}
+                                        description={product.description}
+                                        features={product.features}
+                                        demoUrl={product.demoUrl}
+                                        marketplace={product.marketplace}
+                                    />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
                     </motion.div>
-                ))}
-            </AnimatePresence>
-        </motion.div>
+                </motion.div>
+            ))}
+        </div>
     );
 } 

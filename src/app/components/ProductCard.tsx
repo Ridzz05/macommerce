@@ -101,7 +101,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         transition={{ duration: 0.3 }}
                                         className="absolute inset-0"
                                     >
-                                        <Image
+                                <Image
                                             src={allImages[currentImageIndex]}
                                             alt={`${name} - Gambar ${currentImageIndex + 1}`}
                                             fill
