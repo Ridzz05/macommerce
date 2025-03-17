@@ -18,6 +18,7 @@ const Navbar = () => {
     const handleClearSearch = () => {
         setLocalSearchQuery('');
         setSearchQuery('');
+        setShowSearchModal(false); // Menutup modal pencarian setelah dibersihkan
     };
 
     const handleSearchSubmit = () => {
