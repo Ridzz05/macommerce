@@ -12,12 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // Get all unique categories using filter
-  const categories = products
-    .map(product => product.category)
-    .filter((category, index, self) => self.indexOf(category) === index)
+  // Get unique categories using reduce
+  const uniqueCategories = products.reduce((acc: Record<string, boolean>, product) => {
+    acc[product.category] = true;
+    return acc;
+  }, {});
 
-  const categoryUrls = categories.map((category) => ({
+  const categoryUrls = Object.keys(uniqueCategories).map((category) => ({
     url: `${baseUrl}/category/${category.toLowerCase().replace(/ /g, '-')}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
