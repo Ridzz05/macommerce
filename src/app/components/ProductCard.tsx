@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
 
-const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketplace }: ProductCardProps) => {
+const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketplace, description, features }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
     
@@ -112,7 +112,7 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
                                             Deskripsi Produk
                                         </h3>
                                         <p className="text-sm text-[#8B7355]">
-                                            Layanan {name} dengan kualitas terbaik dan pengerjaan profesional.
+                                            {description}
                                         </p>
                                     </div>
 
@@ -121,10 +121,9 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
                                             Fitur Utama
                                         </h3>
                                         <ul className="text-sm text-[#8B7355] list-disc list-inside space-y-0.5 sm:space-y-1">
-                                            <li>Pengerjaan Cepat</li>
-                                            <li>Hasil Berkualitas</li>
-                                            <li>Revisi Tanpa Batas</li>
-                                            <li>Garansi 100%</li>
+                                            {features.map((feature, index) => (
+                                                <li key={index}>{feature}</li>
+                                            ))}
                                         </ul>
                                     </div>
                                 </div>

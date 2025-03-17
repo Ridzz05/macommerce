@@ -75,6 +75,8 @@ export function ProductGridClient({ products, filteredCategory }: ProductGridCli
                             price={product.price}
                             imageUrl={product.imageUrl}
                             category={product.category}
+                            description={product.description}
+                            features={product.features}
                             demoUrl={product.demoUrl}
                             marketplace={product.marketplace}
                         />

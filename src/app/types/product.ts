@@ -3,6 +3,8 @@ export interface ProductCardProps {
     price: number;
     imageUrl: string;
     category?: string;
+    description: string;
+    features: string[];
     demoUrl?: string;
     marketplace: {
         shopee?: string;
@@ -12,7 +14,7 @@ export interface ProductCardProps {
     };
 }
 
-export interface ProductCardServerProps extends Omit<ProductCardProps, 'marketplace' | 'demoUrl'> {
+export interface ProductCardServerProps extends Omit<ProductCardProps, 'marketplace' | 'demoUrl' | 'description' | 'features'> {
     onDetailClick: () => void;
     onBeliClick: () => void;
 } 

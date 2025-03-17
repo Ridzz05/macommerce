@@ -11,6 +11,8 @@ export interface Product {
     price: number;
     imageUrl: string;
     category: Category;
+    description: string;
+    features: string[];
     demoUrl?: string;
     marketplace: {
         shopee?: string;
@@ -52,6 +54,14 @@ export const products: Product[] = [
         price: 500000,
         imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
         category: "Produk Kecantikan",
+        description: "Paket lengkap skincare untuk mencerahkan dan merawat kulit wajah Anda. Terdiri dari cleanser, toner, serum, moisturizer, dan sunscreen yang diformulasikan khusus untuk kulit Indonesia.",
+        features: [
+            "Bahan alami dan aman untuk semua jenis kulit",
+            "Teruji dermatologis",
+            "Hasil terlihat dalam 2 minggu",
+            "Free konsultasi dengan beauty expert",
+            "Garansi uang kembali 100%"
+        ],
         marketplace: {
             shopee: "https://shopee.co.id/product/123",
             tokopedia: "https://tokopedia.com/product/123",
@@ -65,6 +75,14 @@ export const products: Product[] = [
         price: 2600000,
         imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
         category: "Jasa",
+        description: "Layanan pembuatan website profesional dengan teknologi terkini. Kami menyediakan solusi website yang responsif, cepat, dan SEO-friendly untuk bisnis Anda.",
+        features: [
+            "Design modern dan responsif",
+            "Optimasi SEO",
+            "Integrasi media sosial",
+            "Support teknis 24/7",
+            "Garansi maintenance 1 tahun"
+        ],
         demoUrl: "https://demo.jasaku.com/website",
         marketplace: {
             shopee: "https://shopee.co.id/product/456",
@@ -77,6 +95,14 @@ export const products: Product[] = [
         price: 200000,
         imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
         category: "Jasa",
+        description: "Layanan pijat profesional yang datang ke lokasi Anda. Terapis berpengalaman dan tersertifikasi akan membantu meredakan ketegangan otot dan memberikan relaksasi maksimal.",
+        features: [
+            "Terapis berpengalaman & tersertifikasi",
+            "Peralatan pijat steril",
+            "Bisa request terapis pria/wanita",
+            "Tersedia berbagai jenis pijat",
+            "Booking fleksibel 24 jam"
+        ],
         demoUrl: "https://demo.jasaku.com/website",
         marketplace: {
             shopee: "https://shopee.co.id/product/456",
