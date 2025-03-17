@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Lexend_Giga, Lexend, Montserrat, Raleway } from 'next/font/google'
 import './globals.css'
-import Navbar from './components/Navbar'
 import { SearchProvider } from './context/SearchContext'
+import Navbar from './components/Navbar'
 
 // Initialize fonts with display swap and preload
 const lexendGiga = Lexend_Giga({
@@ -42,44 +42,57 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jasaku.com'),
   title: {
-    default: 'JasaKu - Layanan Digital Terpercaya',
-    template: '%s | JasaKu'
+    template: '%s | MaCommerce - Marketplace Indonesia',
+    default: 'MaCommerce - Marketplace Indonesia Terpercaya',
   },
-  description: 'Temukan berbagai layanan digital premium dengan harga terbaik. Tersedia layanan E-Wallet, Bank, dan layanan digital lainnya.',
-  keywords: ['jasa digital', 'e-wallet', 'bank', 'layanan digital'],
-  openGraph: {
-    title: 'JasaKu - Layanan Digital Terpercaya',
-    description: 'Temukan berbagai layanan digital premium dengan harga terbaik. Tersedia layanan E-Wallet, Bank, dan layanan digital lainnya.',
-    url: 'https://jasaku.com',
-    siteName: 'JasaKu',
-    images: [
-      {
-        url: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45',
-        width: 1200,
-        height: 630,
-        alt: 'JasaKu Preview'
-      }
-    ],
-    locale: 'id_ID',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'JasaKu - Layanan Digital Terpercaya',
-    description: 'Temukan berbagai layanan digital premium dengan harga terbaik. Tersedia layanan E-Wallet, Bank, dan layanan digital lainnya.',
-    images: ['https://images.unsplash.com/photo-1593642632823-8f785ba67e45'],
-  },
-  alternates: {
-    canonical: '/',
-  },
+  description: 'MaCommerce adalah marketplace Indonesia yang menyediakan berbagai produk berkualitas dengan harga terbaik. Temukan produk fashion, elektronik, dan kebutuhan sehari-hari.',
+  keywords: ['marketplace indonesia', 'jual beli online', 'belanja online', 'produk berkualitas', 'fashion', 'elektronik'],
+  authors: [{ name: 'MaCommerce Team' }],
+  creator: 'MaCommerce',
+  publisher: 'MaCommerce',
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    url: 'https://macommerce.com',
+    siteName: 'MaCommerce',
+    title: 'MaCommerce - Marketplace Indonesia Terpercaya',
+    description: 'Temukan berbagai produk berkualitas dengan harga terbaik di MaCommerce. Marketplace terpercaya dengan pengiriman cepat ke seluruh Indonesia.',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'MaCommerce - Marketplace Indonesia',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MaCommerce - Marketplace Indonesia Terpercaya',
+    description: 'Temukan berbagai produk berkualitas dengan harga terbaik di MaCommerce. Marketplace terpercaya dengan pengiriman cepat ke seluruh Indonesia.',
+    images: ['/images/twitter-image.jpg'],
+    creator: '@macommerce',
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
+  alternates: {
+    canonical: 'https://macommerce.com',
+    languages: {
+      'id-ID': 'https://macommerce.com/id',
+      'en-US': 'https://macommerce.com/en',
     },
   },
 }
@@ -90,7 +103,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="id">
       <head>
         <link
           rel="preconnect"
