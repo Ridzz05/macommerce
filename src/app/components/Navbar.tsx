@@ -42,7 +42,7 @@ const Navbar = () => {
                     <div className="flex justify-between h-16 items-center">
                         {/* Logo */}
                         <div className="flex-shrink-0">
-                            <svg width="210 " height="41" viewBox="0 0 240 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="210" height="41" viewBox="0 0 240 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M39.1447 33.3661L39.1477 33.3695L32.6776 39.0465C31.351 40.2393 29.6357 40.915 27.8476 40.9483L27.8326 40.9486H5.66019C4.83941 40.9831 4.02151 40.8295 3.26979 40.4995C2.50478 40.1638 1.82894 39.6547 1.29671 39.0124C0.764448 38.3703 0.390749 37.6134 0.205024 36.8023C0.0227516 36.005 0.026707 35.1759 0.217453 34.3802L1.92453 25.6882C2.07639 24.9316 2.47773 24.2467 3.06517 23.7426L3.14888 23.6708C2.96716 23.3965 2.83424 23.0926 2.7563 22.7724C2.65291 22.3477 2.6493 21.9058 2.74453 21.4808L4.455 12.7726L4.45764 12.7602C4.79052 11.1976 5.62898 9.78682 6.84471 8.74384L12.7685 3.54618C13.0426 3.2331 13.3435 2.94146 13.669 2.67484C14.9657 1.61267 16.5793 1.00782 18.2578 0.954276L18.2857 0.953384L40.485 1.01693C41.3049 0.982846 42.1218 1.13657 42.8727 1.4661C43.6378 1.80187 44.3136 2.31102 44.8458 2.95316C45.378 3.5952 45.7518 4.35217 45.9375 5.16362C46.12 5.96114 46.1157 6.78959 45.9253 7.58487L41.685 29.2304L41.6789 29.2567C41.3065 30.8652 40.4163 32.3079 39.1447 33.3661Z" fill="#03301D"></path>
                             <path d="M40.1385 3.01698C40.7217 2.98755 41.3037 3.09504 41.838 3.33068C42.3723 3.56631 42.8441 3.92357 43.2157 4.37407C43.5872 4.82456 43.8482 5.35568 43.9779 5.92505C44.1075 6.49442 44.1022 7.08627 43.9623 7.6532L39.7402 29.3125C39.4436 30.5994 38.7296 31.7521 37.7094 32.5907C36.6892 33.4293 35.4201 33.9068 34.1001 33.9487H12.0098C11.4265 33.9778 10.8444 33.8703 10.3099 33.6347C9.7754 33.399 9.30332 33.0419 8.93121 32.5917C8.5591 32.1414 8.29723 31.6105 8.16648 31.0413C8.03574 30.472 8.03973 29.88 8.1781 29.3125L9.88288 20.55C9.98284 20.1223 10.2214 19.7397 10.5614 19.4617C10.9014 19.1836 11.3238 19.0257 11.7629 19.0126C15.7938 19.156 19.6654 19.4587 23.2741 20.7571L24.0707 25.7677C24.0902 25.8887 24.154 25.9981 24.2497 26.0746C24.3454 26.1512 24.4661 26.1895 24.5885 26.182C24.729 26.1795 24.8665 26.14 24.9868 26.0672C25.1071 25.9945 25.2061 25.8911 25.2736 25.7677L27.998 20.7571L33.4469 19.0365C33.5787 18.9943 33.6973 18.9186 33.7909 18.8166C33.8845 18.7146 33.9499 18.59 33.9806 18.4551C34.0118 18.3357 33.9971 18.209 33.9396 18.0999C33.8822 17.9908 33.786 17.9073 33.6699 17.8656L28.8902 16.1528L28.0936 11.1424C28.0742 11.0207 28.0106 10.9104 27.9152 10.8326C27.8197 10.7547 27.6989 10.7147 27.5758 10.7202C27.4344 10.7234 27.2964 10.7642 27.176 10.8384C27.0556 10.9126 26.9571 11.0175 26.8907 11.1424L24.1663 16.1528C20.2156 17.286 16.1278 17.8705 12.0178 17.8895C11.8205 17.9063 11.6221 17.8759 11.4388 17.801C11.2555 17.7262 11.0926 17.609 10.9635 17.4589C10.8344 17.3088 10.7428 17.1301 10.6962 16.9377C10.6496 16.7453 10.6493 16.5445 10.6954 16.3519L12.4002 7.58942C12.6951 6.30315 13.4076 5.15073 14.4265 4.31203C15.4454 3.47332 16.7133 2.99567 18.0323 2.95338L40.1385 3.01698Z" fill="#86EE02"></path>
                             <path d="M176.026 31.9563C171.93 31.9563 169.024 30.286 168.108 27.1346L173.464 24.7081C173.844 26.0001 174.954 26.5989 176.97 26.5989C178.538 26.5989 179.806 26.1262 179.983 25.1177C180.206 23.8572 178.959 23.6681 177.057 23.3845C173.908 22.9118 169.389 21.6827 170.284 16.609C170.973 12.7013 175.053 9.70747 179.853 9.70747C183.629 9.70747 186.534 11.3777 187.451 14.5291L182.095 16.9557C181.67 15.9157 180.668 15.0648 178.652 15.0648C177.244 15.0648 176.398 15.506 176.243 16.3884C176.032 17.5859 177.373 17.9641 179.429 18.2792C182.546 18.752 186.815 19.9495 185.915 25.0547C185.226 28.9624 180.826 31.9563 176.026 31.9563Z" fill="#03301D"></path>
@@ -64,7 +64,7 @@ const Navbar = () => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => setShowSearchModal(true)}
-                                className="group p-2 rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300"
+                                className="group p-2.5 rounded-xl border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
                             >
                                 <svg
                                     className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12"
@@ -88,7 +88,7 @@ const Navbar = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                        className="group p-2 rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300"
+                                        className="group p-2.5 rounded-xl border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
                                     >
                                         <svg
                                             className="w-4 h-4"
@@ -112,17 +112,17 @@ const Navbar = () => {
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -10 }}
                                                 transition={{ duration: 0.2 }}
-                                                className="absolute right-0 mt-1 w-44 rounded-lg border border-[#EDE3CD] bg-[#FDF6E3] shadow-lg overflow-hidden"
+                                                className="absolute right-0 mt-2 w-44 rounded-xl border border-[#EDE3CD] bg-[#FDF6E3] shadow-lg overflow-hidden"
                                             >
-                                                <div className="py-1" role="menu">
+                                                <div className="py-1.5" role="menu">
                                                     <motion.a
                                                         href="https://wa.me/6281222827630"
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="flex items-center px-3 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
+                                                        className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
                                                         whileHover={{ x: 4 }}
                                                     >
-                                                        <svg className="h-4 w-4 mr-2 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
+                                                        <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
                                                             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
                                                             <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
                                                         </svg>
@@ -132,10 +132,10 @@ const Navbar = () => {
                                                         href="https://wa.me/6281222827630"
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="flex items-center px-3 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
+                                                        className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
                                                         whileHover={{ x: 4 }}
                                                     >
-                                                        <svg className="h-4 w-4 mr-2 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
+                                                        <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
                                                             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
                                                             <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
                                                         </svg>
@@ -170,23 +170,23 @@ const Navbar = () => {
                             transition={{ type: "spring", duration: 0.5 }}
                             className="w-full max-w-lg mt-24 mx-4"
                         >
-                            <div className="relative bg-[#FDF6E3] rounded-xl shadow-lg">
-                                <div className="relative flex items-center bg-[#FDF6E3] rounded-xl border-2 border-[#EDE3CD] focus-within:border-[#8B7355] transition-all duration-300">
+                            <div className="relative bg-[#FDF6E3] rounded-2xl shadow-lg">
+                                <div className="relative flex items-center bg-[#FDF6E3] rounded-2xl border-2 border-[#EDE3CD] focus-within:border-[#8B7355] transition-all duration-300">
                                     {/* Search Icon */}
                                     <div className="absolute left-4 text-[#8B7355]">
                                         <svg
                                             className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    />
-                                </svg>
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                            />
+                                        </svg>
                                     </div>
                                     
                                     {/* Search Input */}
@@ -197,16 +197,16 @@ const Navbar = () => {
                                         onChange={(e) => handleSearch(e.target.value)}
                                         onKeyDown={handleKeyDown}
                                         autoFocus
-                                        className="w-full py-3 pl-12 pr-12 text-base bg-transparent text-[#5C4B37] placeholder-[#8B7355] focus:outline-none"
+                                        className="w-full py-4 pl-12 pr-12 text-base bg-transparent text-[#5C4B37] placeholder-[#8B7355] focus:outline-none rounded-2xl"
                                     />
 
                                     {/* Clear Button */}
                                     <AnimatePresence>
-                                {localSearchQuery && (
-                                    <motion.button
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.8 }}
+                                        {localSearchQuery && (
+                                            <motion.button
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                exit={{ opacity: 0, scale: 0.8 }}
                                                 transition={{
                                                     type: "spring",
                                                     stiffness: 300,
@@ -221,7 +221,7 @@ const Navbar = () => {
                                                     transition: { duration: 0.1 }
                                                 }}
                                                 onClick={() => handleClearSearch()}
-                                                className="absolute right-3 p-1.5 rounded-full hover:bg-[#EDE3CD] text-[#8B7355] hover:text-[#5C4B37] transition-colors duration-300"
+                                                className="absolute right-4 p-1.5 rounded-xl hover:bg-[#EDE3CD] text-[#8B7355] hover:text-[#5C4B37] transition-colors duration-300"
                                             >
                                                 <motion.svg 
                                                     className="w-4 h-4" 
@@ -236,8 +236,8 @@ const Navbar = () => {
                                                         d="M6 18L18 6M6 6l12 12"
                                                     />
                                                 </motion.svg>
-                                    </motion.button>
-                                )}
+                                            </motion.button>
+                                        )}
                                     </AnimatePresence>
                                 </div>
                             </div>

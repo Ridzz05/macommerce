@@ -6,12 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
 
-const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, marketplace, description, features }: ProductCardProps) => {
+const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketplace, description, features }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    
-    const allImages = [imageUrl, ...images];
     
     // Format price to IDR currency
     const formattedPrice = new Intl.NumberFormat('id-ID', {
@@ -21,23 +18,10 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
 
     const handleDetailClick = () => {
         setShowDetailModal(true);
-        setCurrentImageIndex(0);
     };
 
     const handleBeli = () => {
         setShowPurchaseModal(true);
-    };
-
-    const handleNextImage = () => {
-        setCurrentImageIndex((prevIndex) => 
-            prevIndex === allImages.length - 1 ? 0 : prevIndex + 1
-        );
-    };
-
-    const handlePrevImage = () => {
-        setCurrentImageIndex((prevIndex) => 
-            prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
-        );
     };
 
     return (
@@ -69,62 +53,15 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                             className="bg-[#FDF6E3] rounded-t-xl sm:rounded-xl overflow-hidden w-full sm:max-w-lg mx-auto shadow-lg"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Image Carousel */}
                             <div className="relative w-full h-[280px] sm:h-[320px] bg-[#EDE3CD]">
                                 <Image
-                                    src={allImages[currentImageIndex]}
-                                    alt={`${name} - Gambar ${currentImageIndex + 1}`}
+                                    src={imageUrl}
+                                    alt={name}
                                     fill
                                     className="object-contain"
                                     sizes="(max-width: 640px) 100vw, 640px"
                                     priority
                                 />
-
-                                {/* Navigation Buttons */}
-                                {allImages.length > 1 && (
-                                    <>
-                                        <motion.button
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            onClick={handlePrevImage}
-                                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
-                                        >
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                            </svg>
-                                        </motion.button>
-                                        <motion.button
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            onClick={handleNextImage}
-                                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
-                                        >
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </motion.button>
-
-                                        {/* Dots Indicator */}
-                                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                                            {allImages.map((_, index) => (
-                                                <button
-                                                    key={index}
-                                                    onClick={() => setCurrentImageIndex(index)}
-                                                    className={`w-2 h-2 rounded-full transition-colors ${
-                                                        currentImageIndex === index 
-                                                            ? 'bg-white' 
-                                                            : 'bg-white/50'
-                                                    }`}
-                                                />
-                                            ))}
-                                        </div>
-
-                                        {/* Image Counter */}
-                                        <div className="absolute top-2 right-2 bg-black/30 text-white px-2 py-1 rounded-full text-xs">
-                                            {currentImageIndex + 1} / {allImages.length}
-                                        </div>
-                                    </>
-                                )}
                             </div>
                             
                             <div className="p-3 sm:p-4">
