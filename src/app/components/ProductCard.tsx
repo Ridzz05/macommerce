@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
 
@@ -10,7 +10,6 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [direction, setDirection] = useState(0);
     
     const allImages = [imageUrl, ...images];
     
@@ -29,66 +28,16 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
         setShowPurchaseModal(true);
     };
 
-    const paginate = (newDirection: number) => {
-        setDirection(newDirection);
-        setCurrentImageIndex((prevIndex) => {
-            let newIndex = prevIndex + newDirection;
-            if (newIndex < 0) newIndex = allImages.length - 1;
-            if (newIndex >= allImages.length) newIndex = 0;
-            return newIndex;
-        });
+    const handleNextImage = () => {
+        setCurrentImageIndex((prevIndex) => 
+            prevIndex === allImages.length - 1 ? 0 : prevIndex + 1
+        );
     };
 
-    const handleDragEnd = (event: any, info: PanInfo) => {
-        const swipeThreshold = 50;
-        if (Math.abs(info.offset.x) > swipeThreshold) {
-            paginate(info.offset.x > 0 ? -1 : 1);
-        }
-    };
-
-    const swipeConfidenceThreshold = 10000;
-    const swipePower = (offset: number, velocity: number) => {
-        return Math.abs(offset) * velocity;
-    };
-
-    const variants = {
-        enter: (direction: number) => ({
-            x: direction > 0 ? 1000 : -1000,
-            opacity: 0
-        }),
-        center: {
-            zIndex: 1,
-            x: 0,
-            opacity: 1
-        },
-        exit: (direction: number) => ({
-            zIndex: 0,
-            x: direction < 0 ? 1000 : -1000,
-            opacity: 0
-        })
-    };
-
-    const marketplaceImages = {
-        shopee: {
-            src: '/images/marketplace/shopee.webp',
-            alt: 'Shopee Logo',
-            bg: 'bg-[#FE5621]'
-        },
-        tokopedia: {
-            src: '/images/marketplace/tokopedia.webp',
-            alt: 'Tokopedia Logo',
-            bg: 'bg-[#03AC0E]'
-        },
-        lazada: {
-            src: '/images/marketplace/lazada.webp',
-            alt: 'Lazada Logo',
-            bg: 'bg-[#0F146D]'
-        },
-        tiktokshop: {
-            src: '/images/marketplace/tiktokshop.webp',
-            alt: 'TikTok Shop Logo',
-            bg: 'bg-black'
-        }
+    const handlePrevImage = () => {
+        setCurrentImageIndex((prevIndex) => 
+            prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
+        );
     };
 
     return (
@@ -122,42 +71,14 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                         >
                             {/* Image Carousel */}
                             <div className="relative w-full h-[280px] sm:h-[320px] bg-[#EDE3CD]">
-                                <AnimatePresence initial={false} custom={direction}>
-                                    <motion.div
-                                        key={currentImageIndex}
-                                        custom={direction}
-                                        variants={variants}
-                                        initial="enter"
-                                        animate="center"
-                                        exit="exit"
-                                        transition={{
-                                            x: { type: "spring", stiffness: 300, damping: 30 },
-                                            opacity: { duration: 0.2 }
-                                        }}
-                                        drag="x"
-                                        dragConstraints={{ left: 0, right: 0 }}
-                                        dragElastic={1}
-                                        onDragEnd={handleDragEnd}
-                                        onDrag={(e, { offset, velocity }) => {
-                                            const swipe = swipePower(offset.x, velocity.x);
-                                            if (swipe < -swipeConfidenceThreshold) {
-                                                paginate(1);
-                                            } else if (swipe > swipeConfidenceThreshold) {
-                                                paginate(-1);
-                                            }
-                                        }}
-                                        className="absolute inset-0 cursor-grab active:cursor-grabbing"
-                                    >
-                                        <Image
-                                            src={allImages[currentImageIndex]}
-                                            alt={`${name} - Gambar ${currentImageIndex + 1}`}
-                                            fill
-                                            className="object-contain"
-                                            sizes="(max-width: 640px) 100vw, 640px"
-                                            priority
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
+                                <Image
+                                    src={allImages[currentImageIndex]}
+                                    alt={`${name} - Gambar ${currentImageIndex + 1}`}
+                                    fill
+                                    className="object-contain"
+                                    sizes="(max-width: 640px) 100vw, 640px"
+                                    priority
+                                />
 
                                 {/* Navigation Buttons */}
                                 {allImages.length > 1 && (
@@ -165,7 +86,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         <motion.button
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.9 }}
-                                            onClick={() => paginate(-1)}
+                                            onClick={handlePrevImage}
                                             className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
                                         >
                                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,7 +96,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         <motion.button
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.9 }}
-                                            onClick={() => paginate(1)}
+                                            onClick={handleNextImage}
                                             className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors z-10"
                                         >
                                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,18 +107,14 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         {/* Dots Indicator */}
                                         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
                                             {allImages.map((_, index) => (
-                                                <motion.button
+                                                <button
                                                     key={index}
-                                                    initial={false}
-                                                    animate={{
-                                                        scale: currentImageIndex === index ? 1.2 : 1,
-                                                        opacity: currentImageIndex === index ? 1 : 0.5
-                                                    }}
-                                                    onClick={() => {
-                                                        setDirection(index > currentImageIndex ? 1 : -1);
-                                                        setCurrentImageIndex(index);
-                                                    }}
-                                                    className={`w-2 h-2 rounded-full bg-white transition-colors`}
+                                                    onClick={() => setCurrentImageIndex(index)}
+                                                    className={`w-2 h-2 rounded-full transition-colors ${
+                                                        currentImageIndex === index 
+                                                            ? 'bg-white' 
+                                                            : 'bg-white/50'
+                                                    }`}
                                                 />
                                             ))}
                                         </div>
@@ -311,12 +228,12 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.shopee.bg} text-white hover:bg-opacity-90 transition-all`}
+                                        className="flex flex-col items-center p-4 rounded-lg bg-[#FE5621] text-white hover:bg-opacity-90 transition-all"
                                     >
                                         <div className="relative w-8 h-8">
                                             <Image
-                                                src={marketplaceImages.shopee.src}
-                                                alt={marketplaceImages.shopee.alt}
+                                                src="/images/marketplace/shopee.webp"
+                                                alt="Shopee Logo"
                                                 fill
                                                 className="object-contain"
                                             />
@@ -332,12 +249,12 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.tokopedia.bg} text-white hover:bg-opacity-90 transition-all`}
+                                        className="flex flex-col items-center p-4 rounded-lg bg-[#03AC0E] text-white hover:bg-opacity-90 transition-all"
                                     >
                                         <div className="relative w-8 h-8">
                                             <Image
-                                                src={marketplaceImages.tokopedia.src}
-                                                alt={marketplaceImages.tokopedia.alt}
+                                                src="/images/marketplace/tokopedia.webp"
+                                                alt="Tokopedia Logo"
                                                 fill
                                                 className="object-contain"
                                             />
@@ -353,12 +270,12 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.lazada.bg} text-white hover:bg-opacity-90 transition-all`}
+                                        className="flex flex-col items-center p-4 rounded-lg bg-[#0F146D] text-white hover:bg-opacity-90 transition-all"
                                     >
                                         <div className="relative w-8 h-8">
                                             <Image
-                                                src={marketplaceImages.lazada.src}
-                                                alt={marketplaceImages.lazada.alt}
+                                                src="/images/marketplace/lazada.webp"
+                                                alt="Lazada Logo"
                                                 fill
                                                 className="object-contain"
                                             />
@@ -374,12 +291,12 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className={`flex flex-col items-center p-4 rounded-lg ${marketplaceImages.tiktokshop.bg} text-white hover:bg-opacity-90 transition-all`}
+                                        className="flex flex-col items-center p-4 rounded-lg bg-black text-white hover:bg-opacity-90 transition-all"
                                     >
                                         <div className="relative w-8 h-8">
                                             <Image
-                                                src={marketplaceImages.tiktokshop.src}
-                                                alt={marketplaceImages.tiktokshop.alt}
+                                                src="/images/marketplace/tiktokshop.webp"
+                                                alt="TikTok Shop Logo"
                                                 fill
                                                 className="object-contain"
                                             />
