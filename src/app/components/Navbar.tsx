@@ -55,14 +55,6 @@ const Navbar = () => {
                                     strokeWidth="1.5"
                                 />
                                 
-                                {/* Decorative Line */}
-                                <path 
-                                    d="M45 6L45 30" 
-                                    stroke="#EDE3CD" 
-                                    strokeWidth="1.5" 
-                                    strokeLinecap="round"
-                                />
-                                
                                 {/* Ma */}
                                 <text 
                                     x="16" 
