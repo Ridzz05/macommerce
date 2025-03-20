@@ -101,7 +101,7 @@ const Navbar = () => {
             <AnimatePresence>
                 {isVisible && (
                     <motion.div 
-                        className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-2"
+                        className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6 py-2"
                         variants={shouldReduceMotion ? {} : navVariants}
                         initial="initial"
                         animate="animate"
