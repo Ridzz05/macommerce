@@ -10,6 +10,14 @@ interface CategorySidebarProps {
     onSelectCategory: (category: Category | null) => void;
 }
 
+const CATEGORY_ICONS = {
+    'Produk Kecantikan': 'face',
+    'Pakaian': 'checkroom',
+    'Sepatu': 'hiking',
+    'Produk Digital': 'devices',
+    'Jasa': 'support_agent'
+};
+
 const CategorySidebar = ({ 
     isOpen, 
     onClose, 
@@ -54,19 +62,7 @@ const CategorySidebar = ({
                                     whileTap={{ scale: 0.95 }}
                                     className="p-2 hover:bg-[#EDE3CD] rounded-lg transition-colors"
                                 >
-                                    <svg 
-                                        className="w-5 h-5 text-[#5C4B37]" 
-                                        fill="none" 
-                                        stroke="currentColor" 
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path 
-                                            strokeLinecap="round" 
-                                            strokeLinejoin="round" 
-                                            strokeWidth={2} 
-                                            d="M6 18L18 6M6 6l12 12"
-                                        />
-                                    </svg>
+                                    <span className="material-icons text-[#5C4B37]">close</span>
                                 </motion.button>
                             </div>
                         </div>
@@ -84,82 +80,45 @@ const CategorySidebar = ({
                                 }`}
                             >
                                 <div className="flex items-center">
-                                    <svg 
-                                        className="w-5 h-5 mr-3" 
-                                        fill="none" 
-                                        stroke="currentColor" 
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path 
-                                            strokeLinecap="round" 
-                                            strokeLinejoin="round" 
-                                            strokeWidth={2} 
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
-                                    </svg>
+                                    <span className="material-icons mr-3">category</span>
                                     <span className="text-base">Semua Kategori</span>
                                     {!selectedCategory && (
-                                        <motion.svg 
-                                            className="ml-auto h-5 w-5" 
-                                            fill="none" 
-                                            viewBox="0 0 24 24" 
-                                            stroke="currentColor"
+                                        <motion.span 
+                                            className="material-icons ml-auto"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                        </motion.svg>
+                                            check
+                                        </motion.span>
                                     )}
                                 </div>
                             </motion.button>
 
                             {/* Category Grid */}
                             <div className="grid grid-cols-2 gap-3">
-                                {categoryInfo.map(({ name, icon }) => (
+                                {categories.map((category) => (
                                     <motion.button
-                                        key={name}
+                                        key={category}
                                         whileTap={{ scale: 0.98 }}
-                                        onClick={() => handleSelect(name)}
+                                        onClick={() => handleSelect(category)}
                                         className={`flex flex-col items-center justify-center p-4 rounded-lg transition-all ${
-                                            selectedCategory === name 
+                                            selectedCategory === category 
                                                 ? 'bg-[#5C4B37] text-white' 
                                                 : 'text-[#5C4B37] bg-[#EDE3CD] hover:bg-[#E5D5B7]'
                                         }`}
                                     >
-                                        <svg 
-                                            className="w-6 h-6 mb-2" 
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path 
-                                                strokeLinecap="round" 
-                                                strokeLinejoin="round" 
-                                                strokeWidth={2} 
-                                                d={icon}
-                                            />
-                                        </svg>
-                                        <span className="text-sm text-center font-medium">{name}</span>
-                                        {selectedCategory === name && (
-                                            <motion.div
-                                                className="absolute top-1 right-1"
+                                        <span className="material-icons mb-2 text-2xl">
+                                            {CATEGORY_ICONS[category]}
+                                        </span>
+                                        <span className="text-sm text-center font-medium">{category}</span>
+                                        {selectedCategory === category && (
+                                            <motion.span
+                                                className="material-icons absolute top-1 right-1 text-sm"
                                                 initial={{ opacity: 0, scale: 0.5 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                             >
-                                                <svg 
-                                                    className="w-4 h-4" 
-                                                    fill="none" 
-                                                    viewBox="0 0 24 24" 
-                                                    stroke="currentColor"
-                                                >
-                                                    <path 
-                                                        strokeLinecap="round" 
-                                                        strokeLinejoin="round" 
-                                                        strokeWidth={2} 
-                                                        d="M5 13l4 4L19 7"
-                                                    />
-                                                </svg>
-                                            </motion.div>
+                                                check_circle
+                                            </motion.span>
                                         )}
                                     </motion.button>
                                 ))}
