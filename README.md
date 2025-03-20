@@ -12,6 +12,9 @@ JASAKU adalah platform marketplace modern yang dibangun menggunakan Next.js 13 d
 - **Detail Produk**: Modal detail produk yang informatif
 - **Integrasi Marketplace**: Koneksi langsung ke berbagai platform marketplace (Shopee, Tokopedia, Lazada, TikTok Shop)
 - **Kontak Langsung**: Integrasi dengan WhatsApp untuk komunikasi cepat
+- **Feedback Form**: Form interaktif untuk masukan pengguna dengan animasi smooth
+- **Welcome Message**: Pesan selamat datang dengan countdown timer
+- **Navbar Dinamis**: Navbar responsif dengan animasi scroll dan pencarian
 
 ## 🛠️ Teknologi
 
@@ -32,7 +35,8 @@ src/
 │   │   ├── CategorySidebar.tsx
 │   │   ├── Navbar.tsx
 │   │   ├── ProductCard.tsx
-│   │   └── ProductGrid.tsx
+│   │   ├── ProductGrid.tsx
+│   │   └── FeedbackForm.tsx
 │   ├── context/
 │   │   └── SearchContext.tsx
 │   ├── data/
@@ -49,6 +53,10 @@ src/
 - Modal responsif untuk detail produk
 - Sidebar kategori yang intuitif
 - Pencarian dengan animasi feedback
+- Feedback form dengan toggle button animasi
+- Navbar dengan animasi scroll yang smooth
+- Welcome message dengan countdown timer
+- Rating system dengan bintang interaktif
 
 ## 🚀 Cara Menjalankan
 
@@ -76,6 +84,7 @@ Platform ini terintegrasi dengan WhatsApp untuk:
 - Channel informasi dan update
 - Komunikasi langsung dengan admin
 - Konsultasi produk dan jasa
+- Pengiriman feedback dan saran
 
 ## 🎯 Target Pengguna
 
