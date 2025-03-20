@@ -42,13 +42,50 @@ const Navbar = () => {
                     <div className="flex justify-between h-16 items-center">
                         {/* Logo */}
                         <div className="flex-shrink-0">
-                            <svg width="200" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="180" height="36" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                {/* Background */}
+                                <rect 
+                                    x="1" 
+                                    y="1" 
+                                    width="178" 
+                                    height="34" 
+                                    rx="17" 
+                                    fill="#FDF6E3"
+                                    stroke="#EDE3CD"
+                                    strokeWidth="1.5"
+                                />
+                                
+                                {/* Decorative Line */}
+                                <path 
+                                    d="M45 6L45 30" 
+                                    stroke="#EDE3CD" 
+                                    strokeWidth="1.5" 
+                                    strokeLinecap="round"
+                                />
+                                
                                 {/* Ma */}
-                                <text x="10" y="28" className="text-2xl font-bold" fill="#5C4B37" fontFamily="Montserrat">
+                                <text 
+                                    x="16" 
+                                    y="24" 
+                                    fontSize="20"
+                                    fontWeight="600" 
+                                    fill="#5C4B37" 
+                                    className="logo-text"
+                                    letterSpacing="0.5"
+                                >
                                     Ma
                                 </text>
+                                
                                 {/* Commerce */}
-                                <text x="45" y="28" className="text-2xl" fill="#8B7355" fontFamily="Montserrat">
+                                <text 
+                                    x="52" 
+                                    y="24" 
+                                    fontSize="20"
+                                    fontWeight="500"
+                                    fill="#8B7355" 
+                                    className="logo-text"
+                                    letterSpacing="0.2"
+                                >
                                     Commerce
                                 </text>
                             </svg>
