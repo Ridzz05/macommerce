@@ -142,7 +142,7 @@ const Navbar = () => {
                                             >
                                                 <div className="py-1.5" role="menu">
                                                     <motion.a
-                                                        href="https://wa.me/6281222827630"
+                                                        href="https://chat.whatsapp.com/Hqe9cwAb7spJcqYi4Ficg1"
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
