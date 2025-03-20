@@ -86,11 +86,33 @@ export const products: Product[] = [
         demoUrl: "https://demo.jasaku.com/website",
         marketplace: {
             shopee: "https://shopee.co.id/product/456",
-            tokopedia: "https://tokopedia.com/product/456"
+            tokopedia: "https://tokopedia.com/product/456",
+            lazada: "https://lazada.co.id/product/456",
+            tiktokshop: "https://tiktok.com/shop/456"
         }
     },
     {
         id: 3,
+        name: "Jasa Pembuatan Website",
+        price: 2600000,
+        imageUrl: "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800",
+        category: "Jasa",
+        description: "Layanan pembuatan website profesional dengan teknologi terkini. Kami menyediakan solusi website yang responsif, cepat, dan SEO-friendly untuk bisnis Anda.",
+        features: [
+            "Design modern dan responsif",
+            "Optimasi SEO",
+            "Integrasi media sosial",
+            "Support teknis 24/7",
+            "Garansi maintenance 1 tahun"
+        ],
+        demoUrl: "https://demo.jasaku.com/website",
+        marketplace: {
+            shopee: "https://shopee.co.id/product/456",
+            tokopedia: "https://tokopedia.com/product/456"
+        }
+    },
+    {
+        id: 4,
         name: "Sepatu Sneakers Premium",
         price: 899000,
         imageUrl: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800",
@@ -110,7 +132,7 @@ export const products: Product[] = [
         }
     },
     {
-        id: 4,
+        id: 5,
         name: "Kemeja Formal Premium",
         price: 450000,
         imageUrl: "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?auto=format&fit=crop&w=800",
@@ -130,7 +152,7 @@ export const products: Product[] = [
         }
     },
     {
-        id: 5,
+        id: 6,
         name: "Template Website Premium",
         price: 750000,
         imageUrl: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?auto=format&fit=crop&w=800",
@@ -146,7 +168,51 @@ export const products: Product[] = [
         demoUrl: "https://demo.jasaku.com/template",
         marketplace: {
             tokopedia: "https://tokopedia.com/product/202",
-            tiktokshop: "https://tiktok.com/shop/202"
+            tiktokshop: "https://tiktok.com/shop/202",
+            shopee: "https://shopee.co.id/product/202"
+        }
+    },
+    {
+        id: 7,
+        name: "Template Website Premium",
+        price: 750000,
+        imageUrl: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?auto=format&fit=crop&w=800",
+        category: "Produk Digital",
+        description: "Template website premium dengan desain modern dan responsif. Cocok untuk berbagai jenis bisnis dan mudah dikustomisasi.",
+        features: [
+            "Desain responsif",
+            "SEO friendly",
+            "Mudah dikustomisasi",
+            "Update seumur hidup",
+            "Dokumentasi lengkap"
+        ],
+        demoUrl: "https://demo.jasaku.com/template",
+        marketplace: {
+            tokopedia: "https://tokopedia.com/product/202",
+            tiktokshop: "https://tiktok.com/shop/202",
+            shopee: "https://shopee.co.id/product/202"
+        }
+    },
+    {
+        id: 8,
+        name: "Template Website Premium",
+        price: 750000,
+        imageUrl: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?auto=format&fit=crop&w=800",
+        category: "Produk Digital",
+        description: "Template website premium dengan desain modern dan responsif. Cocok untuk berbagai jenis bisnis dan mudah dikustomisasi.",
+        features: [
+            "Desain responsif",
+            "SEO friendly",
+            "Mudah dikustomisasi",
+            "Update seumur hidup",
+            "Dokumentasi lengkap"
+        ],
+        demoUrl: "https://demo.jasaku.com/template",
+        marketplace: {
+            tokopedia: "https://tokopedia.com/product/202",
+            tiktokshop: "https://tiktok.com/shop/202",
+            shopee: "https://shopee.co.id/product/202"
         }
     }
+
 ];
