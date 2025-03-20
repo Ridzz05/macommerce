@@ -1,0 +1,21 @@
+{
+    "name": "MaCommerce - Marketplace Terpercaya Indonesia",
+    "short_name": "MaCommerce",
+    "description": "Marketplace terpercaya dengan berbagai produk berkualitas",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FFFBF2",
+    "theme_color": "#FDF6E3",
+    "icons": [
+      {
+        "src": "/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }

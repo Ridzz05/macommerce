@@ -169,7 +169,7 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
                                     >
                                         <div className="relative w-8 h-8">
                                             <Image
-                                                src="/images/marketplace/shopee.webp"
+                                                src="/images/marketplace/shopee.png"
                                                 alt="Shopee Logo"
                                                 fill
                                                 className="object-contain"
