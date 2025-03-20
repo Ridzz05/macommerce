@@ -2,6 +2,7 @@
 
 import { SearchProvider } from '../context/SearchContext'
 import Navbar from './Navbar'
+import FeedbackForm from './FeedbackForm'
 
 interface RootLayoutClientProps {
     children: React.ReactNode;
@@ -23,6 +24,7 @@ export default function RootLayoutClient({
             <SearchProvider>
                 <Navbar />
                 {children}
+                <FeedbackForm />
             </SearchProvider>
         </body>
     )
