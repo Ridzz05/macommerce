@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FeedbackForm() {
     const [isOpen, setIsOpen] = useState(false);
-    const [isButtonVisible, setIsButtonVisible] = useState(true);
+    const [isButtonVisible, setIsButtonVisible] = useState(false);
+    const [showTooltip, setShowTooltip] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -14,6 +15,30 @@ export default function FeedbackForm() {
         category: 'umum'
     });
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    useEffect(() => {
+        // Tampilkan tombol feedback setelah 1 detik
+        const buttonTimer = setTimeout(() => {
+            setIsButtonVisible(true);
+        }, 1000);
+
+        const tooltipTimer = setTimeout(() => {
+            setShowTooltip(true);
+            // Sembunyikan tooltip setelah 5 detik ditampilkan
+            setTimeout(() => {
+                setShowTooltip(false);
+                // Sembunyikan tombol feedback setelah tooltip hilang
+                setTimeout(() => {
+                    setIsButtonVisible(false);
+                }, 300); // Delay 300ms untuk memberi waktu animasi tooltip selesai
+            }, 5000);
+        }, 5000);
+
+        return () => {
+            clearTimeout(tooltipTimer);
+            clearTimeout(buttonTimer);
+        };
+    }, []);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -49,23 +74,41 @@ export default function FeedbackForm() {
         <div className="fixed bottom-4 right-4 z-40 flex items-end gap-3">
             <AnimatePresence>
                 {isButtonVisible && (
-                    <motion.button
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 50 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setIsOpen(true)}
-                        className="bg-[#5C4B37] text-white px-4 py-2 rounded-xl shadow-lg hover:bg-[#4A3C2D] transition-colors duration-300"
-                    >
-                        <div className="flex items-center space-x-2">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                            </svg>
-                            <span>Berikan Masukan</span>
-                        </div>
-                    </motion.button>
+                    <div className="relative">
+                        <AnimatePresence>
+                            {showTooltip && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="absolute bottom-full mb-2 right-0 w-64 p-3 bg-white rounded-xl shadow-lg border border-[#EDE3CD]"
+                                >
+                                    <div className="text-sm text-[#5C4B37]">
+                                        Halo, jika anda mempunyai waktu luang bantu kami meningkatkan layanan website ini
+                                    </div>
+                                    <div className="absolute bottom-0 right-6 transform translate-y-1/2 rotate-45 w-2 h-2 bg-white border-r border-b border-[#EDE3CD]"></div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                        <motion.button
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 50 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setIsOpen(true)}
+                            className="bg-[#5C4B37] text-white px-4 py-2 rounded-xl shadow-lg hover:bg-[#4A3C2D] transition-colors duration-300"
+                        >
+                            <div className="flex items-center space-x-2">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                </svg>
+                                <span>Berikan Masukan</span>
+                            </div>
+                        </motion.button>
+                    </div>
                 )}
             </AnimatePresence>
 
