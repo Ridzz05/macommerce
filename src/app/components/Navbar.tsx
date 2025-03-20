@@ -1,14 +1,77 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearch } from '../context/SearchContext';
+
+const navVariants = {
+    hidden: {
+        y: -20,
+        opacity: 0,
+        transition: {
+            duration: 0.3,
+            ease: [0.645, 0.045, 0.355, 1]
+        }
+    },
+    visible: {
+        y: 0,
+        opacity: 1,
+        transition: {
+            duration: 0.3,
+            ease: [0.645, 0.045, 0.355, 1]
+        }
+    },
+    exit: {
+        y: -20,
+        opacity: 0,
+        transition: {
+            duration: 0.3,
+            ease: [0.645, 0.045, 0.355, 1]
+        }
+    }
+};
 
 const Navbar = () => {
     const { setSearchQuery } = useSearch();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [localSearchQuery, setLocalSearchQuery] = useState('');
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    const throttle = (func: Function, limit: number) => {
+        let inThrottle: boolean;
+        return function(this: any, ...args: any[]) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    };
+
+    const controlNavbar = useCallback(
+        throttle(() => {
+            const currentScrollY = window.scrollY;
+            const scrollDelta = currentScrollY - lastScrollY;
+            
+            if (scrollDelta < -10 || currentScrollY < 100) { // Scroll up or near top
+                setIsVisible(true);
+            } else if (scrollDelta > 10 && currentScrollY > 100) { // Scroll down and not at top
+                setIsVisible(false);
+            }
+            
+            setLastScrollY(currentScrollY);
+        }, 150), // Throttle to 150ms
+        [lastScrollY]
+    );
+
+    useEffect(() => {
+        window.addEventListener('scroll', controlNavbar);
+        return () => {
+            window.removeEventListener('scroll', controlNavbar);
+        };
+    }, [controlNavbar]);
 
     const handleSearch = (value: string) => {
         setLocalSearchQuery(value);
@@ -37,158 +100,168 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="container mx-auto px-4">
-                <nav className="fixed top-4 left-4 right-4 bg-[#FDF6E3] backdrop-blur-sm bg-opacity-90 border border-[#EDE3CD] z-50 rounded-2xl shadow-lg">
-                    <div className="px-6 py-3">
-                        <div className="flex justify-between items-center">
-                            {/* Logo */}
-                            <div className="flex-shrink-0 flex items-center">
-                                <svg width="180" height="36" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    {/* Background */}
-                                    <rect 
-                                        x="1" 
-                                        y="1" 
-                                        width="178" 
-                                        height="34" 
-                                        rx="17" 
-                                        fill="#FDF6E3"
-                                        stroke="#EDE3CD"
-                                        strokeWidth="1.5"
-                                    />
-                                    
-                                    {/* Ma */}
-                                    <text 
-                                        x="16" 
-                                        y="24" 
-                                        fontSize="20"
-                                        fontWeight="600" 
-                                        fill="#5C4B37" 
-                                        className="logo-text"
-                                        letterSpacing="0.5"
-                                    >
-                                        Ma
-                                    </text>
-                                    
-                                    {/* Commerce */}
-                                    <text 
-                                        x="52" 
-                                        y="24" 
-                                        fontSize="20"
-                                        fontWeight="500"
-                                        fill="#8B7355" 
-                                        className="logo-text"
-                                        letterSpacing="0.2"
-                                    >
-                                        Commerce
-                                    </text>
-                                </svg>
-                            </div>
+            <AnimatePresence mode="wait">
+                {isVisible && (
+                    <motion.div 
+                        className="container mx-auto px-4"
+                        variants={navVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                    >
+                        <nav className="fixed top-4 left-4 right-4 bg-[#FDF6E3] backdrop-blur-sm bg-opacity-90 border border-[#EDE3CD] z-50 rounded-2xl shadow-lg">
+                            <div className="px-6 py-3">
+                                <div className="flex justify-between items-center">
+                                    {/* Logo */}
+                                    <div className="flex-shrink-0 flex items-center">
+                                        <svg width="180" height="36" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            {/* Background */}
+                                            <rect 
+                                                x="1" 
+                                                y="1" 
+                                                width="178" 
+                                                height="34" 
+                                                rx="17" 
+                                                fill="#FDF6E3"
+                                                stroke="#EDE3CD"
+                                                strokeWidth="1.5"
+                                            />
+                                            
+                                            {/* Ma */}
+                                            <text 
+                                                x="16" 
+                                                y="24" 
+                                                fontSize="20"
+                                                fontWeight="600" 
+                                                fill="#5C4B37" 
+                                                className="logo-text"
+                                                letterSpacing="0.5"
+                                            >
+                                                Ma
+                                            </text>
+                                            
+                                            {/* Commerce */}
+                                            <text 
+                                                x="52" 
+                                                y="24" 
+                                                fontSize="20"
+                                                fontWeight="500"
+                                                fill="#8B7355" 
+                                                className="logo-text"
+                                                letterSpacing="0.2"
+                                            >
+                                                Commerce
+                                            </text>
+                                        </svg>
+                                    </div>
 
-                            {/* Right side content */}
-                            <div className="flex items-center space-x-4">
-                                {/* Search Button */}
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setShowSearchModal(true)}
-                                    className="group p-2.5 rounded-xl border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
-                                >
-                                    <svg
-                                        className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                        />
-                                    </svg>
-                                </motion.button>
-
-                                {/* Navigation Links */}
-                                <div className="flex items-center">
-                                    <div className="relative">
+                                    {/* Right side content */}
+                                    <div className="flex items-center space-x-4">
+                                        {/* Search Button */}
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                            onClick={() => setShowSearchModal(true)}
                                             className="group p-2.5 rounded-xl border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
                                         >
                                             <svg
-                                                className="w-4 h-4"
+                                                className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12"
                                                 fill="none"
-                                                stroke="currentColor" 
+                                                stroke="currentColor"
                                                 viewBox="0 0 24 24"
                                             >
-                                                <path 
-                                                    strokeLinecap="round" 
-                                                    strokeLinejoin="round" 
-                                                    strokeWidth={2} 
-                                                    d="M4 6h16M4 12h16M4 18h16"
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                                 />
                                             </svg>
                                         </motion.button>
 
-                                        <AnimatePresence>
-                                            {isDropdownOpen && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, y: -10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: -10 }}
-                                                    transition={{ duration: 0.2 }}
-                                                    className="absolute right-0 mt-2 w-44 rounded-xl border border-[#EDE3CD] bg-[#FDF6E3] shadow-lg overflow-hidden"
+                                        {/* Navigation Links */}
+                                        <div className="flex items-center">
+                                            <div className="relative">
+                                                <motion.button
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                                    className="group p-2.5 rounded-xl border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
                                                 >
-                                                    <div className="py-1.5" role="menu">
-                                                        <motion.a
-                                                            href="https://chat.whatsapp.com/Hqe9cwAb7spJcqYi4Ficg1"
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
-                                                            whileHover={{ x: 4 }}
+                                                    <svg
+                                                        className="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor" 
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path 
+                                                            strokeLinecap="round" 
+                                                            strokeLinejoin="round" 
+                                                            strokeWidth={2} 
+                                                            d="M4 6h16M4 12h16M4 18h16"
+                                                        />
+                                                    </svg>
+                                                </motion.button>
+
+                                                <AnimatePresence>
+                                                    {isDropdownOpen && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, y: -10 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            exit={{ opacity: 0, y: -10 }}
+                                                            transition={{ duration: 0.2 }}
+                                                            className="absolute right-0 mt-2 w-44 rounded-xl border border-[#EDE3CD] bg-[#FDF6E3] shadow-lg overflow-hidden"
                                                         >
-                                                            <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
-                                                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
-                                                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
-                                                            </svg>
-                                                            Channel
-                                                        </motion.a>
-                                                        <motion.a
-                                                            href="https://wa.me/6281222827630"
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
-                                                            whileHover={{ x: 4 }}
-                                                        >
-                                                            <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
-                                                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
-                                                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
-                                                            </svg>
-                                                            Admin
-                                                        </motion.a>
-                                                        <motion.a
-                                                            href="/about"
-                                                            className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
-                                                            whileHover={{ x: 4 }}
-                                                        >
-                                                            <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
-                                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                                            </svg>
-                                                            Tentang
-                                                        </motion.a>
-                                                    </div>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                                            <div className="py-1.5" role="menu">
+                                                                <motion.a
+                                                                    href="https://chat.whatsapp.com/Hqe9cwAb7spJcqYi4Ficg1"
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
+                                                                    whileHover={{ x: 4 }}
+                                                                >
+                                                                    <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
+                                                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
+                                                                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
+                                                                    </svg>
+                                                                    Channel
+                                                                </motion.a>
+                                                                <motion.a
+                                                                    href="https://wa.me/6281222827630"
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
+                                                                    whileHover={{ x: 4 }}
+                                                                >
+                                                                    <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
+                                                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
+                                                                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
+                                                                    </svg>
+                                                                    Admin
+                                                                </motion.a>
+                                                                <motion.a
+                                                                    href="/about"
+                                                                    className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
+                                                                    whileHover={{ x: 4 }}
+                                                                >
+                                                                    <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
+                                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                                                    </svg>
+                                                                    Tentang
+                                                                </motion.a>
+                                                            </div>
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+                        </nav>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Search Modal */}
             <AnimatePresence>
