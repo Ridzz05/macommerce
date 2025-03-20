@@ -60,13 +60,13 @@ export default function Home() {
                                 }}
                             >
                                 <motion.div 
-                                    className="absolute -top-8 right-0"
+                                    className="absolute -top-5 right-0"
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.8 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    <div className="bg-[#5C4B37] text-white text-sm px-3 py-1 rounded-full shadow-md">
+                                    <div className="bg-[#5C4B37] text-white text-sm px-2 py-1 rounded-full shadow-md">
                                        Pesan akan ini akan hilang dalam {countdown} detik
                                     </div>
                                 </motion.div>
