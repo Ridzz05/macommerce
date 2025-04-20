@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useSearch } from '../context/SearchContext';
+import Link from 'next/link';
 
 const navVariants = {
     initial: {
@@ -44,10 +45,9 @@ const Navbar = () => {
         const currentScrollY = window.scrollY;
         const scrollDelta = currentScrollY - lastScrollY;
         
-        // Lebih responsif dengan threshold yang lebih kecil
-        if (scrollDelta < -5) { // scroll up
+        if (scrollDelta < -5) {
             setIsVisible(true);
-        } else if (scrollDelta > 5 && currentScrollY > 50) { // scroll down & not at top
+        } else if (scrollDelta > 5 && currentScrollY > 50) {
             setIsVisible(false);
         }
         
@@ -79,7 +79,7 @@ const Navbar = () => {
     const handleClearSearch = () => {
         setLocalSearchQuery('');
         setSearchQuery('');
-        setShowSearchModal(false); // Menutup modal pencarian setelah dibersihkan
+        setShowSearchModal(false);
     };
 
     const handleSearchSubmit = () => {
@@ -101,70 +101,35 @@ const Navbar = () => {
             <AnimatePresence>
                 {isVisible && (
                     <motion.div 
-                        className="fixed top-2 left-0 right-0 z-50 px-4 sm:px-6 py-2"
+                        className="fixed top-2 left-0 right-0 z-50 px-3 sm:px-6 py-2"
                         variants={shouldReduceMotion ? {} : navVariants}
                         initial="initial"
                         animate="animate"
                         exit="exit"
                     >
                         <div className="max-w-7xl mx-auto">
-                            <nav className="bg-[#FDF6E3] backdrop-blur-sm bg-opacity-90 border border-[#EDE3CD] rounded-2xl shadow-lg">
-                                <div className="px-6 py-3">
+                            <nav className="bg-[#FDF6E3] backdrop-blur-sm bg-opacity-90 border border-[#EDE3CD] rounded-xl shadow-lg">
+                                <div className="px-3 sm:px-6 py-2 sm:py-3">
                                     <div className="flex justify-between items-center">
                                         {/* Logo */}
-                                        <div className="flex-shrink-0 flex items-center">
-                                            <svg width="180" height="36" viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                {/* Background */}
-                                                <rect 
-                                                    x="1" 
-                                                    y="1" 
-                                                    width="178" 
-                                                    height="34" 
-                                                    rx="17" 
-                                                    fill="#FDF6E3"
-                                                    stroke="#EDE3CD"
-                                                    strokeWidth="1.5"
-                                                />
-                                                
-                                                {/* Ma */}
-                                                <text 
-                                                    x="16" 
-                                                    y="24" 
-                                                    fontSize="20"
-                                                    fontWeight="600" 
-                                                    fill="#5C4B37" 
-                                                    className="logo-text"
-                                                    letterSpacing="0.5"
-                                                >
-                                                    Ma
-                                                </text>
-                                                
-                                                {/* Commerce */}
-                                                <text 
-                                                    x="52" 
-                                                    y="24" 
-                                                    fontSize="20"
-                                                    fontWeight="500"
-                                                    fill="#8B7355" 
-                                                    className="logo-text"
-                                                    letterSpacing="0.2"
-                                                >
-                                                    Commerce
-                                                </text>
-                                            </svg>
-                                        </div>
+                                        <Link href="/" className="flex-shrink-0">
+                                            <div className="relative flex items-center h-8 sm:h-9 px-3 sm:px-4 bg-[#FDF6E3] border border-[#EDE3CD] rounded-lg hover:bg-[#F5ECD6] transition-colors">
+                                                <span className="text-base sm:text-lg font-semibold text-[#5C4B37] mr-1">Ma</span>
+                                                <span className="text-base sm:text-lg font-medium text-[#8B7355]">Commerce</span>
+                                            </div>
+                                        </Link>
 
                                         {/* Right side content */}
-                                        <div className="flex items-center space-x-4">
+                                        <div className="flex items-center gap-2 sm:gap-3">
                                             {/* Search Button */}
                                             <motion.button
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
                                                 onClick={() => setShowSearchModal(true)}
-                                                className="group p-2.5 rounded-xl border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
+                                                className="group p-2 sm:p-2.5 rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
                                             >
                                                 <svg
-                                                    className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12"
+                                                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:rotate-12"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -185,10 +150,10 @@ const Navbar = () => {
                                                         whileHover={{ scale: 1.05 }}
                                                         whileTap={{ scale: 0.95 }}
                                                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                                        className="group p-2.5 rounded-xl border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
+                                                        className="group p-2 sm:p-2.5 rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
                                                     >
                                                         <svg
-                                                            className="w-4 h-4"
+                                                            className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                                                             fill="none"
                                                             stroke="currentColor" 
                                                             viewBox="0 0 24 24"
@@ -202,6 +167,7 @@ const Navbar = () => {
                                                         </svg>
                                                     </motion.button>
 
+                                                    {/* Dropdown Menu */}
                                                     <AnimatePresence>
                                                         {isDropdownOpen && (
                                                             <motion.div
@@ -209,45 +175,21 @@ const Navbar = () => {
                                                                 animate={{ opacity: 1, y: 0 }}
                                                                 exit={{ opacity: 0, y: -10 }}
                                                                 transition={{ duration: 0.2 }}
-                                                                className="absolute right-0 mt-2 w-44 rounded-xl border border-[#EDE3CD] bg-[#FDF6E3] shadow-lg overflow-hidden"
+                                                                className="absolute right-0 mt-2 w-48 bg-[#FDF6E3] border border-[#EDE3CD] rounded-lg shadow-lg overflow-hidden"
                                                             >
-                                                                <div className="py-1.5" role="menu">
-                                                                    <motion.a
-                                                                        href="https://chat.whatsapp.com/Hqe9cwAb7spJcqYi4Ficg1"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
-                                                                        whileHover={{ x: 4 }}
+                                                                <div className="py-1">
+                                                                    <a
+                                                                        href="#"
+                                                                        className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
                                                                     >
-                                                                        <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
-                                                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
-                                                                        </svg>
-                                                                        Channel
-                                                                    </motion.a>
-                                                                    <motion.a
-                                                                        href="https://wa.me/6281222827630"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
-                                                                        whileHover={{ x: 4 }}
+                                                                        Tentang Kami
+                                                                    </a>
+                                                                    <a
+                                                                        href="#"
+                                                                        className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
                                                                     >
-                                                                        <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.828z"/>
-                                                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
-                                                                        </svg>
-                                                                        Admin
-                                                                    </motion.a>
-                                                                    <motion.a
-                                                                        href="/about"
-                                                                        className="flex items-center px-4 py-2.5 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-all duration-300"
-                                                                        whileHover={{ x: 4 }}
-                                                                    >
-                                                                        <svg className="h-4 w-4 mr-3 text-[#8B7355]" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-12S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                                                        </svg>
-                                                                        Tentang
-                                                                    </motion.a>
+                                                                        Hubungi Kami
+                                                                    </a>
                                                                 </div>
                                                             </motion.div>
                                                         )}
@@ -270,87 +212,67 @@ const Navbar = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-50 backdrop-blur-sm"
-                        onClick={(e) => e.target === e.currentTarget && setShowSearchModal(false)}
+                        className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 pt-20 px-4"
+                        onClick={() => setShowSearchModal(false)}
                     >
                         <motion.div
-                            initial={{ scale: 0.95, opacity: 0, y: -40 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.95, opacity: 0, y: -40 }}
-                            transition={{ type: "spring", duration: 0.5 }}
-                            className="w-full max-w-lg mt-24 mx-4"
+                            initial={{ y: -50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -50, opacity: 0 }}
+                            className="w-full max-w-2xl bg-[#FDF6E3] rounded-lg shadow-xl overflow-hidden"
+                            onClick={e => e.stopPropagation()}
                         >
-                            <div className="relative bg-[#FDF6E3] rounded-2xl shadow-lg">
-                                <div className="relative flex items-center bg-[#FDF6E3] rounded-2xl border-2 border-[#EDE3CD] focus-within:border-[#8B7355] transition-all duration-300">
-                                    {/* Search Icon */}
-                                    <div className="absolute left-4 text-[#8B7355]">
-                                        <svg
-                                            className="w-5 h-5"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                            />
-                                        </svg>
-                                    </div>
-                                    
-                                    {/* Search Input */}
+                            <div className="p-4 flex gap-3">
+                                <div className="relative flex-1">
                                     <input
                                         type="text"
-                                        placeholder="Cari produk..."
                                         value={localSearchQuery}
                                         onChange={(e) => handleSearch(e.target.value)}
                                         onKeyDown={handleKeyDown}
+                                        placeholder="Cari produk..."
+                                        className="w-full pl-10 pr-4 py-2 bg-white border border-[#EDE3CD] rounded-lg focus:outline-none focus:border-[#D8C8A7] text-[#5C4B37] placeholder-[#8B7355]"
                                         autoFocus
-                                        className="w-full py-4 pl-12 pr-12 text-base bg-transparent text-[#5C4B37] placeholder-[#8B7355] focus:outline-none rounded-2xl"
                                     />
-
-                                    {/* Clear Button */}
-                                    <AnimatePresence>
-                                        {localSearchQuery && (
-                                            <motion.button
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0, scale: 0.8 }}
-                                                transition={{
-                                                    type: "spring",
-                                                    stiffness: 300,
-                                                    damping: 20
-                                                }}
-                                                whileHover={{ 
-                                                    scale: 1.1,
-                                                    transition: { duration: 0.2 }
-                                                }}
-                                                whileTap={{ 
-                                                    scale: 0.9,
-                                                    transition: { duration: 0.1 }
-                                                }}
-                                                onClick={() => handleClearSearch()}
-                                                className="absolute right-4 p-1.5 rounded-xl hover:bg-[#EDE3CD] text-[#8B7355] hover:text-[#5C4B37] transition-colors duration-300"
+                                    <svg
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8B7355]"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                        />
+                                    </svg>
+                                    {localSearchQuery && (
+                                        <button
+                                            onClick={handleClearSearch}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8B7355] hover:text-[#5C4B37] transition-colors"
+                                        >
+                                            <svg
+                                                className="w-4 h-4"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
                                             >
-                                                <motion.svg 
-                                                    className="w-4 h-4" 
-                                                    fill="none" 
-                                                    stroke="currentColor" 
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path 
-                                                        strokeLinecap="round" 
-                                                        strokeLinejoin="round" 
-                                                        strokeWidth="2" 
-                                                        d="M6 18L18 6M6 6l12 12"
-                                                    />
-                                                </motion.svg>
-                                            </motion.button>
-                                        )}
-                                    </AnimatePresence>
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M6 18L18 6M6 6l12 12"
+                                                />
+                                            </svg>
+                                        </button>
+                                    )}
                                 </div>
+                                <button
+                                    onClick={handleSearchSubmit}
+                                    className="px-4 py-2 bg-[#5C4B37] text-white rounded-lg hover:bg-[#3D3224] transition-colors text-sm font-medium"
+                                >
+                                    Cari
+                                </button>
                             </div>
                         </motion.div>
                     </motion.div>
