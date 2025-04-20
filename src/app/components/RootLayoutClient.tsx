@@ -1,27 +1,29 @@
 'use client'
 
-import { useEffect } from 'react'
-import Navbar from './Navbar'
 import { SearchProvider } from '../context/SearchContext'
+import Navbar from './Navbar'
+
+interface RootLayoutClientProps {
+    children: React.ReactNode;
+    lexendGigaClass: string;
+    lexendClass: string;
+    montserratClass: string;
+    ralewayClass: string;
+}
 
 export default function RootLayoutClient({
     children,
-}: {
-    children: React.ReactNode
-}) {
-    useEffect(() => {
-        // Menambahkan class untuk mencegah scroll saat modal terbuka
-        document.documentElement.classList.add('scroll-smooth');
-        
-        return () => {
-            document.documentElement.classList.remove('scroll-smooth');
-        };
-    }, []);
-
+    lexendGigaClass,
+    lexendClass,
+    montserratClass,
+    ralewayClass
+}: RootLayoutClientProps) {
     return (
-        <SearchProvider>
-            <Navbar />
-            {children}
-        </SearchProvider>
+        <body className={`${lexendGigaClass} ${lexendClass} ${montserratClass} ${ralewayClass} font-montserrat bg-[#FFFBF2]`}>
+            <SearchProvider>
+                <Navbar />
+                {children}
+            </SearchProvider>
+        </body>
     )
 } 
