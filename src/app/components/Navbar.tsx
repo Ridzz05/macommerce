@@ -222,18 +222,60 @@ const Navbar = () => {
                                                                 className="absolute right-0 mt-2 w-48 bg-[#FDF6E3] border border-[#EDE3CD] rounded-lg shadow-lg overflow-hidden"
                                                             >
                                                                 <div className="py-1">
-                                                                    <a
-                                                                        href="#"
+                                                                    <Link
+                                                                        href="/about"
                                                                         className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
+                                                                        onClick={() => setIsDropdownOpen(false)}
                                                                     >
-                                                                        Tentang Kami
-                                                                    </a>
-                                                                    <a
-                                                                        href="#"
+                                                                        <motion.div
+                                                                            initial={{ x: -10, opacity: 0 }}
+                                                                            animate={{ x: 0, opacity: 1 }}
+                                                                            transition={{ delay: 0.1 }}
+                                                                            className="flex items-center gap-2"
+                                                                        >
+                                                                            <svg 
+                                                                                className="w-4 h-4 text-[#8B7355]" 
+                                                                                fill="none" 
+                                                                                stroke="currentColor" 
+                                                                                viewBox="0 0 24 24"
+                                                                            >
+                                                                                <path 
+                                                                                    strokeLinecap="round" 
+                                                                                    strokeLinejoin="round" 
+                                                                                    strokeWidth="2" 
+                                                                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                                                />
+                                                                            </svg>
+                                                                            Tentang Kami
+                                                                        </motion.div>
+                                                                    </Link>
+                                                                    <Link
+                                                                        href="/about#contact"
                                                                         className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
+                                                                        onClick={() => setIsDropdownOpen(false)}
                                                                     >
-                                                                        Hubungi Kami
-                                                                    </a>
+                                                                        <motion.div
+                                                                            initial={{ x: -10, opacity: 0 }}
+                                                                            animate={{ x: 0, opacity: 1 }}
+                                                                            transition={{ delay: 0.2 }}
+                                                                            className="flex items-center gap-2"
+                                                                        >
+                                                                            <svg 
+                                                                                className="w-4 h-4 text-[#8B7355]" 
+                                                                                fill="none" 
+                                                                                stroke="currentColor" 
+                                                                                viewBox="0 0 24 24"
+                                                                            >
+                                                                                <path 
+                                                                                    strokeLinecap="round" 
+                                                                                    strokeLinejoin="round" 
+                                                                                    strokeWidth="2" 
+                                                                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                                                                />
+                                                                            </svg>
+                                                                            Hubungi Kami
+                                                                        </motion.div>
+                                                                    </Link>
                                                                 </div>
                                                             </motion.div>
                                                         )}
