@@ -68,9 +68,13 @@ const imageVariants = {
     }
 };
 
-const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketplace, description, features }: ProductCardProps) => {
+const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, marketplace, description, features }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    
+    // Combine single imageUrl with additional images array
+    const allImages = [imageUrl, ...(images || [])];
     
     // Format price to IDR currency
     const formattedPrice = new Intl.NumberFormat('id-ID', {
@@ -80,6 +84,7 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
 
     const handleDetailClick = () => {
         setShowDetailModal(true);
+        setCurrentImageIndex(0);
         document.body.style.overflow = 'hidden';
     };
 
@@ -96,6 +101,14 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
     const handleClosePurchase = () => {
         setShowPurchaseModal(false);
         document.body.style.overflow = 'unset';
+    };
+
+    const nextImage = () => {
+        setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+    };
+
+    const prevImage = () => {
+        setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
     };
 
     return (
@@ -129,14 +142,75 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
                                 className="relative w-full aspect-[4/3] sm:aspect-square bg-[#EDE3CD] flex-shrink-0"
                                 variants={imageVariants}
                             >
-                                <Image
-                                    src={imageUrl}
-                                    alt={name}
-                                    fill
-                                    className="object-contain"
-                                    sizes="(max-width: 640px) 100vw, 480px"
-                                    priority
-                                />
+                                <motion.div
+                                    key={currentImageIndex}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="absolute inset-0"
+                                >
+                                    <Image
+                                        src={allImages[currentImageIndex]}
+                                        alt={`${name} - Image ${currentImageIndex + 1}`}
+                                        fill
+                                        className="object-contain"
+                                        sizes="(max-width: 640px) 100vw, 480px"
+                                        priority
+                                    />
+                                </motion.div>
+
+                                {allImages.length > 1 && (
+                                    <>
+                                        {/* Navigation Arrows */}
+                                        <motion.button
+                                            className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/80 text-[#5C4B37] hover:bg-white transition-colors z-10"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                prevImage();
+                                            }}
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9 }}
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </motion.button>
+                                        <motion.button
+                                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/80 text-[#5C4B37] hover:bg-white transition-colors z-10"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                nextImage();
+                                            }}
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9 }}
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </motion.button>
+
+                                        {/* Image Indicators */}
+                                        <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-10">
+                                            {allImages.map((_, index) => (
+                                                <motion.button
+                                                    key={index}
+                                                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                                                        index === currentImageIndex 
+                                                            ? 'bg-[#5C4B37]' 
+                                                            : 'bg-white/60 hover:bg-white'
+                                                    }`}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setCurrentImageIndex(index);
+                                                    }}
+                                                    whileHover={{ scale: 1.2 }}
+                                                    whileTap={{ scale: 0.8 }}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
                             </motion.div>
                             
                             <motion.div 
