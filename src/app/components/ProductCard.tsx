@@ -2,8 +2,71 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
+
+const modalVariants = {
+    hidden: {
+        opacity: 0,
+        backdropFilter: "blur(0px)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
+    },
+    visible: {
+        opacity: 1,
+        backdropFilter: "blur(4px)",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        transition: {
+            duration: 0.3,
+            ease: "easeOut"
+        }
+    },
+    exit: {
+        opacity: 0,
+        backdropFilter: "blur(0px)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        transition: {
+            duration: 0.2,
+            ease: "easeIn"
+        }
+    }
+};
+
+const contentVariants = {
+    hidden: {
+        y: "100%",
+        opacity: 0
+    },
+    visible: {
+        y: "0%",
+        opacity: 1,
+        transition: {
+            type: "spring",
+            damping: 25,
+            stiffness: 300
+        }
+    },
+    exit: {
+        y: "100%",
+        opacity: 0,
+        transition: {
+            duration: 0.2,
+            ease: "easeIn"
+        }
+    }
+};
+
+const imageVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: { 
+        scale: 1, 
+        opacity: 1,
+        transition: {
+            duration: 0.3,
+            ease: "easeOut"
+        }
+    }
+};
 
 const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketplace, description, features }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
@@ -47,86 +110,137 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
             />
 
             {/* Detail Modal */}
-            {showDetailModal && (
-                <div 
-                    className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 transition-opacity duration-300"
-                    onClick={handleCloseDetail}
-                >
-                    <div 
-                        className="bg-[#FDF6E3] w-full sm:w-[480px] sm:rounded-lg overflow-hidden shadow-xl transform transition-all duration-300 max-h-[90vh] flex flex-col"
-                        onClick={(e) => e.stopPropagation()}
+            <AnimatePresence mode="wait">
+                {showDetailModal && (
+                    <motion.div 
+                        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm"
+                        variants={modalVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        onClick={handleCloseDetail}
                     >
-                        <div className="relative w-full aspect-[4/3] sm:aspect-square bg-[#EDE3CD] flex-shrink-0">
-                            <Image
-                                src={imageUrl}
-                                alt={name}
-                                fill
-                                className="object-contain"
-                                sizes="(max-width: 640px) 100vw, 480px"
-                                priority
-                            />
-                        </div>
-                        
-                        <div className="p-3 sm:p-4 overflow-y-auto flex-1">
-                            <div className="flex items-start justify-between gap-3 mb-3">
-                                <div>
-                                    {category && (
-                                        <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full mb-1">
-                                            {category}
-                                        </span>
-                                    )}
-                                    <h2 className="text-base font-medium text-[#5C4B37] leading-tight">
-                                        {name}
-                                    </h2>
+                        <motion.div 
+                            className="bg-[#FDF6E3] w-full sm:w-[480px] sm:rounded-lg overflow-hidden shadow-xl transform transition-all duration-300 max-h-[90vh] flex flex-col"
+                            variants={contentVariants}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <motion.div 
+                                className="relative w-full aspect-[4/3] sm:aspect-square bg-[#EDE3CD] flex-shrink-0"
+                                variants={imageVariants}
+                            >
+                                <Image
+                                    src={imageUrl}
+                                    alt={name}
+                                    fill
+                                    className="object-contain"
+                                    sizes="(max-width: 640px) 100vw, 480px"
+                                    priority
+                                />
+                            </motion.div>
+                            
+                            <motion.div 
+                                className="p-3 sm:p-4 overflow-y-auto flex-1"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <div className="flex items-start justify-between gap-3 mb-3">
+                                    <div>
+                                        {category && (
+                                            <motion.span 
+                                                className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full mb-1"
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: 0.3 }}
+                                            >
+                                                {category}
+                                            </motion.span>
+                                        )}
+                                        <motion.h2 
+                                            className="text-base font-medium text-[#5C4B37] leading-tight"
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.4 }}
+                                        >
+                                            {name}
+                                        </motion.h2>
+                                    </div>
+                                    <motion.p 
+                                        className="text-base font-bold text-[#8B7355] flex-shrink-0"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.4 }}
+                                    >
+                                        {formattedPrice}
+                                    </motion.p>
                                 </div>
-                                <p className="text-base font-bold text-[#8B7355] flex-shrink-0">
-                                    {formattedPrice}
-                                </p>
-                            </div>
 
-                            <div className="space-y-3">
-                                <div>
-                                    <h3 className="text-xs font-medium text-[#5C4B37] mb-1">
-                                        Deskripsi Produk
-                                    </h3>
-                                    <p className="text-xs text-[#8B7355]">
-                                        {description}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <h3 className="text-xs font-medium text-[#5C4B37] mb-1">
-                                        Fitur Utama
-                                    </h3>
-                                    <ul className="text-xs text-[#8B7355] list-disc list-inside space-y-0.5">
-                                        {features.map((feature, index) => (
-                                            <li key={index}>{feature}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className="flex justify-end gap-2 mt-4 pt-3 border-t border-[#EDE3CD]">
-                                <button
-                                    className="px-3 py-1.5 text-xs font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded hover:bg-[#EDE3CD] transition-colors"
-                                    onClick={handleCloseDetail}
+                                <motion.div 
+                                    className="space-y-3"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5 }}
                                 >
-                                    Tutup
-                                </button>
-                                <button
-                                    className="px-3 py-1.5 text-xs font-medium text-white bg-[#5C4B37] rounded hover:bg-[#3D3224] transition-colors"
-                                    onClick={() => {
-                                        handleCloseDetail();
-                                        handleBeli();
-                                    }}
+                                    <div>
+                                        <h3 className="text-xs font-medium text-[#5C4B37] mb-1">
+                                            Deskripsi Produk
+                                        </h3>
+                                        <p className="text-xs text-[#8B7355]">
+                                            {description}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xs font-medium text-[#5C4B37] mb-1">
+                                            Fitur Utama
+                                        </h3>
+                                        <ul className="text-xs text-[#8B7355] list-disc list-inside space-y-0.5">
+                                            {features.map((feature, index) => (
+                                                <motion.li 
+                                                    key={index}
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: 0.6 + index * 0.1 }}
+                                                >
+                                                    {feature}
+                                                </motion.li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </motion.div>
+
+                                <motion.div 
+                                    className="flex justify-end gap-2 mt-4 pt-3 border-t border-[#EDE3CD]"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.7 }}
                                 >
-                                    Beli Sekarang
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+                                    <motion.button
+                                        className="px-3 py-1.5 text-xs font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded hover:bg-[#EDE3CD] transition-colors"
+                                        onClick={handleCloseDetail}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        Tutup
+                                    </motion.button>
+                                    <motion.button
+                                        className="px-3 py-1.5 text-xs font-medium text-white bg-[#5C4B37] rounded hover:bg-[#3D3224] transition-colors"
+                                        onClick={() => {
+                                            handleCloseDetail();
+                                            handleBeli();
+                                        }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        Beli Sekarang
+                                    </motion.button>
+                                </motion.div>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Purchase Modal */}
             {showPurchaseModal && (
