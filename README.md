@@ -103,11 +103,4 @@ Proyek ini dilindungi hak cipta. Semua hak dilindungi.
 - UI/UX Designer
 - Product Manager
 
-## 📞 Kontak
-
-Untuk informasi lebih lanjut, hubungi kami melalui:
-- WhatsApp: [+62 812-2282-7630](https://wa.me/6281222827630)
-- Email: info@jasaku.com
-
----
 Made with ❤️ By Rizki
