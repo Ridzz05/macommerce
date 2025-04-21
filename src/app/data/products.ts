@@ -1,4 +1,4 @@
-export type Category = 'Produk Kecantikan' | 'Pakaian' | 'Sepatu' | 'Produk Digital' | 'Jasa';
+export type Category = 'Produk Kecantikan' | 'T-Shirt' | 'Sepatu' | 'Produk Digital' | 'Jasa';
 
 interface CategoryInfo {
     name: Category;
@@ -10,6 +10,7 @@ export interface Product {
     name: string;
     price: number;
     imageUrl: string;
+    images?: string[];
     category: Category;
     description: string;
     features: string[];
@@ -28,7 +29,7 @@ export const categoryInfo: CategoryInfo[] = [
         icon: 'M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z'
     },
     {
-        name: 'Pakaian',
+        name: 'T-Shirt',
         icon: 'M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z'
     },
     {
@@ -53,6 +54,11 @@ export const products: Product[] = [
         name: "Paket Skincare Glowing",
         price: 500000,
         imageUrl: "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=800",
+        images: [
+            "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800"
+        ],
         category: "Produk Kecantikan",
         description: "Paket lengkap skincare untuk mencerahkan dan merawat kulit wajah Anda. Terdiri dari cleanser, toner, serum, moisturizer, dan sunscreen yang diformulasikan khusus untuk kulit Indonesia.",
         features: [
@@ -74,6 +80,11 @@ export const products: Product[] = [
         name: "Jasa Pembuatan Website",
         price: 2600000,
         imageUrl: "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800",
+        images: [
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1517292987719-0369a794ec0f?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=800"
+        ],
         category: "Jasa",
         description: "Layanan pembuatan website profesional dengan teknologi terkini. Kami menyediakan solusi website yang responsif, cepat, dan SEO-friendly untuk bisnis Anda.",
         features: [
@@ -116,6 +127,11 @@ export const products: Product[] = [
         name: "Sepatu Sneakers Premium",
         price: 899000,
         imageUrl: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800",
+        images: [
+            "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?auto=format&fit=crop&w=800"
+        ],
         category: "Sepatu",
         description: "Sepatu sneakers premium dengan desain modern dan bahan berkualitas tinggi. Nyaman digunakan untuk aktivitas sehari-hari maupun berolahraga.",
         features: [
@@ -133,10 +149,15 @@ export const products: Product[] = [
     },
     {
         id: 5,
-        name: "Kemeja Formal Premium",
+        name: "Tung Tung Tung Sahur Shirt",
         price: 450000,
-        imageUrl: "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?auto=format&fit=crop&w=800",
-        category: "Pakaian",
+        imageUrl: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800",
+        images: [
+            "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1618354691229-88d47f285158?auto=format&fit=crop&w=800",
+            "https://images.unsplash.com/photo-1618354691551-44de113f0164?auto=format&fit=crop&w=800"
+        ],
+        category: "T-Shirt",
         description: "Kemeja formal berkualitas tinggi dengan bahan premium dan jahitan rapi. Cocok untuk acara formal atau kantor.",
         features: [
             "Bahan katun premium",
@@ -151,68 +172,4 @@ export const products: Product[] = [
             lazada: "https://lazada.co.id/product/101"
         }
     },
-    {
-        id: 6,
-        name: "Template Website Premium",
-        price: 750000,
-        imageUrl: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?auto=format&fit=crop&w=800",
-        category: "Produk Digital",
-        description: "Template website premium dengan desain modern dan responsif. Cocok untuk berbagai jenis bisnis dan mudah dikustomisasi.",
-        features: [
-            "Desain responsif",
-            "SEO friendly",
-            "Mudah dikustomisasi",
-            "Update seumur hidup",
-            "Dokumentasi lengkap"
-        ],
-        demoUrl: "https://demo.jasaku.com/template",
-        marketplace: {
-            tokopedia: "https://tokopedia.com/product/202",
-            tiktokshop: "https://tiktok.com/shop/202",
-            shopee: "https://shopee.co.id/product/202"
-        }
-    },
-    {
-        id: 7,
-        name: "Template Website Premium",
-        price: 750000,
-        imageUrl: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?auto=format&fit=crop&w=800",
-        category: "Produk Digital",
-        description: "Template website premium dengan desain modern dan responsif. Cocok untuk berbagai jenis bisnis dan mudah dikustomisasi.",
-        features: [
-            "Desain responsif",
-            "SEO friendly",
-            "Mudah dikustomisasi",
-            "Update seumur hidup",
-            "Dokumentasi lengkap"
-        ],
-        demoUrl: "https://demo.jasaku.com/template",
-        marketplace: {
-            tokopedia: "https://tokopedia.com/product/202",
-            tiktokshop: "https://tiktok.com/shop/202",
-            shopee: "https://shopee.co.id/product/202"
-        }
-    },
-    {
-        id: 8,
-        name: "Template Website Premium",
-        price: 750000,
-        imageUrl: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?auto=format&fit=crop&w=800",
-        category: "Produk Digital",
-        description: "Template website premium dengan desain modern dan responsif. Cocok untuk berbagai jenis bisnis dan mudah dikustomisasi.",
-        features: [
-            "Desain responsif",
-            "SEO friendly",
-            "Mudah dikustomisasi",
-            "Update seumur hidup",
-            "Dokumentasi lengkap"
-        ],
-        demoUrl: "https://demo.jasaku.com/template",
-        marketplace: {
-            tokopedia: "https://tokopedia.com/product/202",
-            tiktokshop: "https://tiktok.com/shop/202",
-            shopee: "https://shopee.co.id/product/202"
-        }
-    }
-
 ];

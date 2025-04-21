@@ -12,7 +12,7 @@ interface CategorySidebarProps {
 
 const CATEGORY_ICONS = {
     'Produk Kecantikan': 'face',
-    'Pakaian': 'checkroom',
+    'T-Shirt': 'checkroom',
     'Sepatu': 'hiking',
     'Produk Digital': 'devices',
     'Jasa': 'support_agent'
