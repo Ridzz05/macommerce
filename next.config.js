@@ -10,6 +10,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'github.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'shopee.co.id',
+      },
+      {
+        protocol: 'https',
+        hostname: 'down-id.img.susercontent.com',
+      },
     ],
   },
 }
