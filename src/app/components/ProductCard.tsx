@@ -243,116 +243,175 @@ const ProductCardClient = ({ name, price, imageUrl, category, demoUrl, marketpla
             </AnimatePresence>
 
             {/* Purchase Modal */}
-            {showPurchaseModal && (
-                <div 
-                    className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 transition-opacity duration-300"
-                    onClick={handleClosePurchase}
-                >
-                    <div 
-                        className="bg-[#FDF6E3] w-full sm:w-[400px] sm:rounded-lg p-4 shadow-xl transform transition-all duration-300"
-                        onClick={(e) => e.stopPropagation()}
+            <AnimatePresence mode="wait">
+                {showPurchaseModal && (
+                    <motion.div 
+                        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm"
+                        variants={modalVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        onClick={handleClosePurchase}
                     >
-                        <div className="text-center mb-4">
-                            <h3 className="text-base font-medium text-[#5C4B37]">
-                                Pilih Marketplace
-                            </h3>
-                            <p className="mt-1 text-xs text-[#8B7355]">
-                                Lanjutkan pembelian {name} melalui marketplace pilihan Anda
-                            </p>
-                            <p className="mt-1 text-xs font-medium text-[#5C4B37]">
-                                {formattedPrice}
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-3">
-                            {marketplace.shopee && (
-                                <a
-                                    href={marketplace.shopee}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex flex-col items-center p-3 rounded bg-[#FE5621] text-white hover:opacity-90 transition-opacity"
-                                >
-                                    <div className="relative w-6 h-6">
-                                        <Image
-                                            src="/images/marketplace/shopee.png"
-                                            alt="Shopee Logo"
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                    <span className="mt-1 text-xs font-medium">Shopee</span>
-                                </a>
-                            )}
-
-                            {marketplace.tokopedia && (
-                                <a
-                                    href={marketplace.tokopedia}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex flex-col items-center p-3 rounded bg-[#03AC0E] text-white hover:opacity-90 transition-opacity"
-                                >
-                                    <div className="relative w-6 h-6">
-                                        <Image
-                                            src="/images/marketplace/tokopedia.webp"
-                                            alt="Tokopedia Logo"
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                    <span className="mt-1 text-xs font-medium">Tokopedia</span>
-                                </a>
-                            )}
-
-                            {marketplace.lazada && (
-                                <a
-                                    href={marketplace.lazada}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex flex-col items-center p-3 rounded bg-[#0F146D] text-white hover:opacity-90 transition-opacity"
-                                >
-                                    <div className="relative w-6 h-6">
-                                        <Image
-                                            src="/images/marketplace/lazada.webp"
-                                            alt="Lazada Logo"
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                    <span className="mt-1 text-xs font-medium">Lazada</span>
-                                </a>
-                            )}
-
-                            {marketplace.tiktokshop && (
-                                <a
-                                    href={marketplace.tiktokshop}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex flex-col items-center p-3 rounded bg-black text-white hover:opacity-90 transition-opacity"
-                                >
-                                    <div className="relative w-6 h-6">
-                                        <Image
-                                            src="/images/marketplace/tiktokshop.webp"
-                                            alt="TikTok Shop Logo"
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                    <span className="mt-1 text-xs font-medium">TikTok Shop</span>
-                                </a>
-                            )}
-                        </div>
-
-                        <div className="mt-4 flex justify-end">
-                            <button
-                                className="px-3 py-1.5 text-xs font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded hover:bg-[#EDE3CD] transition-colors"
-                                onClick={handleClosePurchase}
+                        <motion.div 
+                            className="bg-[#FDF6E3] w-full sm:w-[400px] sm:rounded-lg p-4 shadow-xl transform transition-all duration-300"
+                            variants={contentVariants}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <motion.div 
+                                className="text-center mb-4"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
                             >
-                                Tutup
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+                                <motion.h3 
+                                    className="text-base font-medium text-[#5C4B37]"
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    Pilih Marketplace
+                                </motion.h3>
+                                <motion.p 
+                                    className="mt-1 text-xs text-[#8B7355]"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.4 }}
+                                >
+                                    Lanjutkan pembelian {name} melalui marketplace pilihan Anda
+                                </motion.p>
+                                <motion.p 
+                                    className="mt-1 text-xs font-medium text-[#5C4B37]"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.4 }}
+                                >
+                                    {formattedPrice}
+                                </motion.p>
+                            </motion.div>
+
+                            <motion.div 
+                                className="grid grid-cols-2 gap-3"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.5 }}
+                            >
+                                {marketplace.shopee && (
+                                    <motion.a
+                                        href={marketplace.shopee}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex flex-col items-center p-3 rounded bg-[#FE5621] text-white hover:opacity-90 transition-opacity"
+                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        transition={{ delay: 0.6 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <div className="relative w-6 h-6">
+                                            <Image
+                                                src="/images/marketplace/shopee.png"
+                                                alt="Shopee Logo"
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
+                                        <span className="mt-1 text-xs font-medium">Shopee</span>
+                                    </motion.a>
+                                )}
+
+                                {marketplace.tokopedia && (
+                                    <motion.a
+                                        href={marketplace.tokopedia}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex flex-col items-center p-3 rounded bg-[#03AC0E] text-white hover:opacity-90 transition-opacity"
+                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        transition={{ delay: 0.7 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <div className="relative w-6 h-6">
+                                            <Image
+                                                src="/images/marketplace/tokopedia.webp"
+                                                alt="Tokopedia Logo"
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
+                                        <span className="mt-1 text-xs font-medium">Tokopedia</span>
+                                    </motion.a>
+                                )}
+
+                                {marketplace.lazada && (
+                                    <motion.a
+                                        href={marketplace.lazada}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex flex-col items-center p-3 rounded bg-[#0F146D] text-white hover:opacity-90 transition-opacity"
+                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        transition={{ delay: 0.8 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <div className="relative w-6 h-6">
+                                            <Image
+                                                src="/images/marketplace/lazada.webp"
+                                                alt="Lazada Logo"
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
+                                        <span className="mt-1 text-xs font-medium">Lazada</span>
+                                    </motion.a>
+                                )}
+
+                                {marketplace.tiktokshop && (
+                                    <motion.a
+                                        href={marketplace.tiktokshop}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex flex-col items-center p-3 rounded bg-black text-white hover:opacity-90 transition-opacity"
+                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        transition={{ delay: 0.9 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <div className="relative w-6 h-6">
+                                            <Image
+                                                src="/images/marketplace/tiktokshop.webp"
+                                                alt="TikTok Shop Logo"
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
+                                        <span className="mt-1 text-xs font-medium">TikTok Shop</span>
+                                    </motion.a>
+                                )}
+                            </motion.div>
+
+                            <motion.div 
+                                className="mt-4 flex justify-end"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1 }}
+                            >
+                                <motion.button
+                                    className="px-3 py-1.5 text-xs font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded hover:bg-[#EDE3CD] transition-colors"
+                                    onClick={handleClosePurchase}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    Tutup
+                                </motion.button>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 };
