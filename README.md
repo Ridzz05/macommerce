@@ -1,106 +1,39 @@
-# JASAKU - Platform Marketplace Jasa dan Produk
+# 🛒 MaCommerce — Modern E-Commerce Platform
 
-![JASAKU Logo](public/images/logo/logoipsum.png)
+**MaCommerce** adalah platform e-commerce modern yang dikembangkan dengan teknologi **Next.js 13**, **Tailwind CSS**, dan **Framer Motion**, dirancang untuk memberikan pengalaman belanja yang cepat, elegan, dan responsif di semua perangkat.
 
-JASAKU adalah platform marketplace modern yang dibangun menggunakan Next.js 13 dan Tailwind CSS. Platform ini menyediakan tempat bagi penjual untuk menawarkan berbagai jasa dan produk kepada pembeli dengan antarmuka yang elegan dan responsif.
+![MaCommerce Demo Banner](https://user-images.githubusercontent.com/your-demo-banner.png)
 
-## 🚀 Fitur Utama
+---
 
-- **Pencarian Pintar**: Pencarian real-time dengan filter kategori
-- **Tampilan Responsif**: Desain yang optimal untuk desktop dan perangkat mobile
-- **Kategori Dinamis**: Filtering produk berdasarkan kategori
-- **Detail Produk**: Modal detail produk yang informatif
-- **Integrasi Marketplace**: Koneksi langsung ke berbagai platform marketplace (Shopee, Tokopedia, Lazada, TikTok Shop)
-- **Kontak Langsung**: Integrasi dengan WhatsApp untuk komunikasi cepat
-- **Feedback Form**: Form interaktif untuk masukan pengguna dengan animasi smooth
-- **Welcome Message**: Pesan selamat datang dengan countdown timer
-- **Navbar Dinamis**: Navbar responsif dengan animasi scroll dan pencarian
+## ✨ Fitur Unggulan
 
-## 🛠️ Teknologi
+- ⚡ **Performa Tinggi** — Didukung **Next.js 13 App Router**, rendering super-cepat dengan *server components* dan *route caching*.
+- 🎨 **Desain Responsif** — UI dibangun dengan **Tailwind CSS**, menyesuaikan tampilan otomatis untuk mobile, tablet, dan desktop.
+- 🛍️ **Modul Produk Dinamis** — Tampilkan daftar produk, filter kategori, pencarian, dan animasi interaktif via **Framer Motion**.
+- 💳 **Integrasi Pembayaran Modern** — Siap diintegrasikan dengan gateway seperti Midtrans / Stripe / QRIS.
+- 🧾 **Halaman Checkout Elegan** — Flow checkout sederhana tapi estetik, memprioritaskan UX.
+- 🌐 **SEO & Social Preview** — Optimalisasi metadata otomatis untuk meningkatkan visibilitas website.
 
-- **Framework**: Next.js 13
-- **Styling**: Tailwind CSS
-- **Animasi**: Framer Motion
-- **State Management**: React Context
-- **Icons**: Custom SVG
-- **Deployment**: Vercel
+---
 
-## 📦 Struktur Proyek
+## 🧱 Teknologi yang Digunakan
 
-```
-src/
-├── app/
-│   ├── components/
-│   │   ├── CategoryFilter.tsx
-│   │   ├── CategorySidebar.tsx
-│   │   ├── Navbar.tsx
-│   │   ├── ProductCard.tsx
-│   │   ├── ProductGrid.tsx
-│   │   └── FeedbackForm.tsx
-│   ├── context/
-│   │   └── SearchContext.tsx
-│   ├── data/
-│   │   └── products.ts
-│   ├── types/
-│   │   └── product.ts
-│   └── page.tsx
-```
+| Kategori | Teknologi |
+|-----------|------------|
+| Framework | [Next.js 13](https://nextjs.org) |
+| Styling | [Tailwind CSS](https://tailwindcss.com) |
+| Animasi | [Framer Motion](https://www.framer.com/motion/) |
+| Bahasa | TypeScript, JavaScript |
+| Hosting | [Vercel](https://vercel.com) |
+| Tools | ESLint, Prettier, GitHub Actions |
 
-## 🎨 Fitur UI/UX
+---
 
-- Animasi halus menggunakan Framer Motion
-- Skema warna yang konsisten dan modern
-- Modal responsif untuk detail produk
-- Sidebar kategori yang intuitif
-- Pencarian dengan animasi feedback
-- Feedback form dengan toggle button animasi
-- Navbar dengan animasi scroll yang smooth
-- Welcome message dengan countdown timer
-- Rating system dengan bintang interaktif
+## 🚀 Demo Langsung
 
-## 🚀 Cara Menjalankan
+🔗 [Klik di sini untuk melihat demo](https://macommerce.shop)  
 
-1. Clone repository
-```bash
-git clone https://github.com/username/jasaku.git
-```
+---
 
-2. Install dependencies
-```bash
-cd jasaku
-npm install
-```
-
-3. Jalankan development server
-```bash
-npm run dev
-```
-
-4. Buka [http://localhost:3000](http://localhost:3000) di browser
-
-## 📱 Integrasi WhatsApp
-
-Platform ini terintegrasi dengan WhatsApp untuk:
-- Channel informasi dan update
-- Komunikasi langsung dengan admin
-- Konsultasi produk dan jasa
-- Pengiriman feedback dan saran
-
-## 🎯 Target Pengguna
-
-- Penyedia jasa profesional
-- Penjual produk
-- Pembeli yang mencari jasa atau produk
-- Pengguna yang menginginkan kemudahan transaksi marketplace
-
-## 📄 Lisensi
-
-Proyek ini dilindungi hak cipta. Semua hak dilindungi.
-
-## 👥 Kontributor
-
-- Developer Tim
-- UI/UX Designer
-- Product Manager
-
-Made with ❤️ By Rizki
+## 🧩 Struktur Proyek
