@@ -1,37 +1,41 @@
 # 🛒 MaCommerce — Modern E-Commerce Platform
 
-**MaCommerce** adalah platform e-commerce modern yang dikembangkan dengan teknologi **Next.js 13**, **Tailwind CSS**, dan **Framer Motion**, dirancang untuk memberikan pengalaman belanja yang cepat, elegan, dan responsif di semua perangkat.
+**MaCommerce** is a modern e-commerce platform developed with **Next.js 13**, **Tailwind CSS**, and **Framer Motion** technologies, designed to provide a fast, elegant, and responsive shopping experience on all devices.
 
 ---
 
-## ✨ Fitur Unggulan
+## ✨ Key Features
 
-- ⚡ **Performa Tinggi** — Didukung **Next.js 13 App Router**, rendering super-cepat dengan *server components* dan *route caching*.
-- 🎨 **Desain Responsif** — UI dibangun dengan **Tailwind CSS**, menyesuaikan tampilan otomatis untuk mobile, tablet, dan desktop.
-- 🛍️ **Modul Produk Dinamis** — Tampilkan daftar produk, filter kategori, pencarian, dan animasi interaktif via **Framer Motion**.
-- 💳 **Integrasi Pembayaran Modern** — Siap diintegrasikan dengan gateway seperti Midtrans / Stripe / QRIS.
-- 🧾 **Halaman Checkout Elegan** — Flow checkout sederhana tapi estetik, memprioritaskan UX.
-- 🌐 **SEO & Social Preview** — Optimalisasi metadata otomatis untuk meningkatkan visibilitas website.
+- ⚡ **High Performance** — Powered by **Next.js 13 App Router**, super-fast rendering with *server components* and *route caching*.
+- 🎨 **Responsive Design** — UI built with **Tailwind CSS**, automatically adjusting the display for mobile, tablet, and desktop.
+- 🛍️ **Dynamic Product Module** — Display product listings, category filters, search, and interactive animations via **Framer Motion**.
+- 💳 **Modern Payment Integration** — Ready to integrate with gateways such as Midtrans / Stripe / QRIS.
+- 🧾 **Elegant Checkout Page** — Simple yet aesthetic checkout flow, prioritizing UX.
+- 🌐 **SEO & Social Preview** — Automatic metadata optimization to improve website visibility.
 
 ---
 
-## 🧱 Teknologi yang Digunakan
+## 🧱 Technologies Used
 
-| Kategori | Teknologi |
+| Category | Technology |
 |-----------|------------|
 | Framework | [Next.js 13](https://nextjs.org) |
 | Styling | [Tailwind CSS](https://tailwindcss.com) |
-| Animasi | [Framer Motion](https://www.framer.com/motion/) |
-| Bahasa | TypeScript, JavaScript |
+| Animation | [Framer Motion](https://www.framer.com/motion/) |
+| Language | TypeScript, JavaScript |
 | Hosting | [Vercel](https://vercel.com) |
 | Tools | ESLint, Prettier, GitHub Actions |
 
 ---
 
-## 🚀 Demo Langsung
+## 🚀 Live Demo
 
-🔗 [Klik di sini untuk melihat demo](https://macommerce.shop)  
+🔗 [Click here to see the demo](https://macommerce.shop)  
 
+---
+
+## 🧩 Project Structure
+macommerce/ ├── src/ │   ├── app/            # Main routing (Next.js 13 App Router) │   ├── components/     # Reusable UI components │   ├── lib/            # Helpers & global configuration │   └── styles/         # Global CSS files & Tailwind config ├── public/             # Images and public assets ├── package.json └── README.md
 ---
 
 ## 🧩 Struktur Proyek
