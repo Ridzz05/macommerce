@@ -2,8 +2,6 @@
 
 **MaCommerce** adalah platform e-commerce modern yang dikembangkan dengan teknologi **Next.js 13**, **Tailwind CSS**, dan **Framer Motion**, dirancang untuk memberikan pengalaman belanja yang cepat, elegan, dan responsif di semua perangkat.
 
-![MaCommerce Demo Banner](https://user-images.githubusercontent.com/your-demo-banner.png)
-
 ---
 
 ## ✨ Fitur Unggulan
@@ -37,3 +35,4 @@
 ---
 
 ## 🧩 Struktur Proyek
+macommerce/ ├── src/ │   ├── app/            # Routing utama (Next.js 13 App Router) │   ├── components/     # Komponen UI reusable │   ├── lib/            # Helper & konfigurasi global │   └── styles/         # File CSS global & Tailwind config ├── public/             # Gambar dan aset publik ├── package.json └── README.md
