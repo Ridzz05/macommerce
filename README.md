@@ -30,13 +30,4 @@
 
 ## 🚀 Live Demo
 
-🔗 [Click here to see the demo](https://macommerce.shop)  
-
----
-
-## 🧩 Project Structure
-macommerce/ ├── src/ │   ├── app/            # Main routing (Next.js 13 App Router) │   ├── components/     # Reusable UI components │   ├── lib/            # Helpers & global configuration │   └── styles/         # Global CSS files & Tailwind config ├── public/             # Images and public assets ├── package.json └── README.md
----
-
-## 🧩 Struktur Proyek
-macommerce/ ├── src/ │   ├── app/            # Routing utama (Next.js 13 App Router) │   ├── components/     # Komponen UI reusable │   ├── lib/            # Helper & konfigurasi global │   └── styles/         # File CSS global & Tailwind config ├── public/             # Gambar dan aset publik ├── package.json └── README.md
+🔗 [Click here to see the demo](https://macommerce.shop)
