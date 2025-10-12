@@ -1,7 +1,5 @@
-'use client'
-
-import { SearchProvider } from '../context/SearchContext'
-import Navbar from './Navbar'
+import SearchProvider from '../context/SearchContext'
+import Navbar from './navbar/Navbar'
 
 interface RootLayoutClientProps {
     children: React.ReactNode;

@@ -9,7 +9,7 @@ interface SearchContextType {
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
-export function SearchProvider({ children }: { children: ReactNode }) {
+export default function SearchProvider({ children }: { children: ReactNode }) {
     const [searchQuery, setSearchQuery] = useState('');
 
     return (
