@@ -1,6 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Category } from '../data/products';
-import { categoryInfo } from '../data/products';
+import { 
+    X, 
+    LayoutGrid, 
+    Check, 
+    CheckCircle2, 
+    Sparkles, 
+    Shirt, 
+    Footprints, 
+    Laptop, 
+    Users,
+    type LucideIcon
+} from 'lucide-react';
 
 interface CategorySidebarProps {
     isOpen: boolean;
@@ -10,12 +21,14 @@ interface CategorySidebarProps {
     onSelectCategory: (category: Category | null) => void;
 }
 
-const CATEGORY_ICONS = {
-    'Produk Kecantikan': 'face',
-    'T-Shirt': 'checkroom',
-    'Sepatu': 'hiking',
-    'Produk Digital': 'devices',
-    'Jasa': 'support_agent'
+// Pre-initialize icon components for faster rendering (no lazy loading)
+// Icons are imported and ready immediately when component loads
+const CATEGORY_ICONS: Record<Category, LucideIcon> = {
+    'Produk Kecantikan': Sparkles,
+    'T-Shirt': Shirt,
+    'Sepatu': Footprints,
+    'Produk Digital': Laptop,
+    'Jasa': Users
 };
 
 const CategorySidebar = ({ 
@@ -62,7 +75,7 @@ const CategorySidebar = ({
                                     whileTap={{ scale: 0.95 }}
                                     className="p-2 hover:bg-[#EDE3CD] rounded-lg transition-colors"
                                 >
-                                    <span className="material-icons text-[#5C4B37]">close</span>
+                                    <X className="w-5 h-5 text-[#5C4B37]" />
                                 </motion.button>
                             </div>
                         </div>
@@ -80,48 +93,49 @@ const CategorySidebar = ({
                                 }`}
                             >
                                 <div className="flex items-center">
-                                    <span className="material-icons mr-3">category</span>
+                                    <LayoutGrid className="w-5 h-5 mr-3 flex-shrink-0" />
                                     <span className="text-base">Semua Kategori</span>
                                     {!selectedCategory && (
-                                        <motion.span 
-                                            className="material-icons ml-auto"
+                                        <motion.div 
+                                            className="ml-auto"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                         >
-                                            check
-                                        </motion.span>
+                                            <Check className="w-5 h-5" />
+                                        </motion.div>
                                     )}
                                 </div>
                             </motion.button>
 
                             {/* Category Grid */}
                             <div className="grid grid-cols-2 gap-3">
-                                {categories.map((category) => (
-                                    <motion.button
-                                        key={category}
-                                        whileTap={{ scale: 0.98 }}
-                                        onClick={() => handleSelect(category)}
-                                        className={`flex flex-col items-center justify-center p-4 rounded-lg transition-all ${
-                                            selectedCategory === category 
-                                                ? 'bg-[#5C4B37] text-white' 
-                                                : 'text-[#5C4B37] bg-[#EDE3CD] hover:bg-[#E5D5B7]'
-                                        }`}
-                                    >
-                                        <span className="material-icons mb-2 text-2xl">
-                                            {CATEGORY_ICONS[category]}
-                                        </span>
-                                        <span className="text-sm text-center font-medium">{category}</span>
-                                        {selectedCategory === category && (
-                                            <motion.span
-                                                className="material-icons absolute top-1 right-1 text-sm"
-                                                initial={{ opacity: 0, scale: 0.5 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                            >
-                                                check_circle
-                                            </motion.span>
-                                        )}
-                                    </motion.button>
-                                ))}
+                                {categories.map((category) => {
+                                    const IconComponent = CATEGORY_ICONS[category];
+                                    return (
+                                        <motion.button
+                                            key={category}
+                                            whileTap={{ scale: 0.98 }}
+                                            onClick={() => handleSelect(category)}
+                                            className={`relative flex flex-col items-center justify-center p-4 rounded-lg transition-all ${
+                                                selectedCategory === category 
+                                                    ? 'bg-[#5C4B37] text-white' 
+                                                    : 'text-[#5C4B37] bg-[#EDE3CD] hover:bg-[#E5D5B7]'
+                                            }`}
+                                        >
+                                            <IconComponent className="w-6 h-6 mb-2 flex-shrink-0" />
+                                            <span className="text-sm text-center font-medium">{category}</span>
+                                            {selectedCategory === category && (
+                                                <motion.div
+                                                    className="absolute top-1 right-1"
+                                                    initial={{ opacity: 0, scale: 0.5 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                >
+                                                    <CheckCircle2 className="w-4 h-4" />
+                                                </motion.div>
+                                            )}
+                                        </motion.button>
+                                    );
+                                })}
                             </div>
                         </div>
 
