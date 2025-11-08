@@ -35,23 +35,23 @@ export function ProductCardServer({ name, price, imageUrl, category, onDetailCli
                     </p>
                 </div>
                 
-                <div className="flex justify-end items-center gap-2 pt-2.5 mt-auto border-t border-[#EDE3CD]">
+                <div className="flex justify-center items-center gap-1.5 sm:gap-2 pt-2 mt-auto border-t border-[#EDE3CD]">
                     <button 
-                        className="px-3 py-2 text-xs sm:text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-1.5"
+                        className="px-2 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-1 sm:gap-1.5"
                         onClick={onDetailClick}
                     >
-                        <Info className="w-4 h-4 flex-shrink-0" />
+                        <Info className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                         <span className="whitespace-nowrap">Detail</span>
                     </button>
                     <button 
-                        className="px-3 py-2 text-xs sm:text-sm font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-all duration-200 flex items-center gap-1.5"
+                        className="px-2 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-sm font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-all duration-200 flex items-center gap-1 sm:gap-1.5"
                         onClick={onBeliClick}
                     >
-                        <ShoppingCart className="w-4 h-4 flex-shrink-0" />
+                        <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                         <span className="whitespace-nowrap">Beli</span>
                     </button>
                 </div>
             </div>
         </div>
     );
-} 
+}
