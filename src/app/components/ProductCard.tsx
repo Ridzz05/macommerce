@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
+import { X, ShoppingCart } from 'lucide-react';
 
 const modalVariants = {
     hidden: {
@@ -285,21 +286,22 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 </motion.div>
 
                                 <motion.div 
-                                    className="flex justify-end gap-2 mt-4 pt-3 border-t border-[#EDE3CD]"
+                                    className="flex justify-end gap-3 mt-4 pt-4 border-t border-[#EDE3CD]"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.7 }}
                                 >
                                     <motion.button
-                                        className="px-3 py-1.5 text-xs font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded hover:bg-[#EDE3CD] transition-colors"
+                                        className="px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-2"
                                         onClick={handleCloseDetail}
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
+                                        <X className="w-4 h-4" />
                                         Tutup
                                     </motion.button>
                                     <motion.button
-                                        className="px-3 py-1.5 text-xs font-medium text-white bg-[#5C4B37] rounded hover:bg-[#3D3224] transition-colors"
+                                        className="px-4 py-2.5 text-sm font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-all duration-200 flex items-center gap-2"
                                         onClick={() => {
                                             handleCloseDetail();
                                             handleBeli();
@@ -307,6 +309,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
+                                        <ShoppingCart className="w-4 h-4" />
                                         Beli Sekarang
                                     </motion.button>
                                 </motion.div>
@@ -474,11 +477,12 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 transition={{ delay: 1 }}
                             >
                                 <motion.button
-                                    className="px-3 py-1.5 text-xs font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded hover:bg-[#EDE3CD] transition-colors"
+                                    className="px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-2"
                                     onClick={handleClosePurchase}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                 >
+                                    <X className="w-4 h-4" />
                                     Tutup
                                 </motion.button>
                             </motion.div>
