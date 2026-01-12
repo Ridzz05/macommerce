@@ -1,12 +1,15 @@
 import { MetadataRoute } from 'next'
-import { products } from './data/products'
+import { getProducts, slugify } from './lib/products'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 0
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://macommerce.com'
+  const products = await getProducts()
 
   // Get all product slugs
   const productUrls = products.map((product) => ({
-    url: `${baseUrl}/product/${product.name.toLowerCase().replace(/ /g, '-')}`,
+    url: `${baseUrl}/product/${slugify(product.name)}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
@@ -18,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((value, index, self) => self.indexOf(value) === index)
 
   const categoryUrls = categories.map((category) => ({
-    url: `${baseUrl}/category/${category.toLowerCase().replace(/ /g, '-')}`,
+    url: `${baseUrl}/category/${slugify(category)}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,

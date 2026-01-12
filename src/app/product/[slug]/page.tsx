@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
-import { products } from '@/app/data/products'
-import ProductDetail from '@/app/components/ProductDetail'
 import { notFound } from 'next/navigation'
+import ProductDetail from '@/app/components/ProductDetail'
+import { getProductBySlug } from '@/app/lib/products'
+
+export const dynamic = 'force-dynamic'
 
 interface Props {
   params: {
@@ -10,9 +12,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = products.find(
-    (p) => p.name.toLowerCase().replace(/ /g, '-') === params.slug
-  )
+  const product = await getProductBySlug(params.slug)
 
   if (!product) {
     return {
@@ -45,20 +45,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export async function generateStaticParams() {
-  return products.map((product) => ({
-    slug: product.name.toLowerCase().replace(/ /g, '-'),
-  }))
-}
-
-export default function ProductPage({ params }: Props) {
-  const product = products.find(
-    (p) => p.name.toLowerCase().replace(/ /g, '-') === params.slug
-  )
+export default async function ProductPage({ params }: Props) {
+  const product = await getProductBySlug(params.slug)
 
   if (!product) {
     notFound()
   }
 
   return <ProductDetail product={product} />
-} 
+}

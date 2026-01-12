@@ -101,6 +101,7 @@ export function ProductGridClient({ products, filteredCategory }: ProductGridCli
                                         name={product.name}
                                         price={product.price}
                                         imageUrl={product.imageUrl}
+                                        images={product.images}
                                         category={product.category}
                                         description={product.description}
                                         features={product.features}
