@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server'
 import { deleteProduct, getProductById, parseProductPayload, updateProduct } from '@/app/lib/products'
 
 type RouteParams = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 const parseId = (value: string) => {
@@ -13,7 +13,8 @@ const parseId = (value: string) => {
 }
 
 export async function GET(_request: Request, { params }: RouteParams) {
-  const id = parseId(params.id)
+  const { id: rawId } = await params
+  const id = parseId(rawId)
 
   if (id === null) {
     return NextResponse.json({ error: 'ID tidak valid.' }, { status: 400 })
@@ -28,7 +29,8 @@ export async function GET(_request: Request, { params }: RouteParams) {
 }
 
 export async function PUT(request: Request, { params }: RouteParams) {
-  const id = parseId(params.id)
+  const { id: rawId } = await params
+  const id = parseId(rawId)
 
   if (id === null) {
     return NextResponse.json({ error: 'ID tidak valid.' }, { status: 400 })
@@ -51,7 +53,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
 }
 
 export async function DELETE(_request: Request, { params }: RouteParams) {
-  const id = parseId(params.id)
+  const { id: rawId } = await params
+  const id = parseId(rawId)
 
   if (id === null) {
     return NextResponse.json({ error: 'ID tidak valid.' }, { status: 400 })
