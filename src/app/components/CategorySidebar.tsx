@@ -5,11 +5,11 @@ import {
     LayoutGrid, 
     Check, 
     CheckCircle2, 
-    Sparkles, 
-    Shirt, 
-    Footprints, 
-    Laptop, 
-    Users,
+    BookOpen,
+    Server,
+    Link2,
+    Globe,
+    Code,
     type LucideIcon
 } from 'lucide-react';
 
@@ -24,11 +24,11 @@ interface CategorySidebarProps {
 // Pre-initialize icon components for faster rendering (no lazy loading)
 // Icons are imported and ready immediately when component loads
 const CATEGORY_ICONS: Record<Category, LucideIcon> = {
-    'Produk Kecantikan': Sparkles,
-    'T-Shirt': Shirt,
-    'Sepatu': Footprints,
-    'Produk Digital': Laptop,
-    'Jasa': Users
+    'E-Book': BookOpen,
+    'VPS': Server,
+    'SubDomain': Link2,
+    'Domain': Globe,
+    'WebP Script': Code
 };
 
 const CategorySidebar = ({ 

@@ -1,4 +1,5 @@
 import { Lexend_Giga, Lexend, Montserrat, Raleway } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import RootLayoutClient from './components/RootLayoutClient'
 import { metadata } from './metadata'
@@ -67,6 +68,23 @@ export default function RootLayout({
         <link 
           rel="manifest" 
           href="/manifest.json" 
+        />
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-N8GBV0JMX3"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-N8GBV0JMX3');
+            `,
+          }}
         />
       </head>
       <RootLayoutClient
