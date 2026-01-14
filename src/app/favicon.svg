@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="MaCommerce">
+  <!-- Rounded background -->
+  <rect x="10" y="10" width="108" height="108" rx="28" fill="#C9A46A"/>
+  <!-- Inner cut for depth -->
+  <rect x="22" y="22" width="84" height="84" rx="22" fill="#F6EBD4"/>
+  
+  <!-- Portal M -->
+  <path
+    d="M36 88V44c0-4 3-7 7-7h0c3 0 5 1 6 4l15 28 15-28c1-3 3-4 6-4h0c4 0 7 3 7 7v44c0 3-2 5-5 5h-2c-3 0-5-2-5-5V63l-11 21c-1 2-3 3-5 3h0c-2 0-4-1-5-3L48 63v25c0 3-2 5-5 5h-2c-3 0-5-2-5-5z"
+    fill="#8A6A3A"
+  />
+  
+  <!-- Subtle upward arrow (negative space suggestion) -->
+  <path d="M64 44l10 12H54z" fill="#F6EBD4"/>
+</svg>

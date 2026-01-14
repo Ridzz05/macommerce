@@ -58,7 +58,7 @@ export default function RootLayout({
         />
         <link 
           rel="icon" 
-          href="/favicon.ico" 
+          href="/favicon.svg" 
           sizes="any" 
         />
         <link 
