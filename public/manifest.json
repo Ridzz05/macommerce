@@ -1,16 +1,15 @@
 {
-    "name": "MaCommerce - Marketplace Terpercaya Indonesia",
-    "short_name": "MaCommerce",
-    "description": "Marketplace terpercaya dengan berbagai produk berkualitas",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#FFFBF2",
-    "theme_color": "#FDF6E3",
-    "icons": [
-      {
-        "src": "/favicon.svg",
-        "sizes": "any",
-        "type": "image/svg+xml"
-      }
-    ]
-  }
+  "name": "MaCommerce — Rekomendasi Produk Cerdas",
+  "short_name": "MaCommerce",
+  "description": "Kurasi produk keren & berguna: gadget, toys, dan lifestyle tools. Rekomendasi singkat + link pembelian.",
+  "start_url": "/?utm_source=pwa&utm_medium=homescreen&utm_campaign=launch",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFBF2",
+  "theme_color": "#FDF6E3",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
