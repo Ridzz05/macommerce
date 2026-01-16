@@ -3,6 +3,7 @@ import Script from 'next/script'
 import './globals.css'
 import RootLayoutClient from './components/RootLayoutClient'
 import { metadata } from './metadata'
+import { AuthProvider } from './context/AuthContext'
 
 // Initialize fonts with display swap and preload
 const lexendGiga = Lexend_Giga({
@@ -93,7 +94,9 @@ export default function RootLayout({
         montserratClass={montserrat.variable}
         ralewayClass={raleway.variable}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </RootLayoutClient>
     </html>
   )
