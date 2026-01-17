@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { CircleHelp, X } from 'lucide-react';
 import { useSearch } from '@/app/context/SearchContext';
 import { navVariants } from './NavbarAnimations';
 import { Logo } from './Logo';
@@ -15,6 +16,7 @@ const Navbar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const shouldReduceMotion = useReducedMotion();
+    const [showHelp, setShowHelp] = useState(false);
 
     // Safe context access with error handling
     let setSearchQuery: (query: string) => void;
@@ -87,6 +89,7 @@ const Navbar = () => {
                                                 isOpen={isDropdownOpen}
                                                 onToggle={() => setIsDropdownOpen(!isDropdownOpen)}
                                                 onClose={() => setIsDropdownOpen(false)}
+                                                onHelpClick={() => setShowHelp(true)}
                                             />
                                         </div>
                                     </div>
@@ -103,6 +106,48 @@ const Navbar = () => {
                 onSearch={handleSearch}
                 onClear={handleClearSearch}
             />
+
+            <div className="fixed bottom-6 right-6 z-50">
+                <AnimatePresence>
+                    {showHelp && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 12 }}
+                            transition={{ duration: 0.2 }}
+                            className="w-72 rounded-xl border border-[#EDE3CD] bg-white shadow-lg overflow-hidden"
+                        >
+                            <div className="px-4 py-3">
+                                <div className="flex items-start gap-3">
+                                    <div className="w-9 h-9 rounded-full bg-[#F5ECD6] text-[#5C4B37] flex items-center justify-center">
+                                        <CircleHelp className="w-4 h-4" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div>
+                                                <p className="text-sm font-semibold text-[#5C4B37]">
+                                                    Selamat datang di MaCommerce
+                                                </p>
+                                                <p className="mt-1 text-xs text-[#8B7355]">
+                                                    Jelajahi worlds pilihan kami dan temukan produk yang relevan untukmu.
+                                                </p>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowHelp(false)}
+                                                className="text-[#8B7355] hover:text-[#5C4B37]"
+                                                aria-label="Tutup pesan"
+                                            >
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
         </>
     );
 };
