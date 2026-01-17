@@ -1,4 +1,4 @@
-export type Category = 'E-Book' | 'VPS' | 'SubDomain' | 'Domain' | 'WebP Script';
+export type Category = 'RC World' | 'Smart Home' | 'Digital Tools' | 'Lifestyle Gear' | 'Creator Tools';
 
 interface CategoryInfo {
     name: Category;
@@ -16,7 +16,6 @@ export interface Product {
     features: string[];
     demoUrl?: string;
     marketplace: {
-        shopee?: string;
         tokopedia?: string;
         lazada?: string;
         tiktokshop?: string;
@@ -25,23 +24,23 @@ export interface Product {
 
 export const categoryInfo: CategoryInfo[] = [
     {
-        name: 'E-Book',
+        name: 'RC World',
         icon: 'M12 6.75a2.25 2.25 0 00-2.25-2.25H4.5A2.25 2.25 0 002.25 6.75v10.5A2.25 2.25 0 004.5 19.5h6a2.25 2.25 0 002.25-2.25v-10.5z'
     },
     {
-        name: 'VPS',
+        name: 'Smart Home',
         icon: 'M4.5 7.5A1.5 1.5 0 016 6h12a1.5 1.5 0 011.5 1.5v9A1.5 1.5 0 0118 18H6a1.5 1.5 0 01-1.5-1.5v-9z'
     },
     {
-        name: 'SubDomain',
+        name: 'Digital Tools',
         icon: 'M6 12a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 12v0a2.25 2.25 0 01-2.25 2.25h-7.5A2.25 2.25 0 016 12v0z'
     },
     {
-        name: 'Domain',
+        name: 'Lifestyle Gear',
         icon: 'M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z'
     },
     {
-        name: 'WebP Script',
+        name: 'Creator Tools',
         icon: 'M8.25 6.75h7.5a1.5 1.5 0 011.5 1.5v7.5a1.5 1.5 0 01-1.5 1.5h-7.5a1.5 1.5 0 01-1.5-1.5v-7.5a1.5 1.5 0 011.5-1.5z'
     }
 ];
@@ -59,7 +58,7 @@ export const products: Product[] = [
             "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=800",
             "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800"
         ],
-        category: "E-Book",
+        category: "Lifestyle Gear",
         description: "Paket lengkap skincare untuk mencerahkan dan merawat kulit wajah Anda. Terdiri dari cleanser, toner, serum, moisturizer, dan sunscreen yang diformulasikan khusus untuk kulit Indonesia.",
         features: [
             "Bahan alami dan aman untuk semua jenis kulit",
@@ -69,7 +68,6 @@ export const products: Product[] = [
             "Garansi uang kembali 100%"
         ],
         marketplace: {
-            shopee: "https://shopee.co.id/product/123",
             tokopedia: "https://tokopedia.com/product/123",
             lazada: "https://lazada.co.id/product/123",
             tiktokshop: "https://tiktok.com/shop/123"
@@ -85,7 +83,7 @@ export const products: Product[] = [
             "https://images.unsplash.com/photo-1517292987719-0369a794ec0f?auto=format&fit=crop&w=800",
             "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=800"
         ],
-        category: "VPS",
+        category: "Creator Tools",
         description: "Layanan pembuatan website profesional dengan teknologi terkini. Kami menyediakan solusi website yang responsif, cepat, dan SEO-friendly untuk bisnis Anda.",
         features: [
             "Design modern dan responsif",
@@ -96,7 +94,6 @@ export const products: Product[] = [
         ],
         demoUrl: "https://demo.jasaku.com/website",
         marketplace: {
-            shopee: "https://shopee.co.id/product/456",
             tokopedia: "https://tokopedia.com/product/456",
             lazada: "https://lazada.co.id/product/456",
             tiktokshop: "https://tiktok.com/shop/456"
@@ -107,7 +104,7 @@ export const products: Product[] = [
         name: "Jasa Pembuatan Website",
         price: 2600000,
         imageUrl: "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800",
-        category: "SubDomain",
+        category: "Creator Tools",
         description: "Layanan pembuatan website profesional dengan teknologi terkini. Kami menyediakan solusi website yang responsif, cepat, dan SEO-friendly untuk bisnis Anda.",
         features: [
             "Design modern dan responsif",
@@ -118,7 +115,6 @@ export const products: Product[] = [
         ],
         demoUrl: "https://demo.jasaku.com/website",
         marketplace: {
-            shopee: "https://shopee.co.id/product/456",
             tokopedia: "https://tokopedia.com/product/456"
         }
     },
@@ -132,7 +128,7 @@ export const products: Product[] = [
             "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800",
             "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?auto=format&fit=crop&w=800"
         ],
-        category: "Domain",
+        category: "Lifestyle Gear",
         description: "Sepatu sneakers premium dengan desain modern dan bahan berkualitas tinggi. Nyaman digunakan untuk aktivitas sehari-hari maupun berolahraga.",
         features: [
             "Bahan premium import",
@@ -142,7 +138,6 @@ export const products: Product[] = [
             "Garansi produk 6 bulan"
         ],
         marketplace: {
-            shopee: "https://shopee.co.id/product/789",
             tokopedia: "https://tokopedia.com/product/789",
             lazada: "https://lazada.co.id/product/789"
         }
@@ -157,7 +152,7 @@ export const products: Product[] = [
             "https://down-id.img.susercontent.com/file/id-11134207-7rbk5-m8eirtsyv42mf5@resize_w500_nl.webp",
             "https://images.unsplash.com/photo-1618354691551-44de113f0164?auto=format&fit=crop&w=800"
         ],
-        category: "WebP Script",
+        category: "Lifestyle Gear",
         description: "Kemeja formal berkualitas tinggi dengan bahan premium dan jahitan rapi. Cocok untuk acara formal atau kantor.",
         features: [
             "Bahan katun premium",
@@ -167,7 +162,6 @@ export const products: Product[] = [
             "Garansi penukaran size"
         ],
         marketplace: {
-            shopee: "https://shopee.co.id/product/101",
             tokopedia: "https://tokopedia.com/product/101",
             lazada: "https://lazada.co.id/product/101"
         }

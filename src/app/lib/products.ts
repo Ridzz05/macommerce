@@ -38,7 +38,6 @@ const toMarketplace = (value: unknown) => {
   const record = typeof value === 'object' && value ? (value as Record<string, unknown>) : {}
 
   return {
-    shopee: toOptionalString(record.shopee),
     tokopedia: toOptionalString(record.tokopedia),
     lazada: toOptionalString(record.lazada),
     tiktokshop: toOptionalString(record.tiktokshop),

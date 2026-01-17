@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { categories, type Category, type Product } from '@/app/data/products'
 
 type MarketplaceForm = {
-  shopee: string
   tokopedia: string
   lazada: string
   tiktokshop: string
@@ -32,7 +31,6 @@ const createEmptyForm = (): ProductForm => ({
   featuresText: '',
   demoUrl: '',
   marketplace: {
-    shopee: '',
     tokopedia: '',
     lazada: '',
     tiktokshop: '',
@@ -129,7 +127,6 @@ export default function AdminProductsClient() {
       features,
       demoUrl: form.demoUrl.trim() || undefined,
       marketplace: {
-        shopee: form.marketplace.shopee.trim() || undefined,
         tokopedia: form.marketplace.tokopedia.trim() || undefined,
         lazada: form.marketplace.lazada.trim() || undefined,
         tiktokshop: form.marketplace.tiktokshop.trim() || undefined,
@@ -174,7 +171,6 @@ export default function AdminProductsClient() {
       featuresText: product.features.join('\n'),
       demoUrl: product.demoUrl ?? '',
       marketplace: {
-        shopee: product.marketplace.shopee ?? '',
         tokopedia: product.marketplace.tokopedia ?? '',
         lazada: product.marketplace.lazada ?? '',
         tiktokshop: product.marketplace.tiktokshop ?? '',
@@ -307,20 +303,6 @@ export default function AdminProductsClient() {
         </label>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <label className="text-sm text-[#5C4B37] font-medium">
-            Shopee
-            <input
-              type="text"
-              value={form.marketplace.shopee}
-              onChange={(event) =>
-                setForm((prev) => ({
-                  ...prev,
-                  marketplace: { ...prev.marketplace, shopee: event.target.value },
-                }))
-              }
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
           <label className="text-sm text-[#5C4B37] font-medium">
             Tokopedia
             <input

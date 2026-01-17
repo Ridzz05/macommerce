@@ -8,7 +8,6 @@ export interface ProductCardProps {
     features: string[];
     demoUrl?: string;
     marketplace: {
-        shopee?: string;
         tokopedia?: string;
         lazada?: string;
         tiktokshop?: string;

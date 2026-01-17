@@ -373,30 +373,6 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.5 }}
                             >
-                                {marketplace.shopee && (
-                                    <motion.a
-                                        href={marketplace.shopee}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex flex-col items-center p-3 rounded bg-[#FE5621] text-white hover:opacity-90 transition-opacity"
-                                        initial={{ scale: 0.8, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        transition={{ delay: 0.6 }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <div className="relative w-6 h-6">
-                                            <Image
-                                                src="/images/marketplace/shopee.png"
-                                                alt="Shopee Logo"
-                                                fill
-                                                className="object-contain"
-                                            />
-                                        </div>
-                                        <span className="mt-1 text-xs font-medium">Shopee</span>
-                                    </motion.a>
-                                )}
-
                                 {marketplace.tokopedia && (
                                     <motion.a
                                         href={marketplace.tokopedia}
