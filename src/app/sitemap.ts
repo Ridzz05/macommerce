@@ -4,7 +4,7 @@ import { getProducts, slugify } from './lib/products'
 export const revalidate = 0
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://macommerce.com'
+  const baseUrl = 'https://macommerce.shop'
   const products = await getProducts()
 
   // Get all product slugs

@@ -27,18 +27,22 @@ export default function Footer() {
           </div>
           <div className="mt-4 flex items-center gap-3">
             <a
-              href="https://instagram.com"
+              href="https://instagram.com/macommerce_id"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#8B7355] hover:text-[#5C4B37]"
               aria-label="Instagram"
             >
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                <path d="M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm0 2a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2H7zm5 3.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zm0 2a2.5 2.5 0 100 5 2.5 2.5 0 000-5zm5.25-3.05a1.05 1.05 0 110 2.1 1.05 1.05 0 010-2.1z" />
-              </svg>
+               <Image
+                src="/images/marketplace/ig.svg"
+                alt="Instagram"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
             </a>
             <a
-              href="https://tiktok.com"
+              href="https://www.tiktok.com/@pawpewslebew"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#8B7355] hover:text-[#5C4B37]"

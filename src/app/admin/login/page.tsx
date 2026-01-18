@@ -30,6 +30,7 @@ const itemVariants = {
 export default function AdminLoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { isAuthenticated, login } = useAuth()
   const router = useRouter()
@@ -43,12 +44,16 @@ export default function AdminLoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setSuccessMessage('')
     setIsLoading(true)
 
     const success = await login(password)
     if (success) {
       setPassword('')
-      router.push('/admin/products')
+      setSuccessMessage('Login berhasil. Mengalihkan ke dashboard...')
+      setTimeout(() => {
+        router.push('/admin/products')
+      }, 800)
     } else {
       setError('Password salah. Silakan coba lagi.')
       setPassword('')
@@ -108,6 +113,16 @@ export default function AdminLoginPage() {
                   className="text-sm text-red-600"
                 >
                   {error}
+                </motion.div>
+              )}
+              {successMessage && (
+                <motion.div
+                  variants={itemVariants}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-sm text-green-700"
+                >
+                  {successMessage}
                 </motion.div>
               )}
 
