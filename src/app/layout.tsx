@@ -1,41 +1,15 @@
-import { Lexend_Giga, Lexend, Montserrat, Raleway } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import Script from 'next/script'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import RootLayoutClient from './components/RootLayoutClient'
 import { metadata } from './metadata'
 import { AuthProvider } from './context/AuthContext'
 
 // Initialize fonts with display swap and preload
-const lexendGiga = Lexend_Giga({
-  subsets: ['latin'],
-  variable: '--font-lexend-giga',
-  display: 'swap',
-  preload: true,
-  weight: ['400', '500', '600'],
-  fallback: ['system-ui', 'arial']
-});
-
-const lexend = Lexend({
-  subsets: ['latin'],
-  variable: '--font-lexend',
-  display: 'swap',
-  preload: true,
-  weight: ['400', '500', '600'],
-  fallback: ['system-ui', 'arial']
-});
-
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
-  display: 'swap',
-  preload: true,
-  weight: ['400', '500', '600'],
-  fallback: ['system-ui', 'arial']
-});
-
-const raleway = Raleway({
-  subsets: ['latin'],
-  variable: '--font-raleway',
   display: 'swap',
   preload: true,
   weight: ['400', '500', '600'],
@@ -89,13 +63,11 @@ export default function RootLayout({
         />
       </head>
       <RootLayoutClient
-        lexendGigaClass={lexendGiga.variable}
-        lexendClass={lexend.variable}
         montserratClass={montserrat.variable}
-        ralewayClass={raleway.variable}
       >
         <AuthProvider>
           {children}
+          <SpeedInsights />
         </AuthProvider>
       </RootLayoutClient>
     </html>

@@ -44,9 +44,13 @@ export default function Footer() {
               className="text-[#8B7355] hover:text-[#5C4B37]"
               aria-label="TikTok"
             >
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor">
-                <path d="M17.5 6.2c-1.1-.7-1.9-1.7-2.2-3.2h-2.1v11.1a2.6 2.6 0 11-2.6-2.6c.3 0 .6 0 .9.1v-2.1a4.7 4.7 0 00-1-.1A4.7 4.7 0 109 14.1V3h4.2c.2 1.5 1 2.8 2.3 3.7 1 .7 2.2 1.1 3.5 1.2V6.2c-.7 0-1.7-.2-2.5-.7z" />
-              </svg>
+              <Image
+                src="/images/marketplace/tiktok.svg"
+                alt="TikTok"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
             </a>
             <a
               href="https://tokopedia.com"
