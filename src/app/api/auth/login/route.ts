@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 const sessions = new Set<string>()
 
 // Admin password (in production, use environment variable)
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ridzz_100'
 
 export async function POST(request: Request) {
   try {
