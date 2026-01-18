@@ -5,7 +5,6 @@ interface NavigationDropdownProps {
     isOpen: boolean;
     onToggle: () => void;
     onClose: () => void;
-    onHelpClick: () => void;
 }
 
 const dropdownItemVariants = {
@@ -13,7 +12,7 @@ const dropdownItemVariants = {
     visible: { x: 0, opacity: 1 }
 };
 
-export const NavigationDropdown = ({ isOpen, onToggle, onClose, onHelpClick }: NavigationDropdownProps) => {
+export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDropdownProps) => {
     return (
         <div className="flex items-center">
             <div className="relative">
@@ -105,43 +104,6 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose, onHelpClick }: N
                                         Hubungi Kami
                                     </motion.div>
                                 </Link>
-                                <button
-                                    type="button"
-                                    className="w-full text-left px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
-                                    onClick={() => {
-                                        onHelpClick();
-                                        onClose();
-                                    }}
-                                >
-                                    <motion.div
-                                        initial="hidden"
-                                        animate="visible"
-                                        transition={{ delay: 0.3 }}
-                                        variants={dropdownItemVariants}
-                                        className="flex items-center gap-2"
-                                    >
-                                        <svg
-                                            className="w-4 h-4 text-[#8B7355]"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M12 18h.01M12 14a2 2 0 10-2-2"
-                                            />
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M9.1 9a3 3 0 115.8 1.2c-.8.9-1.9 1.2-2.4 2.3"
-                                            />
-                                        </svg>
-                                        Bantuan
-                                    </motion.div>
-                                </button>
                             </div>
                         </motion.div>
                     )}

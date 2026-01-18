@@ -1,4 +1,5 @@
 import SearchProvider from '../context/SearchContext'
+import Footer from './Footer'
 import Navbar from './navbar/Navbar'
 
 interface RootLayoutClientProps {
@@ -21,6 +22,7 @@ export default function RootLayoutClient({
             <SearchProvider>
                 <Navbar />
                 {children}
+                <Footer />
             </SearchProvider>
         </body>
     )
