@@ -71,6 +71,21 @@ export default function Footer() {
                 className="object-contain"
               />
             </a>
+             <a
+              href="https://shopee.co.id"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#8B7355] hover:text-[#5C4B37]"
+              aria-label="Tokopedia"
+            >
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
+                alt="Shopee"
+                width={45}
+                height={45}
+                className="object-contain"
+              />
+            </a>
           </div>
         </div>
       </div>
