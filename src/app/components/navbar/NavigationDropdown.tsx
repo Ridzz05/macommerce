@@ -13,6 +13,8 @@ const dropdownItemVariants = {
 };
 
 export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDropdownProps) => {
+    const menuId = 'navigation-menu';
+
     return (
         <div className="flex items-center">
             <div className="relative">
@@ -20,6 +22,11 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDrop
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={onToggle}
+                    type="button"
+                    aria-label="Menu navigasi"
+                    aria-haspopup="menu"
+                    aria-expanded={isOpen}
+                    aria-controls={menuId}
                     className="group p-2 sm:p-2.5 rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow"
                 >
                     <svg
@@ -45,6 +52,8 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDrop
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
+                            id={menuId}
+                            role="menu"
                             className="absolute right-0 mt-2 w-48 bg-[#FDF6E3] border border-[#EDE3CD] rounded-lg shadow-lg overflow-hidden"
                         >
                             <div className="py-1">
@@ -52,6 +61,7 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDrop
                                     href="/about"
                                     className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
                                     onClick={onClose}
+                                    role="menuitem"
                                 >
                                     <motion.div
                                         initial="hidden"
@@ -80,6 +90,7 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDrop
                                     href="/about#contact"
                                     className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
                                     onClick={onClose}
+                                    role="menuitem"
                                 >
                                     <motion.div
                                         initial="hidden"

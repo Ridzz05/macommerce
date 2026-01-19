@@ -11,6 +11,8 @@ export const SearchButton = ({ onClick, className = "" }: SearchButtonProps) => 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClick}
+            type="button"
+            aria-label="Buka pencarian"
             className={`group p-2 sm:p-2.5 rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6] hover:border-[#D8C8A7] transition-all duration-300 shadow-sm hover:shadow ${className}`}
         >
             <svg

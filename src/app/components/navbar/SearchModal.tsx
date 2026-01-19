@@ -42,6 +42,9 @@ export const SearchModal = ({ isOpen, onClose, onSearch, onClear, initialQuery =
                     initial="hidden"
                     animate="visible"
                     exit="hidden"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Pencarian produk"
                     className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm"
                     onClick={(e) => e.target === e.currentTarget && onClose()}
                 >
@@ -79,6 +82,7 @@ export const SearchModal = ({ isOpen, onClose, onSearch, onClear, initialQuery =
                                     animate={{ x: 0, opacity: 1 }}
                                     transition={{ duration: 0.3, delay: 0.2 }}
                                     type="text"
+                                    aria-label="Cari produk"
                                     placeholder="Cari produk..."
                                     value={localSearchQuery}
                                     onChange={(e) => handleSearch(e.target.value)}
@@ -109,6 +113,8 @@ export const SearchModal = ({ isOpen, onClose, onSearch, onClear, initialQuery =
                                                 transition: { duration: 0.1 }
                                             }}
                                             onClick={handleClearSearch}
+                                            type="button"
+                                            aria-label="Hapus pencarian"
                                             className="absolute right-4 p-1.5 rounded-xl hover:bg-[#EDE3CD] text-[#8B7355] hover:text-[#5C4B37] transition-colors duration-300"
                                         >
                                             <motion.svg
