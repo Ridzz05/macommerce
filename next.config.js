@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'down-id.img.susercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'p16-images-sign-sg.tokopedia-static.net',
+      },
     ],
   },
 }

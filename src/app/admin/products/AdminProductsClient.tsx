@@ -211,162 +211,192 @@ export default function AdminProductsClient() {
         </p>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white border border-[#EDE3CD] rounded-xl p-4 sm:p-6 shadow-sm space-y-4"
-      >
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="text-sm text-[#5C4B37] font-medium">
-            Nama Produk
-            <input
-              type="text"
-              value={form.name}
-              onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
-          <label className="text-sm text-[#5C4B37] font-medium">
-            Harga (IDR)
-            <input
-              type="number"
-              value={form.price}
-              onChange={(event) => setForm((prev) => ({ ...prev, price: event.target.value }))}
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
-          <label className="text-sm text-[#5C4B37] font-medium sm:col-span-2">
-            Image URL Utama
-            <input
-              type="text"
-              value={form.imageUrl}
-              onChange={(event) => setForm((prev) => ({ ...prev, imageUrl: event.target.value }))}
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
-          <label className="text-sm text-[#5C4B37] font-medium sm:col-span-2">
-            Images Tambahan (satu per baris)
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white border border-[#EDE3CD] rounded-xl p-4 sm:p-6 shadow-sm space-y-4"
+        >
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="text-sm text-[#5C4B37] font-medium">
+              Nama Produk
+              <input
+                type="text"
+                value={form.name}
+                onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium">
+              Harga (IDR)
+              <input
+                type="number"
+                value={form.price}
+                onChange={(event) => setForm((prev) => ({ ...prev, price: event.target.value }))}
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium sm:col-span-2">
+              Image URL Utama
+              <input
+                type="text"
+                value={form.imageUrl}
+                onChange={(event) => setForm((prev) => ({ ...prev, imageUrl: event.target.value }))}
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium sm:col-span-2">
+              Images Tambahan (satu per baris)
+              <textarea
+                rows={3}
+                value={form.imagesText}
+                onChange={(event) => setForm((prev) => ({ ...prev, imagesText: event.target.value }))}
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="text-sm text-[#5C4B37] font-medium">
+              Kategori
+              <select
+                value={form.category}
+                onChange={(event) =>
+                  setForm((prev) => ({ ...prev, category: event.target.value as Category }))
+                }
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium">
+              Demo URL (opsional)
+              <input
+                type="text"
+                value={form.demoUrl}
+                onChange={(event) => setForm((prev) => ({ ...prev, demoUrl: event.target.value }))}
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+          </div>
+
+          <label className="text-sm text-[#5C4B37] font-medium block">
+            Deskripsi
             <textarea
-              rows={3}
-              value={form.imagesText}
-              onChange={(event) => setForm((prev) => ({ ...prev, imagesText: event.target.value }))}
+              rows={4}
+              value={form.description}
+              onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))}
               className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
             />
           </label>
-        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="text-sm text-[#5C4B37] font-medium">
-            Kategori
-            <select
-              value={form.category}
-              onChange={(event) =>
-                setForm((prev) => ({ ...prev, category: event.target.value as Category }))
-              }
+          <label className="text-sm text-[#5C4B37] font-medium block">
+            Fitur (satu per baris)
+            <textarea
+              rows={4}
+              value={form.featuresText}
+              onChange={(event) => setForm((prev) => ({ ...prev, featuresText: event.target.value }))}
               className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+            />
+          </label>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="text-sm text-[#5C4B37] font-medium">
+              Tokopedia
+              <input
+                type="text"
+                value={form.marketplace.tokopedia}
+                onChange={(event) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    marketplace: { ...prev.marketplace, tokopedia: event.target.value },
+                  }))
+                }
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium">
+              Lazada
+              <input
+                type="text"
+                value={form.marketplace.lazada}
+                onChange={(event) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    marketplace: { ...prev.marketplace, lazada: event.target.value },
+                  }))
+                }
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium">
+              TikTok Shop
+              <input
+                type="text"
+                value={form.marketplace.tiktokshop}
+                onChange={(event) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    marketplace: { ...prev.marketplace, tiktokshop: event.target.value },
+                  }))
+                }
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+          </div>
+
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          {success && <p className="text-sm text-green-700">{success}</p>}
+
+          <div className="sticky bottom-4 bg-white/95 backdrop-blur border border-[#EDE3CD] rounded-xl px-3 py-2 flex flex-wrap gap-3 justify-end shadow-sm">
+            <button
+              type="submit"
+              disabled={isSaving}
+              className="px-4 py-2 rounded-lg bg-[#5C4B37] text-white text-sm font-medium hover:bg-[#3D3224] disabled:opacity-70"
             >
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="text-sm text-[#5C4B37] font-medium">
-            Demo URL (opsional)
-            <input
-              type="text"
-              value={form.demoUrl}
-              onChange={(event) => setForm((prev) => ({ ...prev, demoUrl: event.target.value }))}
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
+              {isSaving ? 'Menyimpan...' : editingId ? 'Simpan Perubahan' : 'Tambah Produk'}
+            </button>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="px-4 py-2 rounded-lg border border-[#EDE3CD] text-sm text-[#5C4B37] hover:bg-[#F5ECD6]"
+            >
+              Batalkan
+            </button>
+          </div>
+        </form>
+
+        <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 sm:p-5 shadow-sm h-fit sticky top-24">
+          <p className="text-xs font-semibold text-[#5C4B37]">Preview</p>
+          <div className="mt-3 border border-[#EDE3CD] rounded-lg overflow-hidden bg-[#FDF6E3]">
+            <div className="aspect-[4/3] bg-[#EDE3CD] flex items-center justify-center text-xs text-[#8B7355]">
+              {form.imageUrl ? 'Gambar Utama' : 'Belum ada gambar'}
+            </div>
+            <div className="p-3">
+              {form.category && (
+                <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full">
+                  {form.category}
+                </span>
+              )}
+              <p className="mt-2 text-sm font-semibold text-[#5C4B37]">
+                {form.name || 'Nama produk'}
+              </p>
+              <p className="text-xs text-[#8B7355] mt-1">
+                {form.price ? `Rp ${Number(form.price || 0).toLocaleString('id-ID')}` : 'Harga belum diisi'}
+              </p>
+              <p className="text-xs text-[#8B7355] mt-2 line-clamp-3">
+                {form.description || 'Tulis deskripsi singkat untuk memberi konteks produk.'}
+              </p>
+            </div>
+          </div>
+          <p className="mt-3 text-xs text-[#8B7355]">
+            Preview hanya menampilkan ringkasan. Gambar akan tampil saat URL valid.
+          </p>
         </div>
-
-        <label className="text-sm text-[#5C4B37] font-medium block">
-          Deskripsi
-          <textarea
-            rows={4}
-            value={form.description}
-            onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))}
-            className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-          />
-        </label>
-
-        <label className="text-sm text-[#5C4B37] font-medium block">
-          Fitur (satu per baris)
-          <textarea
-            rows={4}
-            value={form.featuresText}
-            onChange={(event) => setForm((prev) => ({ ...prev, featuresText: event.target.value }))}
-            className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-          />
-        </label>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="text-sm text-[#5C4B37] font-medium">
-            Tokopedia
-            <input
-              type="text"
-              value={form.marketplace.tokopedia}
-              onChange={(event) =>
-                setForm((prev) => ({
-                  ...prev,
-                  marketplace: { ...prev.marketplace, tokopedia: event.target.value },
-                }))
-              }
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
-          <label className="text-sm text-[#5C4B37] font-medium">
-            Lazada
-            <input
-              type="text"
-              value={form.marketplace.lazada}
-              onChange={(event) =>
-                setForm((prev) => ({
-                  ...prev,
-                  marketplace: { ...prev.marketplace, lazada: event.target.value },
-                }))
-              }
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
-          <label className="text-sm text-[#5C4B37] font-medium">
-            TikTok Shop
-            <input
-              type="text"
-              value={form.marketplace.tiktokshop}
-              onChange={(event) =>
-                setForm((prev) => ({
-                  ...prev,
-                  marketplace: { ...prev.marketplace, tiktokshop: event.target.value },
-                }))
-              }
-              className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-            />
-          </label>
-        </div>
-
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        {success && <p className="text-sm text-green-700">{success}</p>}
-
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="submit"
-            disabled={isSaving}
-            className="px-4 py-2 rounded-lg bg-[#5C4B37] text-white text-sm font-medium hover:bg-[#3D3224] disabled:opacity-70"
-          >
-            {isSaving ? 'Menyimpan...' : editingId ? 'Simpan Perubahan' : 'Tambah Produk'}
-          </button>
-          <button
-            type="button"
-            onClick={resetForm}
-            className="px-4 py-2 rounded-lg border border-[#EDE3CD] text-sm text-[#5C4B37] hover:bg-[#F5ECD6]"
-          >
-            Batalkan
-          </button>
-        </div>
-      </form>
+      </div>
 
       <div className="mt-8">
         <h2 className="text-lg font-semibold text-[#5C4B37] mb-3">Daftar Produk</h2>
