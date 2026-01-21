@@ -7,19 +7,20 @@ export const metadata: Metadata = {
     default: "MaCommerce — Smart Picks & Curated Worlds",
   },
   description:
-    "Kurasi rekomendasi produk keren & berguna dari berbagai kategori: gadget, smart home, lifestyle gear, digital tools, template, dan source code. Jelajahi, bandingkan, lalu beli lewat link rekomendasi.",
+    "MaCommerce adalah platform discovery berbasis affiliate: worlds tematik, rekomendasi singkat, dan link ke toko resmi atau TikTok Shop untuk transaksi.",
   keywords: [
     "macommerce",
     "rekomendasi produk",
     "curated picks",
-    "affiliate products",
+    "affiliate discovery",
     "gadget",
     "smart home",
     "digital tools",
     "template",
-    "source code",
+    "subscription tools",
     "lifestyle gear",
     "creator tools",
+    "tiktok shop affiliate",
   ],
   authors: [{ name: "MaCommerce", url: "https://macommerce.shop" }],
   creator: "MaCommerce",
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "MaCommerce",
     title: "MaCommerce — Smart Picks & Curated Worlds",
     description:
-      "Kurasi rekomendasi produk keren & berguna. Jelajahi worlds: RC World, Smart Home, Digital Tools, Lifestyle Gear, Creator Tools.",
+      "Platform discovery berbasis affiliate: worlds tematik, rekomendasi singkat, dan link ke toko resmi atau TikTok Shop.",
     images: [
       {
         url: "/images/og-image.jpg",
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MaCommerce — Smart Picks & Curated Worlds",
     description:
-      "Kurasi rekomendasi produk keren & berguna dari berbagai kategori. Smart picks, not random.",
+      "Platform discovery berbasis affiliate: worlds tematik, rekomendasi singkat, dan link ke toko resmi atau TikTok Shop.",
     images: ["/images/og-image.jpg"],
     creator: "@macommerce_id",
     site: "@macommerce_id",
@@ -76,7 +77,7 @@ export const metadata: Metadata = {
       { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", type: "image/x-icon" },
     ],
-    apple: "/icons/icon-192.png",
+    apple: "/apple-touch-icon.png",
   },
 
   other: {
