@@ -25,7 +25,9 @@ export default function HomeClient({ products, worldCategory, worldProducts }: H
   }, [searchQuery])
 
   const worldTiles = useMemo<WorldTile[]>(() => {
-    const picked = worldProducts.slice(0, 9).map((product) => ({ type: 'product', product }))
+    const picked = worldProducts
+      .slice(0, 9)
+      .map((product) => ({ type: 'product' as const, product }))
     const placeholders = Array.from({ length: Math.max(0, 9 - picked.length) }, (_, index) => ({
       type: 'placeholder' as const,
       key: `placeholder-${index}`,
