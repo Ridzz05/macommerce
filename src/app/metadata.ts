@@ -1,89 +1,88 @@
-import { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://macommerce.shop'),
+  metadataBase: new URL("https://macommerce.shop"),
   title: {
-    template: '%s | MaCommerce - Marketplace Terpercaya Indonesia',
-    default: 'MaCommerce - Belanja Online Mudah & Aman | Marketplace Terpercaya Indonesia',
+    template: "%s | MaCommerce",
+    default: "MaCommerce — Smart Picks & Curated Worlds",
   },
-  description: 'MaCommerce adalah marketplace terpercaya di Indonesia yang menyediakan berbagai produk berkualitas seperti fashion, kecantikan, elektronik, dan kebutuhan sehari-hari dengan harga terbaik. Nikmati pengalaman belanja online yang aman dan nyaman.',
+  description:
+    "Kurasi rekomendasi produk keren & berguna dari berbagai kategori: gadget, smart home, lifestyle gear, digital tools, template, dan source code. Jelajahi, bandingkan, lalu beli lewat link rekomendasi.",
   keywords: [
-    'marketplace indonesia',
-    'belanja online',
-    'jual beli online',
-    'produk berkualitas',
-    'fashion indonesia',
-    'produk kecantikan',
-    'elektronik murah',
-    'marketplace terpercaya',
-    'macommerce',
-    'toko online indonesia'
+    "macommerce",
+    "rekomendasi produk",
+    "curated picks",
+    "affiliate products",
+    "gadget",
+    "smart home",
+    "digital tools",
+    "template",
+    "source code",
+    "lifestyle gear",
+    "creator tools",
   ],
-  authors: [{ 
-    name: 'MaCommerce',
-    url: 'https://macommerce.shop'
-  }],
-  creator: 'MaCommerce Indonesia',
-  publisher: 'MaCommerce',
-  applicationName: 'MaCommerce - Marketplace Indonesia',
-  category: 'marketplace',
+  authors: [{ name: "MaCommerce", url: "https://macommerce.shop" }],
+  creator: "MaCommerce",
+  publisher: "MaCommerce",
+  applicationName: "MaCommerce",
+  category: "shopping",
+
   robots: {
     index: true,
     follow: true,
-    nocache: true,
     googleBot: {
       index: true,
       follow: true,
       noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
+
   openGraph: {
-    type: 'website',
-    locale: 'id_ID',
-    url: 'https://macommerce.shop',
-    siteName: 'MaCommerce',
-    title: 'MaCommerce - Marketplace Terpercaya Indonesia',
-    description: 'Temukan berbagai produk berkualitas dengan harga terbaik di MaCommerce. Marketplace terpercaya dengan pengiriman cepat ke seluruh Indonesia. Belanja online jadi lebih mudah dan aman.',
+    type: "website",
+    locale: "id_ID",
+    url: "https://macommerce.shop",
+    siteName: "MaCommerce",
+    title: "MaCommerce — Smart Picks & Curated Worlds",
+    description:
+      "Kurasi rekomendasi produk keren & berguna. Jelajahi worlds: RC World, Smart Home, Digital Tools, Lifestyle Gear, Creator Tools.",
     images: [
       {
-        url: 'https://macommerce.shop/images/og-image.jpg',
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: 'MaCommerce - Marketplace Indonesia',
-        type: 'image/jpeg',
+        alt: "MaCommerce — Smart Picks & Curated Worlds",
       },
     ],
-    countryName: 'Indonesia',
   },
+
   twitter: {
-    card: 'summary_large_image',
-    title: 'MaCommerce - Marketplace Terpercaya Indonesia',
-    description: 'Temukan berbagai produk berkualitas dengan harga terbaik di MaCommerce. Marketplace terpercaya dengan pengiriman cepat ke seluruh Indonesia. Belanja online jadi lebih mudah dan aman.',
-    images: ['https://macommerce.shop/images/twitter-image.jpg'],
-    creator: '@macommerce_id',
-    site: '@macommerce_id',
+    card: "summary_large_image",
+    title: "MaCommerce — Smart Picks & Curated Worlds",
+    description:
+      "Kurasi rekomendasi produk keren & berguna dari berbagai kategori. Smart picks, not random.",
+    images: ["/images/og-image.jpg"],
+    creator: "@macommerce_id",
+    site: "@macommerce_id",
   },
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-    yahoo: 'your-yahoo-verification-code',
-  },
+
   alternates: {
-    canonical: 'https://macommerce.shop',
-    languages: {
-      'id-ID': 'https://macommerce.shop',
-      'en-US': 'https://macommerce.shop/en',
-    },
+    canonical: "https://macommerce.shop",
   },
+
+  // Favicon setup (SVG + ICO)
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+    ],
+    apple: "/icons/icon-192.png",
+  },
+
   other: {
-    'msapplication-TileColor': '#FDF6E3',
-    'theme-color': '#FDF6E3',
-    'mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-title': 'MaCommerce',
-    'apple-mobile-web-app-status-bar-style': 'default',
-  }
-}; 
+    "msapplication-TileColor": "#FDF6E3",
+    "theme-color": "#FDF6E3",
+  },
+};
