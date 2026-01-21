@@ -71,8 +71,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://macommerce.shop",
   },
-
-  // Favicon setup (SVG + ICO)
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
