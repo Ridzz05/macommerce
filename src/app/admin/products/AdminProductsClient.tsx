@@ -51,8 +51,42 @@ export default function AdminProductsClient() {
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [listQuery, setListQuery] = useState('')
 
   const hasProducts = useMemo(() => products.length > 0, [products])
+  const totalProducts = products.length
+  const categoryCount = useMemo(
+    () => new Set(products.map((product) => product.category)).size,
+    [products],
+  )
+  const marketplaceCount = useMemo(
+    () =>
+      products.reduce((total, product) => {
+        return (
+          total +
+          (product.marketplace.tokopedia ? 1 : 0) +
+          (product.marketplace.lazada ? 1 : 0) +
+          (product.marketplace.tiktokshop ? 1 : 0)
+        )
+      }, 0),
+    [products],
+  )
+  const averagePrice = useMemo(() => {
+    if (totalProducts === 0) {
+      return 0
+    }
+    const totalPrice = products.reduce((sum, product) => sum + product.price, 0)
+    return Math.round(totalPrice / totalProducts)
+  }, [products, totalProducts])
+  const filteredList = useMemo(() => {
+    if (!listQuery.trim()) {
+      return products
+    }
+    const query = listQuery.toLowerCase()
+    return products.filter((product) =>
+      `${product.name} ${product.category}`.toLowerCase().includes(query),
+    )
+  }, [listQuery, products])
 
   const fetchProducts = useCallback(async () => {
     setIsLoading(true)
@@ -203,16 +237,31 @@ export default function AdminProductsClient() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-[#5C4B37]">Admin Produk</h1>
-        <p className="text-sm text-[#8B7355] mt-1">
-          Kelola data produk, deskripsi, dan detail marketplace dari sini.
-        </p>
-      </div>
+    <div className="space-y-8">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
+          <p className="text-xs text-[#8B7355]">Total Produk</p>
+          <p className="mt-2 text-2xl font-semibold text-[#5C4B37]">{totalProducts}</p>
+        </div>
+        <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
+          <p className="text-xs text-[#8B7355]">World Aktif</p>
+          <p className="mt-2 text-2xl font-semibold text-[#5C4B37]">{categoryCount}</p>
+        </div>
+        <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
+          <p className="text-xs text-[#8B7355]">Link Marketplace</p>
+          <p className="mt-2 text-2xl font-semibold text-[#5C4B37]">{marketplaceCount}</p>
+        </div>
+        <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
+          <p className="text-xs text-[#8B7355]">Rata-rata Harga</p>
+          <p className="mt-2 text-2xl font-semibold text-[#5C4B37]">
+            {averagePrice ? `Rp ${averagePrice.toLocaleString('id-ID')}` : '—'}
+          </p>
+        </div>
+      </section>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <form
+          id="product-form"
           onSubmit={handleSubmit}
           className="bg-white border border-[#EDE3CD] rounded-xl p-4 sm:p-6 shadow-sm space-y-4"
         >
@@ -369,75 +418,159 @@ export default function AdminProductsClient() {
           </div>
         </form>
 
-        <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 sm:p-5 shadow-sm h-fit sticky top-24">
-          <p className="text-xs font-semibold text-[#5C4B37]">Preview</p>
-          <div className="mt-3 border border-[#EDE3CD] rounded-lg overflow-hidden bg-[#FDF6E3]">
-            <div className="aspect-[4/3] bg-[#EDE3CD] flex items-center justify-center text-xs text-[#8B7355]">
-              {form.imageUrl ? 'Gambar Utama' : 'Belum ada gambar'}
-            </div>
-            <div className="p-3">
-              {form.category && (
-                <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full">
-                  {form.category}
-                </span>
-              )}
-              <p className="mt-2 text-sm font-semibold text-[#5C4B37]">
-                {form.name || 'Nama produk'}
-              </p>
-              <p className="text-xs text-[#8B7355] mt-1">
-                {form.price ? `Rp ${Number(form.price || 0).toLocaleString('id-ID')}` : 'Harga belum diisi'}
-              </p>
-              <p className="text-xs text-[#8B7355] mt-2 line-clamp-3">
-                {form.description || 'Tulis deskripsi singkat untuk memberi konteks produk.'}
-              </p>
-            </div>
-          </div>
-          <p className="mt-3 text-xs text-[#8B7355]">
-            Preview hanya menampilkan ringkasan. Gambar akan tampil saat URL valid.
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-8">
-        <h2 className="text-lg font-semibold text-[#5C4B37] mb-3">Daftar Produk</h2>
-        {isLoading ? (
-          <div className="text-sm text-[#8B7355]">Memuat produk...</div>
-        ) : !hasProducts ? (
-          <div className="text-sm text-[#8B7355]">Belum ada produk.</div>
-        ) : (
-          <div className="space-y-3">
-            {products.map((product) => (
-              <div
-                key={product.id}
-                className="border border-[#EDE3CD] rounded-xl p-4 bg-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-              >
-                <div>
-                  <p className="text-sm font-semibold text-[#5C4B37]">{product.name}</p>
-                  <p className="text-xs text-[#8B7355] mt-1">
-                    ID {product.id} • {product.category} • Rp {product.price.toLocaleString('id-ID')}
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleEdit(product)}
-                    className="px-3 py-1.5 text-xs font-medium rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6]"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(product.id)}
-                    className="px-3 py-1.5 text-xs font-medium rounded-lg bg-red-600 text-white hover:bg-red-700"
-                  >
-                    Hapus
-                  </button>
-                </div>
+        <div className="space-y-4 sticky top-24 h-fit">
+          <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 sm:p-5 shadow-sm">
+            <p className="text-xs font-semibold text-[#5C4B37]">Preview</p>
+            <div className="mt-3 border border-[#EDE3CD] rounded-lg overflow-hidden bg-[#FDF6E3]">
+              <div className="aspect-[4/3] bg-[#EDE3CD] flex items-center justify-center text-xs text-[#8B7355]">
+                {form.imageUrl ? 'Gambar Utama' : 'Belum ada gambar'}
               </div>
-            ))}
+              <div className="p-3">
+                {form.category && (
+                  <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full">
+                    {form.category}
+                  </span>
+                )}
+                <p className="mt-2 text-sm font-semibold text-[#5C4B37]">
+                  {form.name || 'Nama produk'}
+                </p>
+                <p className="text-xs text-[#8B7355] mt-1">
+                  {form.price
+                    ? `Rp ${Number(form.price || 0).toLocaleString('id-ID')}`
+                    : 'Harga belum diisi'}
+                </p>
+                <p className="text-xs text-[#8B7355] mt-2 line-clamp-3">
+                  {form.description || 'Tulis deskripsi singkat untuk memberi konteks produk.'}
+                </p>
+              </div>
+            </div>
+            <p className="mt-3 text-xs text-[#8B7355]">
+              Preview hanya menampilkan ringkasan. Gambar akan tampil saat URL valid.
+            </p>
           </div>
-        )}
-      </div>
+
+          <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
+            <p className="text-xs font-semibold text-[#5C4B37]">Checklist Kurasi</p>
+            <ul className="mt-3 space-y-2 text-xs text-[#8B7355]">
+              <li>Pastikan judul jelas dan singkat.</li>
+              <li>Tulis konteks: untuk siapa & kenapa menarik.</li>
+              <li>Tambahkan minimal 1 link marketplace.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white border border-[#EDE3CD] rounded-xl shadow-sm">
+        <div className="p-4 sm:p-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-base font-semibold text-[#5C4B37]">Daftar Produk</h2>
+            <p className="text-xs text-[#8B7355] mt-1">
+              Kelola produk yang sudah dipublikasikan dan update detailnya.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <input
+              type="text"
+              value={listQuery}
+              onChange={(event) => setListQuery(event.target.value)}
+              placeholder="Cari nama atau kategori..."
+              className="w-full sm:w-60 rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              aria-label="Cari produk"
+            />
+            {listQuery && (
+              <button
+                type="button"
+                onClick={() => setListQuery('')}
+                className="px-3 py-2 rounded-lg border border-[#EDE3CD] text-xs text-[#5C4B37] hover:bg-[#F5ECD6]"
+              >
+                Reset
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="border-t border-[#EDE3CD]">
+          {isLoading ? (
+            <div className="text-sm text-[#8B7355] p-4">Memuat produk...</div>
+          ) : !hasProducts ? (
+            <div className="text-sm text-[#8B7355] p-4">Belum ada produk.</div>
+          ) : filteredList.length === 0 ? (
+            <div className="text-sm text-[#8B7355] p-4">
+              Tidak ada produk yang cocok dengan pencarian.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead className="text-xs uppercase text-[#8B7355] bg-[#FDF6E3]">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-semibold">Produk</th>
+                    <th className="px-4 py-3 text-left font-semibold">Kategori</th>
+                    <th className="px-4 py-3 text-left font-semibold">Harga</th>
+                    <th className="px-4 py-3 text-left font-semibold">Marketplace</th>
+                    <th className="px-4 py-3 text-right font-semibold">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#EDE3CD]">
+                  {filteredList.map((product) => {
+                    const activeMarketplaces = [
+                      product.marketplace.tokopedia && 'Tokopedia',
+                      product.marketplace.lazada && 'Lazada',
+                      product.marketplace.tiktokshop && 'TikTok Shop',
+                    ].filter(Boolean) as string[]
+
+                    return (
+                      <tr key={product.id} className="hover:bg-[#FFFBF2]">
+                        <td className="px-4 py-3">
+                          <p className="text-sm font-semibold text-[#5C4B37]">{product.name}</p>
+                          <p className="text-xs text-[#8B7355] mt-1">ID {product.id}</p>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-[#5C4B37]">{product.category}</td>
+                        <td className="px-4 py-3 text-sm text-[#5C4B37]">
+                          Rp {product.price.toLocaleString('id-ID')}
+                        </td>
+                        <td className="px-4 py-3">
+                          {activeMarketplaces.length > 0 ? (
+                            <div className="flex flex-wrap gap-1">
+                              {activeMarketplaces.map((label) => (
+                                <span
+                                  key={label}
+                                  className="px-2 py-0.5 rounded-full text-[10px] bg-[#EDE3CD] text-[#5C4B37]"
+                                >
+                                  {label}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="text-xs text-[#C3B091]">Belum ada</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2 justify-end">
+                            <button
+                              type="button"
+                              onClick={() => handleEdit(product)}
+                              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-[#EDE3CD] text-[#5C4B37] hover:bg-[#F5ECD6]"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDelete(product.id)}
+                              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-red-600 text-white hover:bg-red-700"
+                            >
+                              Hapus
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   )
 }

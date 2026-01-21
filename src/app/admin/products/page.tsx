@@ -1,14 +1,19 @@
 import AdminProductsClient from './AdminProductsClient'
 import { AdminProtectedRoute } from '@/app/components/AdminProtectedRoute'
+import AdminShell from '@/app/components/admin/AdminShell'
 
 export const dynamic = 'force-dynamic'
 
 export default function AdminProductsPage() {
   return (
     <AdminProtectedRoute>
-      <div className="pt-20 pb-12 bg-[#FFFBF2]">
+      <AdminShell
+        title="Produk"
+        hideHeader
+        showBackLink={false}
+      >
         <AdminProductsClient />
-      </div>
+      </AdminShell>
     </AdminProtectedRoute>
   )
 }
