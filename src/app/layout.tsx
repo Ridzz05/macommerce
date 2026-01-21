@@ -33,7 +33,7 @@ export default function RootLayout({
         />
         <link 
           rel="icon" 
-          href="/favicon.svg" 
+          href="/favicon.ico" 
           sizes="any" 
         />
         <link 

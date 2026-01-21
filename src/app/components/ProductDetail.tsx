@@ -27,7 +27,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
       price: product.price,
       priceCurrency: 'IDR',
       availability: 'https://schema.org/InStock',
-      url: `https://macommerce.com/product/${product.name.toLowerCase().replace(/ /g, '-')}`,
+      url: `https://macommerce.shop/product/${product.name.toLowerCase().replace(/ /g, '-')}`,
     },
     brand: {
       '@type': 'Brand',

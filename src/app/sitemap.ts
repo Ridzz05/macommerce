@@ -15,18 +15,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  // Get unique categories using filter and indexOf
-  const categories = products
-    .map(product => product.category)
-    .filter((value, index, self) => self.indexOf(value) === index)
-
-  const categoryUrls = categories.map((category) => ({
-    url: `${baseUrl}/category/${slugify(category)}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }))
-
   return [
     {
       url: baseUrl,
@@ -35,12 +23,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${baseUrl}/products`,
+      url: `${baseUrl}/about`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
+      changeFrequency: 'monthly',
+      priority: 0.7,
     },
     ...productUrls,
-    ...categoryUrls,
   ]
 } 
