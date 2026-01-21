@@ -1,6 +1,8 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { MouseEvent } from 'react'
+import { useReducedMotion } from 'framer-motion'
 import { categories, type Product } from '../data/products'
 import { useSearch } from '../context/SearchContext'
 import { CategoryFilterClient } from './CategoryFilterClient'
@@ -17,6 +19,7 @@ type WorldTile = { type: 'product'; product: Product } | { type: 'placeholder'; 
 export default function HomeClient({ products, worldCategory, worldProducts }: HomeClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const { searchQuery, setSearchQuery } = useSearch()
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     if (searchQuery === '') {
@@ -35,17 +38,39 @@ export default function HomeClient({ products, worldCategory, worldProducts }: H
     return [...picked, ...placeholders]
   }, [worldProducts])
 
+  const scrollToSection = useCallback(
+    (sectionId: string) => {
+      const target = document.getElementById(sectionId)
+      if (!target) {
+        return
+      }
+
+      target.scrollIntoView({
+        behavior: shouldReduceMotion ? 'auto' : 'smooth',
+        block: 'start',
+      })
+    },
+    [shouldReduceMotion],
+  )
+
   const handleExploreWorld = useCallback(() => {
     if (worldCategory) {
       setSelectedCategory(worldCategory)
       setSearchQuery('')
     }
 
-    const target = document.getElementById('browse-worlds')
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }, [setSearchQuery, worldCategory])
+    requestAnimationFrame(() => {
+      scrollToSection('browse-worlds')
+    })
+  }, [scrollToSection, setSearchQuery, worldCategory])
+
+  const handleHeroScroll = useCallback(
+    (sectionId: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault()
+      scrollToSection(sectionId)
+    },
+    [scrollToSection],
+  )
 
   return (
     <div className="pt-20 bg-[#FFFBF2]">
@@ -65,12 +90,14 @@ export default function HomeClient({ products, worldCategory, worldProducts }: H
             <div className="flex flex-wrap gap-3">
               <a
                 href="#world-of-week"
+                onClick={handleHeroScroll('world-of-week')}
                 className="px-4 py-2 rounded-lg bg-[#5C4B37] text-white text-sm font-medium hover:bg-[#3D3224] transition-colors"
               >
                 World of the Week
               </a>
               <a
                 href="#browse-worlds"
+                onClick={handleHeroScroll('browse-worlds')}
                 className="px-4 py-2 rounded-lg border border-[#EDE3CD] text-sm font-medium text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
               >
                 Explore Worlds

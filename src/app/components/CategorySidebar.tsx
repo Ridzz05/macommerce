@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Category } from '../data/products';
 import {
   X,
@@ -54,6 +54,14 @@ const CategorySidebar = ({
   selectedCategory,
   onSelectCategory,
 }: CategorySidebarProps) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  const overlayTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { duration: 0.2, ease: 'easeOut' };
+  const panelTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : { type: 'tween', duration: 0.28, ease: [0.22, 1, 0.36, 1] };
   const handleSelect = (category: Category | null) => {
     onSelectCategory(category);
     onClose();
@@ -68,6 +76,7 @@ const CategorySidebar = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={overlayTransition}
             className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
             onClick={onClose}
           />
@@ -77,8 +86,11 @@ const CategorySidebar = ({
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed left-0 top-0 bottom-0 w-full sm:w-[280px] z-50 bg-[#FDF6E3] flex flex-col"
+            transition={panelTransition}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Pilih kategori"
+            className="fixed left-0 top-0 bottom-0 w-full sm:w-[280px] z-50 bg-[#FDF6E3] flex flex-col will-change-transform"
           >
             {/* Header */}
             <div className="sticky top-0 bg-[#FDF6E3] p-4 border-b border-[#EDE3CD]">
@@ -88,7 +100,9 @@ const CategorySidebar = ({
                 </h3>
                 <motion.button
                   onClick={onClose}
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+                  type="button"
+                  aria-label="Tutup kategori"
                   className="p-2 hover:bg-[#EDE3CD] rounded-lg transition-colors"
                 >
                   <X className="w-5 h-5 text-[#5C4B37]" />
