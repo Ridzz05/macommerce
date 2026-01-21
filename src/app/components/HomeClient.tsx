@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { MouseEvent } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { categories, type Product } from '../data/products'
 import { useSearch } from '../context/SearchContext'
@@ -64,66 +63,9 @@ export default function HomeClient({ products, worldCategory, worldProducts }: H
     })
   }, [scrollToSection, setSearchQuery, worldCategory])
 
-  const handleHeroScroll = useCallback(
-    (sectionId: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-      event.preventDefault()
-      scrollToSection(sectionId)
-    },
-    [scrollToSection],
-  )
-
   return (
     <div className="pt-20 bg-[#FFFBF2]">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] items-center">
-          <div className="space-y-4">
-            <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full">
-              Smart discovery brand
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-semibold text-[#5C4B37] leading-tight">
-              Curated picks, not random products.
-            </h1>
-            <p className="text-sm sm:text-base text-[#8B7355] max-w-xl">
-              MaCommerce adalah ruang kurasi yang menghubungkan perhatian di media sosial dengan
-              transaksi di toko resmi atau TikTok Shop affiliate.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="#world-of-week"
-                onClick={handleHeroScroll('world-of-week')}
-                className="px-4 py-2 rounded-lg bg-[#5C4B37] text-white text-sm font-medium hover:bg-[#3D3224] transition-colors"
-              >
-                World of the Week
-              </a>
-              <a
-                href="#browse-worlds"
-                onClick={handleHeroScroll('browse-worlds')}
-                className="px-4 py-2 rounded-lg border border-[#EDE3CD] text-sm font-medium text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
-              >
-                Explore Worlds
-              </a>
-            </div>
-          </div>
-
-          <div className="bg-white border border-[#EDE3CD] rounded-2xl p-4 sm:p-5 shadow-sm">
-            <p className="text-xs font-semibold text-[#5C4B37]">Kenapa MaCommerce?</p>
-            <ul className="mt-3 space-y-2 text-xs text-[#8B7355]">
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#5C4B37]" />
-                Kurasi mingguan yang selaras dengan konten IG/TikTok.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#5C4B37]" />
-                Konteks jelas: untuk siapa, kenapa menarik, plus-minus.
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#5C4B37]" />
-                Beli di toko resmi atau TikTok Shop affiliate.
-              </li>
-            </ul>
-          </div>
-        </section>
-
         <section
           id="world-of-week"
           className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] items-start"
@@ -189,7 +131,7 @@ export default function HomeClient({ products, worldCategory, worldProducts }: H
 
         <div
           id="browse-worlds"
-          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 mt-12"
+          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 mt-10"
         >
           <CategoryFilterClient
             selectedCategory={selectedCategory}
