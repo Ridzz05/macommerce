@@ -81,8 +81,8 @@ export default function Footer() {
               <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
                 alt="Shopee"
-                width={45}
-                height={45}
+                width={62}
+                height={62}
                 className="object-contain"
               />
             </a>
