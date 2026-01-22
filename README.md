@@ -1,33 +1,71 @@
-# 🛒 MaCommerce — Modern E-Commerce Platform
+# MaCommerce — Curated Discovery Platform
 
-**MaCommerce** is a modern e-commerce platform developed with **Next.js 13**, **Tailwind CSS**, and **Framer Motion** technologies, designed to provide a fast, elegant, and responsive shopping experience on all devices.
+MaCommerce adalah platform discovery berbasis affiliate. Fokusnya **kurasi produk** (bukan marketplace tradisional): menampilkan rekomendasi singkat dan mengarahkan pengguna ke toko resmi atau TikTok Shop untuk transaksi.
 
 ---
 
 ## ✨ Key Features
 
-- ⚡ **High Performance** — Powered by **Next.js 13 App Router**, super-fast rendering with *server components* and *route caching*.
-- 🎨 **Responsive Design** — UI built with **Tailwind CSS**, automatically adjusting the display for mobile, tablet, and desktop.
-- 🛍️ **Dynamic Product Module** — Display product listings, category filters, search, and interactive animations via **Framer Motion**.
-- 💳 **Modern Payment Integration** — Ready to integrate with gateways such as Midtrans / Stripe / QRIS.
-- 🧾 **Elegant Checkout Page** — Simple yet aesthetic checkout flow, prioritizing UX.
-- 🌐 **SEO & Social Preview** — Automatic metadata optimization to improve website visibility.
+- **Worlds & Kurasi** — produk dikelompokkan dalam world tematik untuk konteks yang jelas.
+- **Filter & Search** — filter kategori + pencarian cepat via modal.
+- **Product Detail** — deskripsi, fitur, dan link marketplace (Tokopedia, Lazada, TikTok Shop).
+- **Admin Dashboard** — overview metric, form input produk, preview, dan tabel manajemen.
+- **SEO Ready** — metadata lengkap, sitemap, robots, dan OpenGraph/Twitter preview.
+- **Brand Assets** — favicon & OG image sudah pakai logo MaCommerce.
 
 ---
 
-## 🧱 Technologies Used
+## 🧱 Tech Stack
 
-| Category | Technology |
-|-----------|------------|
-| Framework | [Next.js 13](https://nextjs.org) |
-| Styling | [Tailwind CSS](https://tailwindcss.com) |
-| Animation | [Framer Motion](https://www.framer.com/motion/) |
-| Language | TypeScript, JavaScript |
-| Hosting | [Vercel](https://vercel.com) |
-| Tools | ESLint, Prettier, GitHub Actions |
+- Next.js App Router
+- Tailwind CSS
+- Framer Motion
+- Vercel KV (Upstash Redis)
+- Lucide Icons
+- Vercel Speed Insights
 
 ---
 
-## 🚀 Live Demo
+## 🚀 Getting Started
 
-🔗 [Click here to see the demo](https://macommerce.shop)
+```bash
+npm install
+npm run dev
+```
+
+### Environment Variables
+Buat `.env.local` dengan variabel berikut:
+
+```
+KV_REST_API_URL=
+KV_REST_API_TOKEN=
+KV_REST_API_READ_ONLY_TOKEN=
+KV_URL=
+REDIS_URL=
+ADMIN_PASSWORD=
+```
+
+> `ADMIN_PASSWORD` digunakan untuk login admin.
+
+---
+
+## 🔗 Routes
+
+- `/` — Homepage (kurasi + grid produk)
+- `/about` — Tentang MaCommerce
+- `/product/[slug]` — Detail produk
+- `/admin/login` — Login admin
+- `/admin/products` — Dashboard admin (manajemen produk)
+
+---
+
+## ✅ SEO & Verification
+
+- Sitemap tersedia di `https://macommerce.shop/sitemap.xml`
+- File verifikasi Google Search Console disimpan di `public/google479e96830e6cfdaf.html`
+
+---
+
+## 🌐 Live
+
+https://macommerce.shop
