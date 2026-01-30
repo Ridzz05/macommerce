@@ -140,7 +140,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                             onClick={(e) => e.stopPropagation()}
                         >
                             <motion.div 
-                                className="relative w-full aspect-[4/3] sm:aspect-square bg-[#EDE3CD] flex-shrink-0"
+                                className="relative w-full aspect-square bg-[#EDE3CD] flex-shrink-0"
                                 variants={imageVariants}
                             >
                                 <motion.div

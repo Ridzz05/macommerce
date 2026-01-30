@@ -1,5 +1,14 @@
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Category } from '../data/products';
+import { 
+  XMarkIcon, 
+  Squares2X2Icon, 
+  CheckIcon, 
+  CheckCircleIcon, 
+  ComputerDesktopIcon, 
+  WrenchScrewdriverIcon,
+  RocketLaunchIcon
+} from '@heroicons/react/24/outline';
 
 interface CategorySidebarProps {
   isOpen: boolean;
@@ -10,90 +19,15 @@ interface CategorySidebarProps {
 }
 
 /**
- * Modern Custom Icon Components
- * Using vibrant gradients and modern designs
+ * Category Icons - Mapped to HeroIcons
  */
-
-// Close Icon - Modern X with rounded edges
-const CloseIcon = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-// Grid Icon - Modern 4-square grid
-const GridIcon = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" opacity="0.8"/>
-    <rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor" opacity="0.8"/>
-    <rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor" opacity="0.8"/>
-    <rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor" opacity="0.8"/>
-  </svg>
-);
-
-// Check Icon - Modern checkmark
-const CheckIcon = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-// Check Circle Icon - Modern circled checkmark
-const CheckCircleIcon = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.9"/>
-    <path d="M16 9L10.5 14.5L8 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-/**
- * Category Icons - Modern & Vibrant
- */
-
-// Digital Product Icon - Modern laptop/screen with shopping elements
-const DigitalProductIcon = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="digitalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#667EEA" />
-        <stop offset="100%" stopColor="#764BA2" />
-      </linearGradient>
-    </defs>
-    {/* Laptop screen */}
-    <rect x="2" y="4" width="20" height="12" rx="1.5" stroke="url(#digitalGrad)" strokeWidth="2" fill="none"/>
-    {/* Keyboard base */}
-    <path d="M1 16H23L21 19H3L1 16Z" fill="url(#digitalGrad)" opacity="0.7"/>
-    {/* Download/Product icon */}
-    <path d="M12 7V12M12 12L10 10M12 12L14 10" stroke="url(#digitalGrad)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="12" cy="13" r="0.8" fill="url(#digitalGrad)"/>
-  </svg>
-);
-
-// Jasa Online Icon - Modern tools/service with gradient
-const JasaOnlineIcon = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="jasaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#F093FB" />
-        <stop offset="50%" stopColor="#F5576C" />
-        <stop offset="100%" stopColor="#FD8D3C" />
-      </linearGradient>
-    </defs>
-    {/* Wrench */}
-    <path d="M14.7 6.3C15.1 5.9 15.1 5.3 14.7 4.9L13.1 3.3C12.7 2.9 12.1 2.9 11.7 3.3L3.3 11.7C2.9 12.1 2.9 12.7 3.3 13.1L4.9 14.7C5.3 15.1 5.9 15.1 6.3 14.7L14.7 6.3Z" 
-          fill="url(#jasaGrad)" opacity="0.8"/>
-    {/* Gear */}
-    <circle cx="17" cy="17" r="4" stroke="url(#jasaGrad)" strokeWidth="1.8" fill="none"/>
-    <circle cx="17" cy="17" r="1.5" fill="url(#jasaGrad)"/>
-    {/* Gear teeth */}
-    <path d="M17 13V14M17 20V21M21 17H20M14 17H13" stroke="url(#jasaGrad)" strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>
-);
-
 const WORLD_ICON_MAP: Record<Category, React.ComponentType<{ className?: string }>> = {
-  'Digital Product': DigitalProductIcon,
-  'Jasa Online': JasaOnlineIcon,
+  'Digital Product': ComputerDesktopIcon,
+  'Jasa Online': WrenchScrewdriverIcon,
+  'Growth Tools': RocketLaunchIcon,
 };
+
+
 
 const CategorySidebar = ({
   isOpen,
@@ -153,7 +87,7 @@ const CategorySidebar = ({
                   aria-label="Tutup kategori"
                   className="p-2 hover:bg-[#EDE3CD] rounded-lg transition-colors"
                 >
-                  <CloseIcon className="w-5 h-5 text-[#5C4B37]" />
+                  <XMarkIcon className="w-5 h-5 text-[#5C4B37]" />
                 </motion.button>
               </div>
             </div>
@@ -171,7 +105,7 @@ const CategorySidebar = ({
                 }`}
               >
                 <div className="flex items-center">
-                  <GridIcon className="w-5 h-5 mr-3 flex-shrink-0" />
+                  <Squares2X2Icon className="w-5 h-5 mr-3 flex-shrink-0" />
                   <span className="text-base">All Worlds</span>
                   {!selectedCategory && (
                     <motion.div
