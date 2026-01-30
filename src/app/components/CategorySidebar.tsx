@@ -43,7 +43,7 @@ const CategorySidebar = ({
     : { duration: 0.2, ease: 'easeOut' };
   const panelTransition = shouldReduceMotion
     ? { duration: 0 }
-    : { type: 'tween', duration: 0.28, ease: [0.22, 1, 0.36, 1] };
+    : { type: 'spring', stiffness: 300, damping: 30, mass: 1 };
   const handleSelect = (category: Category | null) => {
     onSelectCategory(category);
     onClose();
