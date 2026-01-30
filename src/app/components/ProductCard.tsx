@@ -58,22 +58,36 @@ const contentVariants = {
     }
 };
 
-const imageVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: { 
-        scale: 1, 
-        opacity: 1,
-        transition: {
-            duration: 0.3,
-            ease: "easeOut"
-        }
+const slideVariants = {
+    enter: (direction: number) => {
+        return {
+            x: direction > 0 ? 1000 : -1000,
+            opacity: 0
+        };
+    },
+    center: {
+        zIndex: 1,
+        x: 0,
+        opacity: 1
+    },
+    exit: (direction: number) => {
+        return {
+            zIndex: 0,
+            x: direction < 0 ? 1000 : -1000,
+            opacity: 0
+        };
     }
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
 };
 
 const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, description, features, options = [] }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [[currentImageIndex, direction], setPage] = useState([0, 0]);
     const [step, setStep] = useState<'options' | 'marketplace'>('options');
     const [selectedOption, setSelectedOption] = useState<ProductOption | null>(null);
     
@@ -86,9 +100,22 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
         currency: 'IDR'
     }).format(price);
 
+    const paginate = (newDirection: number) => {
+        setPage([currentImageIndex + newDirection, newDirection]);
+    };
+
+    // Calculate actual index based on page number to handle wrap-around
+    const imageIndex = Math.abs(currentImageIndex % allImages.length);
+    // Fix negative index wrap-around logic if needed (Math.abs works but not circular backwards)
+    // Actually Framer Motion paginate logic usually handles infinite pager. 
+    // Here we have finite loop or infinite circle?
+    // Let's implement robust circular index:
+    const activeIndex = ((currentImageIndex % allImages.length) + allImages.length) % allImages.length;
+
+
     const handleDetailClick = () => {
         setShowDetailModal(true);
-        setCurrentImageIndex(0);
+        setPage([0, 0]);
         document.body.style.overflow = 'hidden';
     };
 
@@ -107,14 +134,6 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
     const handleClosePurchase = () => {
         setShowPurchaseModal(false);
         document.body.style.overflow = 'unset';
-    };
-
-    const nextImage = () => {
-        setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-    };
-
-    const prevImage = () => {
-        setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
     };
 
     return (
@@ -146,77 +165,68 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                         >
                             <motion.div 
                                 className="relative w-full aspect-square bg-[#EDE3CD] flex-shrink-0"
-                                variants={imageVariants}
                             >
-                                <motion.div
-                                    key={currentImageIndex}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="absolute inset-0"
-                                >
-                                    <Image
-                                        src={allImages[currentImageIndex]}
-                                        alt={`${name} - Image ${currentImageIndex + 1}`}
-                                        fill
-                                        className="object-contain"
-                                        sizes="(max-width: 640px) 100vw, 480px"
-                                        priority
-                                    />
-                                </motion.div>
-
-                                {allImages.length > 1 && (
-                                    <>
-                                        {/* Navigation Arrows */}
-                                        <motion.button
-                                            className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/80 text-[#5C4B37] hover:bg-white transition-colors z-10"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                prevImage();
+                                {/* Carousel Image Container */}
+                                <div className="relative w-full h-full overflow-hidden">
+                                    <AnimatePresence initial={false} custom={direction}>
+                                        <motion.div
+                                            key={currentImageIndex}
+                                            custom={direction}
+                                            variants={slideVariants}
+                                            initial="enter"
+                                            animate="center"
+                                            exit="exit"
+                                            transition={{
+                                                x: { type: "spring", stiffness: 300, damping: 30 },
+                                                opacity: { duration: 0.2 }
                                             }}
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                        >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                                            </svg>
-                                        </motion.button>
-                                        <motion.button
-                                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/80 text-[#5C4B37] hover:bg-white transition-colors z-10"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                nextImage();
-                                            }}
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                        >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </motion.button>
+                                            drag="x"
+                                            dragConstraints={{ left: 0, right: 0 }}
+                                            dragElastic={1}
+                                            onDragEnd={(e, { offset, velocity }) => {
+                                                const swipe = swipePower(offset.x, velocity.x);
 
-                                        {/* Image Indicators */}
+                                                if (swipe < -swipeConfidenceThreshold) {
+                                                    paginate(1);
+                                                } else if (swipe > swipeConfidenceThreshold) {
+                                                    paginate(-1);
+                                                }
+                                            }}
+                                            className="absolute inset-0 cursor-grab active:cursor-grabbing"
+                                        >
+                                            <Image
+                                                src={allImages[activeIndex]}
+                                                alt={`${name} - Image ${activeIndex + 1}`}
+                                                fill
+                                                className="object-contain"
+                                                sizes="(max-width: 640px) 100vw, 480px"
+                                                priority
+                                                draggable={false}
+                                            />
+                                        </motion.div>
+                                    </AnimatePresence>
+
+                                    {/* Image Indicators */}
+                                    {allImages.length > 1 && (
                                         <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-10">
                                             {allImages.map((_, index) => (
-                                                <motion.button
+                                                <button
                                                     key={index}
-                                                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                                                        index === currentImageIndex 
-                                                            ? 'bg-[#5C4B37]' 
-                                                            : 'bg-white/60 hover:bg-white'
+                                                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                                                        index === activeIndex 
+                                                            ? 'bg-[#5C4B37] w-3 scale-110' 
+                                                            : 'bg-[#5C4B37]/30 hover:bg-[#5C4B37]/50'
                                                     }`}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        setCurrentImageIndex(index);
+                                                        const newDirection = index > activeIndex ? 1 : -1;
+                                                        setPage([index, newDirection]);
                                                     }}
-                                                    whileHover={{ scale: 1.2 }}
-                                                    whileTap={{ scale: 0.8 }}
                                                 />
                                             ))}
                                         </div>
-                                    </>
-                                )}
+                                    )}
+                                </div>
                             </motion.div>
                             
                             <motion.div 
