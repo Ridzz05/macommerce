@@ -61,7 +61,7 @@ const contentVariants = {
 const slideVariants = {
     enter: (direction: number) => {
         return {
-            x: direction > 0 ? 1000 : -1000,
+            x: direction > 0 ? "100%" : "-100%",
             opacity: 0
         };
     },
@@ -73,7 +73,7 @@ const slideVariants = {
     exit: (direction: number) => {
         return {
             zIndex: 0,
-            x: direction < 0 ? 1000 : -1000,
+            x: direction < 0 ? "100%" : "-100%",
             opacity: 0
         };
     }
