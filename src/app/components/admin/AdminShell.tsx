@@ -12,11 +12,10 @@ interface AdminShellProps {
 }
 
 const navItems = [
-  { label: 'Dashboard', href: '/admin', disabled: true },
-  { label: 'Produk', href: '/admin/products', disabled: false },
-  { label: 'Kategori', href: '/admin/categories', disabled: true },
-  { label: 'Insight', href: '/admin/insights', disabled: true },
-  { label: 'Pengaturan', href: '/admin/settings', disabled: true },
+  { label: 'Traffic Pengunjung', href: '#', disabled: true },
+  { label: 'Data Penjualan', href: '#', disabled: true },
+  { label: 'Produk Populer', href: '#', disabled: true },
+  { label: 'Kelola Produk', href: '/admin/products', disabled: false },
 ]
 
 export default function AdminShell({

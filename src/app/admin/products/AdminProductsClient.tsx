@@ -11,6 +11,16 @@ type MarketplaceForm = {
   tiktokshop: string
 }
 
+import { Trash2, Plus } from 'lucide-react'
+
+// ... (in imports)
+
+type ProductOptionInput = {
+  label: string
+  price: string
+  value?: string
+}
+
 type ProductForm = {
   name: string
   price: string
@@ -21,7 +31,7 @@ type ProductForm = {
   featuresText: string
   demoUrl: string
   marketplace: MarketplaceForm
-  optionsText: string
+  options: ProductOptionInput[]
 }
 
 const createEmptyForm = (): ProductForm => ({
@@ -38,8 +48,10 @@ const createEmptyForm = (): ProductForm => ({
     lazada: '',
     tiktokshop: '',
   },
-  optionsText: '',
+  options: [],
 })
+
+
 
 const parseLines = (value: string) =>
   value
@@ -155,45 +167,27 @@ export default function AdminProductsClient() {
       return
     }
 
-const parseOptions = (text: string) => {
-  if (!text.trim()) return undefined;
-  return text.split('\n').map(line => {
-    const parts = line.split(':');
-    if (parts.length >= 2) {
-        const label = parts[0].trim();
-        const price = Number(parts[1].trim());
-        const value = label.toLowerCase().replace(/\s+/g, '_');
-        if (label && !isNaN(price)) {
-            return { label, price, value };
-        }
-    }
-    return null;
-  }).filter(Boolean);
-}
 
-    const options = parseOptions(form.optionsText);
-
-    if (options && options.length === 0 && form.optionsText.trim()) {
-        setError('Format opsi produk salah. Gunakan format "Label:Harga" per baris.');
-        setIsSaving(false);
-        return;
-    }
+    const options = form.options
+      .filter(opt => opt.label.trim())
+      .map(opt => ({
+        label: opt.label.trim(),
+        price: Number(opt.price) || 0,
+        value: opt.label.toLowerCase().replace(/\s+/g, '_')
+      }));
 
     const payload = {
-      name: form.name.trim(),
-      price,
-      imageUrl: form.imageUrl.trim(),
-      images: images.length > 0 ? images : undefined,
-      category: form.category,
-      description: form.description.trim(),
-      features,
-      demoUrl: form.demoUrl.trim() || undefined,
-      marketplace: {
-        tokopedia: form.marketplace.tokopedia.trim() || undefined,
-        lazada: form.marketplace.lazada.trim() || undefined,
-        tiktokshop: form.marketplace.tiktokshop.trim() || undefined,
-      },
-      options: options && options.length > 0 ? options : undefined
+ 
+       name: form.name,
+       price: price,
+       imageUrl: form.imageUrl,
+       images: images,
+       category: form.category,
+       description: form.description,
+       features: features,
+       demoUrl: form.demoUrl || undefined,
+       marketplace: form.marketplace,
+       options: options.length > 0 ? options : undefined
     }
 
     try {
@@ -238,7 +232,11 @@ const parseOptions = (text: string) => {
         lazada: product.marketplace.lazada ?? '',
         tiktokshop: product.marketplace.tiktokshop ?? '',
       },
-      optionsText: product.options?.map(opt => `${opt.label}:${opt.price}`).join('\n') ?? '',
+      options: product.options?.map(opt => ({
+        label: opt.label,
+        price: String(opt.price),
+        value: String(opt.value)
+      })) ?? [],
     })
   }
 
@@ -277,6 +275,31 @@ const parseOptions = (text: string) => {
           <span className="font-medium text-sm">Kembali ke Beranda</span>
         </Link>
       </div>
+
+      <section className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+        <div>
+           {/* Placeholder for potential title if needed, or just leave empty to push search right */}
+        </div>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <input
+            type="text"
+            value={listQuery}
+            onChange={(event) => setListQuery(event.target.value)}
+            placeholder="Cari nama atau kategori..."
+            className="w-full sm:w-80 rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355] bg-white"
+            aria-label="Cari produk"
+          />
+          {listQuery && (
+            <button
+              type="button"
+              onClick={() => setListQuery('')}
+              className="px-3 py-2 rounded-lg border border-[#EDE3CD] text-xs text-[#5C4B37] hover:bg-[#F5ECD6] bg-white"
+            >
+              Reset
+            </button>
+          )}
+        </div>
+      </section>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
@@ -342,16 +365,67 @@ const parseOptions = (text: string) => {
                 className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
               />
             </label>
-            <label className="text-sm text-[#5C4B37] font-medium sm:col-span-2">
-              Varian Produk (Format: "Nama Varian:Harga", satu per baris)
-              <textarea
-                rows={3}
-                value={form.optionsText || ''}
-                onChange={(event) => setForm((prev) => ({ ...prev, optionsText: event.target.value }))}
-                placeholder="Contoh:&#10;100 Views:10000&#10;Custom:0"
-                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355] font-mono"
-              />
-            </label>
+            
+            <div className="sm:col-span-2">
+              <label className="text-sm text-[#5C4B37] font-medium block mb-2">
+                Varian Produk
+              </label>
+              <div className="space-y-3">
+                {form.options.map((option, index) => (
+                  <div key={index} className="flex gap-3 items-start">
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        placeholder="Nama Varian (ex: 100 Views)"
+                        value={option.label}
+                        onChange={(e) => {
+                          const newOptions = [...form.options]
+                          newOptions[index].label = e.target.value
+                          setForm(prev => ({ ...prev, options: newOptions }))
+                        }}
+                        className="w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+                      />
+                    </div>
+                    <div className="w-32">
+                      <input
+                        type="number"
+                        placeholder="Harga"
+                        value={option.price}
+                        onChange={(e) => {
+                          const newOptions = [...form.options]
+                          newOptions[index].price = e.target.value
+                          setForm(prev => ({ ...prev, options: newOptions }))
+                        }}
+                        className="w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newOptions = form.options.filter((_, i) => i !== index)
+                        setForm(prev => ({ ...prev, options: newOptions }))
+                      }}
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors mt-[1px]"
+                      title="Hapus Varian"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+                
+                <button
+                  type="button"
+                  onClick={() => setForm(prev => ({
+                    ...prev,
+                    options: [...prev.options, { label: '', price: '' }]
+                  }))}
+                  className="flex items-center gap-2 text-xs font-medium text-[#8B7355] hover:text-[#5C4B37] px-2 py-1.5 rounded-lg hover:bg-[#FDF6E3] transition-colors w-fit border border-dashed border-[#8B7355]/30 hover:border-[#8B7355]"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  Tambah Varian
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -488,9 +562,9 @@ const parseOptions = (text: string) => {
                   {form.price
                     ? `Rp ${Number(form.price || 0).toLocaleString('id-ID')}`
                     : 'Harga belum diisi'}
-                  {form.optionsText && (
+                  {form.options.length > 0 && (
                     <span className="ml-2 text-[10px] px-1.5 py-0.5 bg-[#EDE3CD] rounded text-[#5C4B37]">
-                        {form.optionsText.split('\n').filter(Boolean).length} Varian
+                        {form.options.length} Varian
                     </span>
                   )}
                 </p>
@@ -523,25 +597,7 @@ const parseOptions = (text: string) => {
               Kelola produk yang sudah dipublikasikan dan update detailnya.
             </p>
           </div>
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <input
-              type="text"
-              value={listQuery}
-              onChange={(event) => setListQuery(event.target.value)}
-              placeholder="Cari nama atau kategori..."
-              className="w-full sm:w-60 rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-              aria-label="Cari produk"
-            />
-            {listQuery && (
-              <button
-                type="button"
-                onClick={() => setListQuery('')}
-                className="px-3 py-2 rounded-lg border border-[#EDE3CD] text-xs text-[#5C4B37] hover:bg-[#F5ECD6]"
-              >
-                Reset
-              </button>
-            )}
-          </div>
+
         </div>
 
         <div className="border-t border-[#EDE3CD]">
