@@ -44,6 +44,16 @@ const toMarketplace = (value: unknown) => {
   }
 }
 
+const toOptions = (value: unknown) => {
+    if (!Array.isArray(value)) return undefined;
+    
+    return value.map((item: any) => ({
+        label: toString(item.label),
+        price: typeof item.price === 'number' ? item.price : Number(item.price) || 0,
+        value: toString(item.value)
+    })).filter(opt => opt.label && opt.value);
+}
+
 export function parseProductPayload(payload: unknown): { ok: true; value: ProductInput } | { ok: false; error: string } {
   if (!payload || typeof payload !== 'object') {
     return { ok: false, error: 'Payload tidak valid.' }
@@ -59,6 +69,7 @@ export function parseProductPayload(payload: unknown): { ok: true; value: Produc
   const images = toStringArray(record.images)
   const demoUrl = toOptionalString(record.demoUrl)
   const marketplace = toMarketplace(record.marketplace)
+  const options = toOptions(record.options)
 
   if (!name) {
     return { ok: false, error: 'Nama produk wajib diisi.' }
@@ -99,6 +110,7 @@ export function parseProductPayload(payload: unknown): { ok: true; value: Produc
       features,
       demoUrl,
       marketplace,
+      options,
     },
   }
 }

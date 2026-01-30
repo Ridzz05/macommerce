@@ -1,3 +1,9 @@
+export interface ProductOption {
+    label: string;
+    price: number;
+    value: string | number;
+}
+
 export interface ProductCardProps {
     name: string;
     price: number;
@@ -12,6 +18,7 @@ export interface ProductCardProps {
         lazada?: string;
         tiktokshop?: string;
     };
+    options?: ProductOption[];
 }
 
 export interface ProductCardServerProps extends Omit<ProductCardProps, 'marketplace' | 'demoUrl' | 'description' | 'features'> {

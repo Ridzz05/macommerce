@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ProductCardProps } from '../types/product';
+import { ProductCardProps, ProductOption } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
-import { X, ShoppingCart } from 'lucide-react';
+import { X, ShoppingCart, ChevronLeft } from 'lucide-react';
 
 const modalVariants = {
     hidden: {
@@ -69,10 +69,12 @@ const imageVariants = {
     }
 };
 
-const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, marketplace, description, features }: ProductCardProps) => {
+const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, marketplace, description, features, options = [] }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [step, setStep] = useState<'options' | 'marketplace'>('options');
+    const [selectedOption, setSelectedOption] = useState<ProductOption | null>(null);
     
     // Combine single imageUrl with additional images array
     const allImages = [imageUrl, ...(images || [])];
@@ -96,6 +98,8 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
 
     const handleBeli = () => {
         setShowPurchaseModal(true);
+        setStep(options.length > 0 ? 'options' : 'marketplace');
+        setSelectedOption(null);
         document.body.style.overflow = 'hidden';
     };
 
@@ -335,133 +339,199 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                             variants={contentVariants}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <motion.div 
-                                className="text-center mb-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                            >
-                                <motion.h3 
-                                    className="text-base font-medium text-[#5C4B37]"
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3 }}
-                                >
-                                    Pilih Marketplace
-                                </motion.h3>
-                                <motion.p 
-                                    className="mt-1 text-xs text-[#8B7355]"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.4 }}
-                                >
-                                    Lanjutkan pembelian {name} melalui marketplace pilihan Anda
-                                </motion.p>
-                                <motion.p 
-                                    className="mt-1 text-xs font-medium text-[#5C4B37]"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.4 }}
-                                >
-                                    {formattedPrice}
-                                </motion.p>
-                            </motion.div>
-
-                            <motion.div 
-                                className="grid grid-cols-2 gap-3"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.5 }}
-                            >
-                                {marketplace.tokopedia && (
-                                    <motion.a
-                                        href={marketplace.tokopedia}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex flex-col items-center p-3 rounded bg-[#03AC0E] text-white hover:opacity-90 transition-opacity"
-                                        initial={{ scale: 0.8, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        transition={{ delay: 0.7 }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <div className="relative w-6 h-6">
-                                            <Image
-                                                src="/images/marketplace/tokopedia.webp"
-                                                alt="Tokopedia Logo"
-                                                fill
-                                                className="object-contain"
-                                            />
+                                {step === 'options' ? (
+                                    <>
+                                        <div className="text-center mb-4">
+                                            <h3 className="text-base font-medium text-[#5C4B37]">
+                                                Pilih Varian
+                                            </h3>
+                                            <p className="mt-1 text-xs text-[#8B7355]">
+                                                Pilih paket yang sesuai dengan kebutuhan Anda
+                                            </p>
                                         </div>
-                                        <span className="mt-1 text-xs font-medium">Tokopedia</span>
-                                    </motion.a>
-                                )}
 
-                                {marketplace.lazada && (
-                                    <motion.a
-                                        href={marketplace.lazada}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex flex-col items-center p-3 rounded bg-[#0F146D] text-white hover:opacity-90 transition-opacity"
-                                        initial={{ scale: 0.8, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        transition={{ delay: 0.8 }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <div className="relative w-6 h-6">
-                                            <Image
-                                                src="/images/marketplace/lazada.webp"
-                                                alt="Lazada Logo"
-                                                fill
-                                                className="object-contain"
-                                            />
+                                        <div className="space-y-2 mb-6 max-h-[60vh] overflow-y-auto">
+                                            {options.map((option, index) => (
+                                                <motion.button
+                                                    key={index}
+                                                    onClick={() => setSelectedOption(option)}
+                                                    className={`w-full p-3 rounded-lg border flex items-center justify-between transition-all ${
+                                                        selectedOption === option
+                                                            ? 'border-[#5C4B37] bg-[#EDE3CD]'
+                                                            : 'border-[#EDE3CD] bg-white hover:border-[#5C4B37]'
+                                                    }`}
+                                                    whileTap={{ scale: 0.98 }}
+                                                >
+                                                    <span className="text-sm font-medium text-[#5C4B37]">{option.label}</span>
+                                                    <span className="text-sm text-[#8B7355]">
+                                                        {option.price === 0 ? 'Hubungi Admin' : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(option.price)}
+                                                    </span>
+                                                </motion.button>
+                                            ))}
                                         </div>
-                                        <span className="mt-1 text-xs font-medium">Lazada</span>
-                                    </motion.a>
-                                )}
 
-                                {marketplace.tiktokshop && (
-                                    <motion.a
-                                        href={marketplace.tiktokshop}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex flex-col items-center p-3 rounded bg-black text-white hover:opacity-90 transition-opacity"
-                                        initial={{ scale: 0.8, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        transition={{ delay: 0.9 }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <div className="relative w-6 h-6">
-                                            <Image
-                                                src="/images/marketplace/tiktokshop.webp"
-                                                alt="TikTok Shop Logo"
-                                                fill
-                                                className="object-contain"
-                                            />
+                                        <div className="flex justify-end gap-3 pt-4 border-t border-[#EDE3CD]">
+                                            <button
+                                                className="px-4 py-2 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD]"
+                                                onClick={handleClosePurchase}
+                                            >
+                                                Batal
+                                            </button>
+                                            <button
+                                                className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors flex items-center gap-2 ${
+                                                    selectedOption 
+                                                        ? 'bg-[#5C4B37] hover:bg-[#3D3224]' 
+                                                        : 'bg-gray-400 cursor-not-allowed'
+                                                }`}
+                                                onClick={() => selectedOption && setStep('marketplace')}
+                                                disabled={!selectedOption}
+                                            >
+                                                Lanjut
+                                            </button>
                                         </div>
-                                        <span className="mt-1 text-xs font-medium">TikTok Shop</span>
-                                    </motion.a>
-                                )}
-                            </motion.div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <motion.div 
+                                            className="text-center mb-4"
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.2 }}
+                                        >
+                                            <motion.h3 
+                                                className="text-base font-medium text-[#5C4B37]"
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.3 }}
+                                            >
+                                                Pilih Marketplace
+                                            </motion.h3>
+                                            <motion.p 
+                                                className="mt-1 text-xs text-[#8B7355]"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ delay: 0.4 }}
+                                            >
+                                                Lanjutkan pembelian {name} {selectedOption ? `(${selectedOption.label})` : ''}
+                                            </motion.p>
+                                            <motion.p 
+                                                className="mt-1 text-xs font-medium text-[#5C4B37]"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ delay: 0.4 }}
+                                            >
+                                                {selectedOption && selectedOption.price > 0 
+                                                    ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price)
+                                                    : formattedPrice}
+                                            </motion.p>
+                                        </motion.div>
 
-                            <motion.div 
-                                className="mt-4 flex justify-end"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 1 }}
-                            >
-                                <motion.button
-                                    className="px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-2"
-                                    onClick={handleClosePurchase}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <X className="w-4 h-4" />
-                                    Tutup
-                                </motion.button>
-                            </motion.div>
+                                        <motion.div 
+                                            className="grid grid-cols-2 gap-3"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.5 }}
+                                        >
+                                            {marketplace.tokopedia && (
+                                                <motion.a
+                                                    href={marketplace.tokopedia}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex flex-col items-center p-3 rounded bg-[#03AC0E] text-white hover:opacity-90 transition-opacity"
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    transition={{ delay: 0.7 }}
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                >
+                                                    <div className="relative w-6 h-6">
+                                                        <Image
+                                                            src="/images/marketplace/tokopedia.webp"
+                                                            alt="Tokopedia Logo"
+                                                            fill
+                                                            className="object-contain"
+                                                        />
+                                                    </div>
+                                                    <span className="mt-1 text-xs font-medium">Tokopedia</span>
+                                                </motion.a>
+                                            )}
+
+                                            {marketplace.lazada && (
+                                                <motion.a
+                                                    href={marketplace.lazada}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex flex-col items-center p-3 rounded bg-[#0F146D] text-white hover:opacity-90 transition-opacity"
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    transition={{ delay: 0.8 }}
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                >
+                                                    <div className="relative w-6 h-6">
+                                                        <Image
+                                                            src="/images/marketplace/lazada.webp"
+                                                            alt="Lazada Logo"
+                                                            fill
+                                                            className="object-contain"
+                                                        />
+                                                    </div>
+                                                    <span className="mt-1 text-xs font-medium">Lazada</span>
+                                                </motion.a>
+                                            )}
+
+                                            {marketplace.tiktokshop && (
+                                                <motion.a
+                                                    href={marketplace.tiktokshop}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex flex-col items-center p-3 rounded bg-black text-white hover:opacity-90 transition-opacity"
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    transition={{ delay: 0.9 }}
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                >
+                                                    <div className="relative w-6 h-6">
+                                                        <Image
+                                                            src="/images/marketplace/tiktokshop.webp"
+                                                            alt="TikTok Shop Logo"
+                                                            fill
+                                                            className="object-contain"
+                                                        />
+                                                    </div>
+                                                    <span className="mt-1 text-xs font-medium">TikTok Shop</span>
+                                                </motion.a>
+                                            )}
+                                        </motion.div>
+
+                                        <motion.div 
+                                            className="mt-4 flex justify-between items-center"
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 1 }}
+                                        >
+                                            {options.length > 0 && (
+                                                <button
+                                                    className="px-3 py-2 text-sm font-medium text-[#5C4B37] hover:bg-[#EDE3CD] rounded-lg transition-colors flex items-center gap-1"
+                                                    onClick={() => setStep('options')}
+                                                >
+                                                    <ChevronLeft className="w-4 h-4" />
+                                                    Kembali
+                                                </button>
+                                            )}
+                                            <motion.button
+                                                className="px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-2 ml-auto"
+                                                onClick={handleClosePurchase}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <X className="w-4 h-4" />
+                                                Tutup
+                                            </motion.button>
+                                        </motion.div>
+                                    </>
+                                )}
                         </motion.div>
                     </motion.div>
                 )}

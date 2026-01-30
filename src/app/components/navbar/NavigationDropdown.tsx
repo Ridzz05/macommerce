@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { Info, Mail, LockKeyhole } from 'lucide-react';
 import Link from 'next/link';
 
 interface NavigationDropdownProps {
@@ -99,20 +100,26 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDrop
                                         variants={dropdownItemVariants}
                                         className="flex items-center gap-2"
                                     >
-                                        <svg
-                                            className="w-4 h-4 text-[#8B7355]"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                            />
-                                        </svg>
+                                        <Mail className="w-4 h-4 text-[#8B7355]" />
                                         Hubungi Kami
+                                    </motion.div>
+                                </Link>
+                                <div className="my-1 border-t border-[#EDE3CD]" />
+                                <Link
+                                    href="/admin/products"
+                                    className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
+                                    onClick={onClose}
+                                    role="menuitem"
+                                >
+                                    <motion.div
+                                        initial="hidden"
+                                        animate="visible"
+                                        transition={{ delay: 0.3 }}
+                                        variants={dropdownItemVariants}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <LockKeyhole className="w-4 h-4 text-[#8B7355]" />
+                                        Login Admin
                                     </motion.div>
                                 </Link>
                             </div>

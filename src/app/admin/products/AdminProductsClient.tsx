@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+import { ChevronLeft } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { categories, type Category, type Product } from '@/app/data/products'
 
@@ -19,6 +21,7 @@ type ProductForm = {
   featuresText: string
   demoUrl: string
   marketplace: MarketplaceForm
+  optionsText: string
 }
 
 const createEmptyForm = (): ProductForm => ({
@@ -35,6 +38,7 @@ const createEmptyForm = (): ProductForm => ({
     lazada: '',
     tiktokshop: '',
   },
+  optionsText: '',
 })
 
 const parseLines = (value: string) =>
@@ -151,6 +155,30 @@ export default function AdminProductsClient() {
       return
     }
 
+const parseOptions = (text: string) => {
+  if (!text.trim()) return undefined;
+  return text.split('\n').map(line => {
+    const parts = line.split(':');
+    if (parts.length >= 2) {
+        const label = parts[0].trim();
+        const price = Number(parts[1].trim());
+        const value = label.toLowerCase().replace(/\s+/g, '_');
+        if (label && !isNaN(price)) {
+            return { label, price, value };
+        }
+    }
+    return null;
+  }).filter(Boolean);
+}
+
+    const options = parseOptions(form.optionsText);
+
+    if (options && options.length === 0 && form.optionsText.trim()) {
+        setError('Format opsi produk salah. Gunakan format "Label:Harga" per baris.');
+        setIsSaving(false);
+        return;
+    }
+
     const payload = {
       name: form.name.trim(),
       price,
@@ -165,6 +193,7 @@ export default function AdminProductsClient() {
         lazada: form.marketplace.lazada.trim() || undefined,
         tiktokshop: form.marketplace.tiktokshop.trim() || undefined,
       },
+      options: options && options.length > 0 ? options : undefined
     }
 
     try {
@@ -209,6 +238,7 @@ export default function AdminProductsClient() {
         lazada: product.marketplace.lazada ?? '',
         tiktokshop: product.marketplace.tiktokshop ?? '',
       },
+      optionsText: product.options?.map(opt => `${opt.label}:${opt.price}`).join('\n') ?? '',
     })
   }
 
@@ -238,6 +268,16 @@ export default function AdminProductsClient() {
 
   return (
     <div className="space-y-8">
+      <div className="flex items-center gap-2 mb-6 lg:hidden">
+        <Link 
+          href="/" 
+          className="p-2 -ml-2 rounded-lg hover:bg-[#EDE3CD] text-[#5C4B37] transition-colors flex items-center gap-2"
+        >
+          <ChevronLeft className="w-5 h-5" />
+          <span className="font-medium text-sm">Kembali ke Beranda</span>
+        </Link>
+      </div>
+
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
           <p className="text-xs text-[#8B7355]">Total Produk</p>
@@ -300,6 +340,16 @@ export default function AdminProductsClient() {
                 value={form.imagesText}
                 onChange={(event) => setForm((prev) => ({ ...prev, imagesText: event.target.value }))}
                 className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium sm:col-span-2">
+              Varian Produk (Format: "Nama Varian:Harga", satu per baris)
+              <textarea
+                rows={3}
+                value={form.optionsText || ''}
+                onChange={(event) => setForm((prev) => ({ ...prev, optionsText: event.target.value }))}
+                placeholder="Contoh:&#10;100 Views:10000&#10;Custom:0"
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355] font-mono"
               />
             </label>
           </div>
@@ -438,6 +488,11 @@ export default function AdminProductsClient() {
                   {form.price
                     ? `Rp ${Number(form.price || 0).toLocaleString('id-ID')}`
                     : 'Harga belum diisi'}
+                  {form.optionsText && (
+                    <span className="ml-2 text-[10px] px-1.5 py-0.5 bg-[#EDE3CD] rounded text-[#5C4B37]">
+                        {form.optionsText.split('\n').filter(Boolean).length} Varian
+                    </span>
+                  )}
                 </p>
                 <p className="text-xs text-[#8B7355] mt-2 line-clamp-3">
                   {form.description || 'Tulis deskripsi singkat untuk memberi konteks produk.'}
@@ -499,7 +554,7 @@ export default function AdminProductsClient() {
               Tidak ada produk yang cocok dengan pencarian.
             </div>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="w-full overflow-x-auto">
               <table className="min-w-full text-sm">
                 <thead className="text-xs uppercase text-[#8B7355] bg-[#FDF6E3]">
                   <tr>

@@ -79,7 +79,7 @@ export default function AdminShell({
           </div>
         </aside>
 
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {!hideHeader && (
             <header className="sticky top-0 z-40 bg-[#FFFBF2]/90 backdrop-blur border-b border-[#EDE3CD]">
               <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
