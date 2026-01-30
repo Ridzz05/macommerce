@@ -21,11 +21,6 @@ export interface Product {
     description: string;
     features: string[];
     demoUrl?: string;
-    marketplace: {
-        tokopedia?: string;
-        lazada?: string;
-        tiktokshop?: string;
-    };
     options?: ProductOption[];
 }
 
@@ -50,31 +45,14 @@ export const products: Product[] = [
     {
         id: 1,
         name: "TikTok Views Booster",
-        price: 10000,
-        imageUrl: "/images/products/tiktok-views.jpg", // Placeholder image path
+        price: 15000,
+        imageUrl: "/images/products/tiktok-views.jpg", // Placeholder
         category: "Growth Tools",
-        description: "Increase your TikTok visibility with our premium views package. Safe, fast, and reliable.",
-        features: ["Instant Delivery", "High Retention", "24/7 Support", "No Password Required"],
-        marketplace: {},
+        description: "Tingkatkan visibilitas konten TikTok Anda dengan paket views premium. Aman, cepat, dan terpercaya.",
+        features: ["Proses Cepat", "High Retention", "Garansi Refill", "Support 24/7"],
         options: [
-            { label: "100 Views", price: 10000, value: "100_views" },
-            { label: "200 Views", price: 20000, value: "200_views" },
-            { label: "500 Views", price: 45000, value: "500_views" },
-            { label: "Custom", price: 0, value: "custom" }
-        ]
-    },
-    {
-        id: 2,
-        name: "TikTok Likes Booster",
-        price: 1000,
-        imageUrl: "/images/products/tiktok-views.jpg", // Re-using placeholder for now
-        category: "Growth Tools",
-        description: "Boost your engagement with real likes.",
-        features: ["High Quality", "Real Users", "Fast Delivery"],
-        marketplace: {},
-        options: [
-            { label: "100 Likes", price: 15000, value: "100_likes" },
-            { label: "500 Likes", price: 70000, value: "500_likes" }
+            { label: "1000 Views", price: 15000, value: "1000_views" },
+            { label: "5000 Views", price: 60000, value: "5000_views" }
         ]
     }
 ];

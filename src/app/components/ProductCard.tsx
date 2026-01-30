@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps, ProductOption } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
 import { X, ShoppingCart, ChevronLeft } from 'lucide-react';
+import { CONTACT_INFO } from '../data/contact';
 
 const modalVariants = {
     hidden: {
@@ -69,7 +70,7 @@ const imageVariants = {
     }
 };
 
-const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, marketplace, description, features, options = [] }: ProductCardProps) => {
+const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, description, features, options = [] }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -432,77 +433,49 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             animate={{ opacity: 1 }}
                                             transition={{ delay: 0.5 }}
                                         >
-                                            {marketplace.tokopedia && (
-                                                <motion.a
-                                                    href={marketplace.tokopedia}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex flex-col items-center p-3 rounded bg-[#03AC0E] text-white hover:opacity-90 transition-opacity"
-                                                    initial={{ scale: 0.8, opacity: 0 }}
-                                                    animate={{ scale: 1, opacity: 1 }}
-                                                    transition={{ delay: 0.7 }}
-                                                    whileHover={{ scale: 1.05 }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                >
-                                                    <div className="relative w-6 h-6">
-                                                        <Image
-                                                            src="/images/marketplace/tokopedia.webp"
-                                                            alt="Tokopedia Logo"
-                                                            fill
-                                                            className="object-contain"
-                                                        />
-                                                    </div>
-                                                    <span className="mt-1 text-xs font-medium">Tokopedia</span>
-                                                </motion.a>
-                                            )}
+                                            <motion.a
+                                                href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(name)}${selectedOption ? `%20(${encodeURIComponent(selectedOption.label)})` : ''}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex flex-col items-center p-3 rounded-xl bg-[#25D366] text-white hover:opacity-90 transition-opacity shadow-sm"
+                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                transition={{ delay: 0.7 }}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <div className="relative w-8 h-8 mb-1">
+                                                    <Image
+                                                        src="/images/marketplace/wa.svg"
+                                                        alt="WhatsApp"
+                                                        fill
+                                                        className="object-contain"
+                                                    />
+                                                </div>
+                                                <span className="text-xs font-semibold">WhatsApp</span>
+                                            </motion.a>
 
-                                            {marketplace.lazada && (
-                                                <motion.a
-                                                    href={marketplace.lazada}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex flex-col items-center p-3 rounded bg-[#0F146D] text-white hover:opacity-90 transition-opacity"
-                                                    initial={{ scale: 0.8, opacity: 0 }}
-                                                    animate={{ scale: 1, opacity: 1 }}
-                                                    transition={{ delay: 0.8 }}
-                                                    whileHover={{ scale: 1.05 }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                >
-                                                    <div className="relative w-6 h-6">
-                                                        <Image
-                                                            src="/images/marketplace/lazada.webp"
-                                                            alt="Lazada Logo"
-                                                            fill
-                                                            className="object-contain"
-                                                        />
-                                                    </div>
-                                                    <span className="mt-1 text-xs font-medium">Lazada</span>
-                                                </motion.a>
-                                            )}
-
-                                            {marketplace.tiktokshop && (
-                                                <motion.a
-                                                    href={marketplace.tiktokshop}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex flex-col items-center p-3 rounded bg-black text-white hover:opacity-90 transition-opacity"
-                                                    initial={{ scale: 0.8, opacity: 0 }}
-                                                    animate={{ scale: 1, opacity: 1 }}
-                                                    transition={{ delay: 0.9 }}
-                                                    whileHover={{ scale: 1.05 }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                >
-                                                    <div className="relative w-6 h-6">
-                                                        <Image
-                                                            src="/images/marketplace/tiktokshop.webp"
-                                                            alt="TikTok Shop Logo"
-                                                            fill
-                                                            className="object-contain"
-                                                        />
-                                                    </div>
-                                                    <span className="mt-1 text-xs font-medium">TikTok Shop</span>
-                                                </motion.a>
-                                            )}
+                                            <motion.a
+                                                href={`https://instagram.com/${CONTACT_INFO.instagram}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex flex-col items-center p-3 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white hover:opacity-90 transition-opacity shadow-sm"
+                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                transition={{ delay: 0.8 }}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <div className="relative w-8 h-8 mb-1">
+                                                    <Image
+                                                        src="/images/marketplace/ig.svg"
+                                                        alt="Instagram"
+                                                        fill
+                                                        className="object-contain invert" 
+                                                    />
+                                                </div>
+                                                <span className="text-xs font-semibold">Instagram</span>
+                                            </motion.a>
                                         </motion.div>
 
                                         <motion.div 

@@ -1,15 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { ChevronLeft } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { categories, type Category, type Product } from '@/app/data/products'
 
-type MarketplaceForm = {
-  tokopedia: string
-  lazada: string
-  tiktokshop: string
-}
+
 
 import { Trash2, Plus } from 'lucide-react'
 
@@ -30,7 +27,7 @@ type ProductForm = {
   description: string
   featuresText: string
   demoUrl: string
-  marketplace: MarketplaceForm
+
   options: ProductOptionInput[]
 }
 
@@ -43,11 +40,7 @@ const createEmptyForm = (): ProductForm => ({
   description: '',
   featuresText: '',
   demoUrl: '',
-  marketplace: {
-    tokopedia: '',
-    lazada: '',
-    tiktokshop: '',
-  },
+
   options: [],
 })
 
@@ -75,18 +68,7 @@ export default function AdminProductsClient() {
     () => new Set(products.map((product) => product.category)).size,
     [products],
   )
-  const marketplaceCount = useMemo(
-    () =>
-      products.reduce((total, product) => {
-        return (
-          total +
-          (product.marketplace.tokopedia ? 1 : 0) +
-          (product.marketplace.lazada ? 1 : 0) +
-          (product.marketplace.tiktokshop ? 1 : 0)
-        )
-      }, 0),
-    [products],
-  )
+
   const averagePrice = useMemo(() => {
     if (totalProducts === 0) {
       return 0
@@ -186,7 +168,6 @@ export default function AdminProductsClient() {
        description: form.description,
        features: features,
        demoUrl: form.demoUrl || undefined,
-       marketplace: form.marketplace,
        options: options.length > 0 ? options : undefined
     }
 
@@ -227,11 +208,7 @@ export default function AdminProductsClient() {
       description: product.description,
       featuresText: product.features.join('\n'),
       demoUrl: product.demoUrl ?? '',
-      marketplace: {
-        tokopedia: product.marketplace.tokopedia ?? '',
-        lazada: product.marketplace.lazada ?? '',
-        tiktokshop: product.marketplace.tiktokshop ?? '',
-      },
+
       options: product.options?.map(opt => ({
         label: opt.label,
         price: String(opt.price),
@@ -310,10 +287,7 @@ export default function AdminProductsClient() {
           <p className="text-xs text-[#8B7355]">World Aktif</p>
           <p className="mt-2 text-2xl font-semibold text-[#5C4B37]">{categoryCount}</p>
         </div>
-        <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
-          <p className="text-xs text-[#8B7355]">Link Marketplace</p>
-          <p className="mt-2 text-2xl font-semibold text-[#5C4B37]">{marketplaceCount}</p>
-        </div>
+
         <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 shadow-sm">
           <p className="text-xs text-[#8B7355]">Rata-rata Harga</p>
           <p className="mt-2 text-2xl font-semibold text-[#5C4B37]">
@@ -476,50 +450,7 @@ export default function AdminProductsClient() {
             />
           </label>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="text-sm text-[#5C4B37] font-medium">
-              Tokopedia
-              <input
-                type="text"
-                value={form.marketplace.tokopedia}
-                onChange={(event) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    marketplace: { ...prev.marketplace, tokopedia: event.target.value },
-                  }))
-                }
-                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-              />
-            </label>
-            <label className="text-sm text-[#5C4B37] font-medium">
-              Lazada
-              <input
-                type="text"
-                value={form.marketplace.lazada}
-                onChange={(event) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    marketplace: { ...prev.marketplace, lazada: event.target.value },
-                  }))
-                }
-                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-              />
-            </label>
-            <label className="text-sm text-[#5C4B37] font-medium">
-              TikTok Shop
-              <input
-                type="text"
-                value={form.marketplace.tiktokshop}
-                onChange={(event) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    marketplace: { ...prev.marketplace, tiktokshop: event.target.value },
-                  }))
-                }
-                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
-              />
-            </label>
-          </div>
+{/* Marketplace inputs removed */}
 
           {error && <p className="text-sm text-red-600">{error}</p>}
           {success && <p className="text-sm text-green-700">{success}</p>}
@@ -547,30 +478,59 @@ export default function AdminProductsClient() {
             <p className="text-xs font-semibold text-[#5C4B37]">Preview</p>
             <div className="mt-3 border border-[#EDE3CD] rounded-lg overflow-hidden bg-[#FDF6E3]">
               <div className="aspect-[4/3] bg-[#EDE3CD] flex items-center justify-center text-xs text-[#8B7355]">
-                {form.imageUrl ? 'Gambar Utama' : 'Belum ada gambar'}
+                {form.imageUrl ? (
+                  <img 
+                    src={form.imageUrl} 
+                    alt="Preview" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      // Optional: show fallback text if needed, but for now just hiding broken image
+                    }}
+                  /> 
+                ) : (
+                  <div className="w-full h-full animate-pulse bg-[#E6DBC4]" />
+                )}
               </div>
               <div className="p-3">
-                {form.category && (
+                {form.category ? (
                   <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full">
                     {form.category}
                   </span>
+                ) : (
+                   <div className="h-4 w-20 bg-[#EDE3CD] animate-pulse rounded-full" />
                 )}
-                <p className="mt-2 text-sm font-semibold text-[#5C4B37]">
-                  {form.name || 'Nama produk'}
-                </p>
-                <p className="text-xs text-[#8B7355] mt-1">
-                  {form.price
-                    ? `Rp ${Number(form.price || 0).toLocaleString('id-ID')}`
-                    : 'Harga belum diisi'}
+                {form.name ? (
+                  <p className="mt-2 text-sm font-semibold text-[#5C4B37]">
+                    {form.name}
+                  </p>
+                ) : (
+                  <div className="mt-2 h-5 w-3/4 bg-[#EDE3CD] animate-pulse rounded" />
+                )}
+                <div className="text-xs text-[#8B7355] mt-1 flex items-center gap-2">
+                  {form.price ? (
+                     `Rp ${Number(form.price || 0).toLocaleString('id-ID')}`
+                  ) : (
+                     <div className="h-4 w-24 bg-[#EDE3CD] animate-pulse rounded" />
+                  )}
+                  
                   {form.options.length > 0 && (
                     <span className="ml-2 text-[10px] px-1.5 py-0.5 bg-[#EDE3CD] rounded text-[#5C4B37]">
                         {form.options.length} Varian
                     </span>
                   )}
-                </p>
-                <p className="text-xs text-[#8B7355] mt-2 line-clamp-3">
-                  {form.description || 'Tulis deskripsi singkat untuk memberi konteks produk.'}
-                </p>
+                </div>
+                {form.description ? (
+                  <p className="text-xs text-[#8B7355] mt-2 line-clamp-3">
+                    {form.description}
+                  </p>
+                ) : (
+                  <div className="mt-2 space-y-1">
+                    <div className="h-3 w-full bg-[#EDE3CD] animate-pulse rounded" />
+                    <div className="h-3 w-5/6 bg-[#EDE3CD] animate-pulse rounded" />
+                    <div className="h-3 w-4/6 bg-[#EDE3CD] animate-pulse rounded" />
+                  </div>
+                )}
               </div>
             </div>
             <p className="mt-3 text-xs text-[#8B7355]">
@@ -617,17 +577,13 @@ export default function AdminProductsClient() {
                     <th className="px-4 py-3 text-left font-semibold">Produk</th>
                     <th className="px-4 py-3 text-left font-semibold">Kategori</th>
                     <th className="px-4 py-3 text-left font-semibold">Harga</th>
-                    <th className="px-4 py-3 text-left font-semibold">Marketplace</th>
+
                     <th className="px-4 py-3 text-right font-semibold">Aksi</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#EDE3CD]">
                   {filteredList.map((product) => {
-                    const activeMarketplaces = [
-                      product.marketplace.tokopedia && 'Tokopedia',
-                      product.marketplace.lazada && 'Lazada',
-                      product.marketplace.tiktokshop && 'TikTok Shop',
-                    ].filter(Boolean) as string[]
+
 
                     return (
                       <tr key={product.id} className="hover:bg-[#FFFBF2]">
@@ -639,22 +595,7 @@ export default function AdminProductsClient() {
                         <td className="px-4 py-3 text-sm text-[#5C4B37]">
                           Rp {product.price.toLocaleString('id-ID')}
                         </td>
-                        <td className="px-4 py-3">
-                          {activeMarketplaces.length > 0 ? (
-                            <div className="flex flex-wrap gap-1">
-                              {activeMarketplaces.map((label) => (
-                                <span
-                                  key={label}
-                                  className="px-2 py-0.5 rounded-full text-[10px] bg-[#EDE3CD] text-[#5C4B37]"
-                                >
-                                  {label}
-                                </span>
-                              ))}
-                            </div>
-                          ) : (
-                            <span className="text-xs text-[#C3B091]">Belum ada</span>
-                          )}
-                        </td>
+{/* marketplace column body removed */}
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2 justify-end">
                             <button

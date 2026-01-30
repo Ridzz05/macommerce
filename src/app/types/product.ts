@@ -13,15 +13,10 @@ export interface ProductCardProps {
     description: string;
     features: string[];
     demoUrl?: string;
-    marketplace: {
-        tokopedia?: string;
-        lazada?: string;
-        tiktokshop?: string;
-    };
     options?: ProductOption[];
 }
 
-export interface ProductCardServerProps extends Omit<ProductCardProps, 'marketplace' | 'demoUrl' | 'description' | 'features'> {
+export interface ProductCardServerProps extends Omit<ProductCardProps, 'demoUrl' | 'description' | 'features'> {
     onDetailClick: () => void;
     onBeliClick: () => void;
 } 

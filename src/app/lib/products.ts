@@ -34,15 +34,7 @@ const toStringArray = (value: unknown) => {
   return []
 }
 
-const toMarketplace = (value: unknown) => {
-  const record = typeof value === 'object' && value ? (value as Record<string, unknown>) : {}
-
-  return {
-    tokopedia: toOptionalString(record.tokopedia),
-    lazada: toOptionalString(record.lazada),
-    tiktokshop: toOptionalString(record.tiktokshop),
-  }
-}
+// marketplace helper removed
 
 const toOptions = (value: unknown) => {
     if (!Array.isArray(value)) return undefined;
@@ -68,7 +60,7 @@ export function parseProductPayload(payload: unknown): { ok: true; value: Produc
   const features = toStringArray(record.features)
   const images = toStringArray(record.images)
   const demoUrl = toOptionalString(record.demoUrl)
-  const marketplace = toMarketplace(record.marketplace)
+  // marketplace removed
   const options = toOptions(record.options)
 
   if (!name) {
@@ -109,7 +101,6 @@ export function parseProductPayload(payload: unknown): { ok: true; value: Produc
       description,
       features,
       demoUrl,
-      marketplace,
       options,
     },
   }
