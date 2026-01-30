@@ -235,7 +235,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.2 }}
                             >
-                                <div className="flex items-start justify-between gap-3 mb-3">
+                                <div className="flex items-start justify-between gap-2 mb-2">
                                     <div>
                                         {category && (
                                             <motion.span 
@@ -267,7 +267,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 </div>
 
                                 <motion.div 
-                                    className="space-y-3"
+                                    className="space-y-2"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.5 }}
@@ -301,7 +301,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 </motion.div>
 
                                 <motion.div 
-                                    className="flex justify-end gap-3 mt-4 pt-4 border-t border-[#EDE3CD]"
+                                    className="flex justify-end gap-2 mt-3 pt-3 border-t border-[#EDE3CD]"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.7 }}
@@ -352,7 +352,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                         >
                                 {step === 'options' ? (
                                     <>
-                                        <div className="text-center mb-4">
+                                        <div className="text-center mb-3">
                                             <h3 className="text-base font-medium text-[#5C4B37]">
                                                 Pilih Varian
                                             </h3>
@@ -361,12 +361,12 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             </p>
                                         </div>
 
-                                        <div className="space-y-2 mb-6 max-h-[60vh] overflow-y-auto">
+                                        <div className="space-y-1.5 mb-4 max-h-[60vh] overflow-y-auto">
                                             {options.map((option, index) => (
                                                 <motion.button
                                                     key={index}
                                                     onClick={() => setSelectedOption(option)}
-                                                    className={`w-full p-3 rounded-lg border flex items-center justify-between transition-all ${
+                                                    className={`w-full p-2.5 rounded-lg border flex items-center justify-between transition-all ${
                                                         selectedOption === option
                                                             ? 'border-[#5C4B37] bg-[#EDE3CD]'
                                                             : 'border-[#EDE3CD] bg-white hover:border-[#5C4B37]'
@@ -381,7 +381,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             ))}
                                         </div>
 
-                                        <div className="flex justify-end gap-3 pt-4 border-t border-[#EDE3CD]">
+                                        <div className="flex justify-end gap-2 pt-3 border-t border-[#EDE3CD]">
                                             <button
                                                 className="px-4 py-2 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD]"
                                                 onClick={handleClosePurchase}
@@ -404,7 +404,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                 ) : (
                                     <>
                                         <motion.div 
-                                            className="text-center mb-4"
+                                            className="text-center mb-3"
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             transition={{ delay: 0.2 }}
@@ -438,7 +438,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         </motion.div>
 
                                         <motion.div 
-                                            className="grid grid-cols-2 gap-3"
+                                            className="grid grid-cols-2 gap-2"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ delay: 0.5 }}
