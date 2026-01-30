@@ -22,6 +22,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'p16-images-sign-sg.tokopedia-static.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'fastly.picsum.photos',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
     ],
   },
 }

@@ -41,51 +41,6 @@ export default function Footer() {
                 className="object-contain"
               />
             </a>
-            <a
-              href="https://www.tiktok.com/@pawpewslebew"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#8B7355] hover:text-[#5C4B37]"
-              aria-label="TikTok"
-            >
-              <Image
-                src="/images/marketplace/tiktok.svg"
-                alt="TikTok"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
-            </a>
-            <a
-              href="https://tokopedia.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#8B7355] hover:text-[#5C4B37]"
-              aria-label="Tokopedia"
-            >
-              <Image
-                src="/images/marketplace/tokopedia.webp"
-                alt="Tokopedia"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
-            </a>
-             <a
-              href="https://shopee.co.id"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#8B7355] hover:text-[#5C4B37]"
-              aria-label="Tokopedia"
-            >
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
-                alt="Shopee"
-                width={62}
-                height={62}
-                className="object-contain"
-              />
-            </a>
           </div>
         </div>
       </div>
