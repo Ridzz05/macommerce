@@ -24,6 +24,9 @@ export default function Footer() {
             <Link href="/about#contact" className="hover:text-[#5C4B37]">
               Hubungi Kami
             </Link>
+            <Link href="/terms" className="hover:text-[#5C4B37]">
+              Syarat & Ketentuan
+            </Link>
           </div>
           <div className="mt-4 flex items-center gap-3">
             <a
