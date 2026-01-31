@@ -106,7 +106,7 @@ export function ProductGridClient({ products, filteredCategory }: ProductGridCli
                                         description={product.description}
                                         features={product.features}
                                         demoUrl={product.demoUrl}
-
+                                        options={product.options}
                                     />
                                 </motion.div>
                             ))}

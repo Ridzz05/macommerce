@@ -145,6 +145,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                 category={category}
                 onDetailClick={handleDetailClick}
                 onBeliClick={handleBeli}
+                optionsCount={options.length}
             />
 
             {/* Detail Modal */}
@@ -164,7 +165,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                             onClick={(e) => e.stopPropagation()}
                         >
                             <motion.div 
-                                className="relative w-full aspect-square bg-[#EDE3CD] flex-shrink-0"
+                                className="relative w-full aspect-[4/3] bg-[#EDE3CD] flex-shrink-0"
                             >
                                 {/* Carousel Image Container */}
                                 <div className="relative w-full h-full overflow-hidden">
@@ -298,6 +299,35 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             ))}
                                         </ul>
                                     </div>
+
+                                    {options.length > 0 && (
+                                        <div>
+                                            <h3 className="text-xs font-medium text-[#5C4B37] mb-1">
+                                                Pilihan Varian
+                                            </h3>
+                                            <div className="space-y-1.5">
+                                                {options.map((option, index) => (
+                                                    <motion.div
+                                                        key={index}
+                                                        initial={{ opacity: 0, x: 20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: 0.6 + (features.length + index) * 0.1 }}
+                                                        className="flex items-center justify-between p-2 bg-white rounded-lg border border-[#EDE3CD]"
+                                                    >
+                                                        <span className="text-xs text-[#5C4B37] font-medium">
+                                                            {option.label}
+                                                        </span>
+                                                        <span className="text-xs text-[#8B7355]">
+                                                            {option.price === 0 
+                                                                ? 'Hubungi Admin' 
+                                                                : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(option.price)
+                                                            }
+                                                        </span>
+                                                    </motion.div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </motion.div>
 
                                 <motion.div 
@@ -444,7 +474,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             transition={{ delay: 0.5 }}
                                         >
                                             <motion.a
-                                                href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(name)}${selectedOption ? `%20(${encodeURIComponent(selectedOption.label)})` : ''}`}
+                                                href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(name)}${selectedOption ? `%20-%20Varian:%20${encodeURIComponent(selectedOption.label)}${selectedOption.price > 0 ? `%20(${encodeURIComponent(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price))})` : ''}` : ''}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex flex-col items-center p-3 rounded-xl bg-[#25D366] text-white hover:opacity-90 transition-opacity shadow-sm"

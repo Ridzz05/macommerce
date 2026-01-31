@@ -16,7 +16,8 @@ export interface ProductCardProps {
     options?: ProductOption[];
 }
 
-export interface ProductCardServerProps extends Omit<ProductCardProps, 'demoUrl' | 'description' | 'features'> {
+export interface ProductCardServerProps extends Omit<ProductCardProps, 'demoUrl' | 'description' | 'features' | 'images'> {
     onDetailClick: () => void;
     onBeliClick: () => void;
+    optionsCount?: number;
 } 
