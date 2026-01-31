@@ -84,7 +84,7 @@ const swipePower = (offset: number, velocity: number) => {
     return Math.abs(offset) * velocity;
 };
 
-const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoUrl, description, features, options = [] }: ProductCardProps) => {
+const ProductCardClient = ({ name, price, discountPrice, imageUrl, images = [], category, demoUrl, description, features, options = [] }: ProductCardProps) => {
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [[currentImageIndex, direction], setPage] = useState([0, 0]);
@@ -141,6 +141,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
             <ProductCardServer
                 name={name}
                 price={price}
+                discountPrice={discountPrice}
                 imageUrl={imageUrl}
                 category={category}
                 onDetailClick={handleDetailClick}
@@ -257,14 +258,27 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             {name}
                                         </motion.h2>
                                     </div>
-                                    <motion.p 
-                                        className="text-base font-bold text-[#8B7355] flex-shrink-0"
+                                    <motion.div
+                                        className="flex flex-col items-end"
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.4 }}
                                     >
-                                        {formattedPrice}
-                                    </motion.p>
+                                        {discountPrice && discountPrice > 0 ? (
+                                            <>
+                                                <span className="text-xs text-[#8B7355] line-through decoration-[#8B7355]/40 mb-0.5">
+                                                    {formattedPrice}
+                                                </span>
+                                                <span className="text-lg font-bold text-[#D32F2F]">
+                                                    {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(discountPrice)}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <span className="text-lg font-bold text-[#8B7355]">
+                                                {formattedPrice}
+                                            </span>
+                                        )}
+                                    </motion.div>
                                 </div>
 
                                 <motion.div 

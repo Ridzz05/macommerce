@@ -7,6 +7,7 @@ export interface ProductOption {
 export interface ProductCardProps {
     name: string;
     price: number;
+    discountPrice?: number;
     imageUrl: string;
     images?: string[];
     category?: string;

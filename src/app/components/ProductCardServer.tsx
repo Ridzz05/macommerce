@@ -2,12 +2,17 @@ import Image from 'next/image';
 import { ProductCardServerProps } from '../types/product';
 import { Info, ShoppingCart } from 'lucide-react';
 
-export function ProductCardServer({ name, price, imageUrl, category, onDetailClick, onBeliClick, optionsCount = 0 }: ProductCardServerProps) {
+export function ProductCardServer({ name, price, discountPrice, imageUrl, category, onDetailClick, onBeliClick, optionsCount = 0 }: ProductCardServerProps) {
     // Format price to IDR currency - moved to server side for better performance
     const formattedPrice = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR'
     }).format(price);
+
+    const formattedDiscountPrice = discountPrice ? new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR'
+    }).format(discountPrice) : null;
 
     return (
         <div className="group bg-[#FDF6E3] rounded-lg border border-[#EDE3CD] overflow-hidden hover:border-[#D8C8A7] transition-all duration-300 flex flex-col h-full">
@@ -35,10 +40,21 @@ export function ProductCardServer({ name, price, imageUrl, category, onDetailCli
                     <h3 className="text-xs font-medium text-[#5C4B37] line-clamp-2 group-hover:text-[#3D3224] mb-1 leading-tight">
                         {name}
                     </h3>
-                    <div className="flex items-center gap-2">
-                        <p className="text-xs font-medium text-[#8B7355]">
-                            {formattedPrice}
-                        </p>
+                    <div className="flex flex-col gap-0.5 mt-1">
+                        {discountPrice && discountPrice > 0 ? (
+                            <>
+                                <p className="text-[10px] text-[#8B7355] line-through decoration-[#8B7355]/40">
+                                    {formattedPrice}
+                                </p>
+                                <p className="text-xs font-bold text-[#D32F2F]">
+                                    {formattedDiscountPrice}
+                                </p>
+                            </>
+                        ) : (
+                            <p className="text-xs font-medium text-[#8B7355]">
+                                {formattedPrice}
+                            </p>
+                        )}
                     </div>
                 </div>
                 

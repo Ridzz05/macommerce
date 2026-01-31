@@ -21,6 +21,7 @@ type ProductOptionInput = {
 type ProductForm = {
   name: string
   price: string
+  discountPrice: string
   imageUrl: string
   imagesText: string
   category: Category | ''
@@ -34,6 +35,7 @@ type ProductForm = {
 const createEmptyForm = (): ProductForm => ({
   name: '',
   price: '',
+  discountPrice: '',
   imageUrl: '',
   imagesText: '',
   category: categories[0] ?? '',
@@ -122,6 +124,7 @@ export default function AdminProductsClient() {
     setSuccess(null)
 
     const price = Number(form.price)
+    const discountPrice = form.discountPrice ? Number(form.discountPrice) : undefined
     const features = parseLines(form.featuresText)
     const images = parseLines(form.imagesText)
 
@@ -162,6 +165,7 @@ export default function AdminProductsClient() {
  
        name: form.name,
        price: price,
+       discountPrice: discountPrice,
        imageUrl: form.imageUrl,
        images: images,
        category: form.category,
@@ -202,6 +206,7 @@ export default function AdminProductsClient() {
     setForm({
       name: product.name,
       price: String(product.price),
+      discountPrice: product.discountPrice ? String(product.discountPrice) : '',
       imageUrl: product.imageUrl,
       imagesText: product.images?.join('\n') ?? '',
       category: product.category,
@@ -318,6 +323,16 @@ export default function AdminProductsClient() {
                 type="number"
                 value={form.price}
                 onChange={(event) => setForm((prev) => ({ ...prev, price: event.target.value }))}
+                className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
+              />
+            </label>
+            <label className="text-sm text-[#5C4B37] font-medium">
+              Harga Diskon (Opsional)
+              <input
+                type="number"
+                value={form.discountPrice}
+                onChange={(event) => setForm((prev) => ({ ...prev, discountPrice: event.target.value }))}
+                placeholder="Kosongkan jika tidak ada diskon"
                 className="mt-2 w-full rounded-lg border border-[#EDE3CD] px-3 py-2 text-sm text-[#5C4B37] focus:outline-none focus:border-[#8B7355]"
               />
             </label>
