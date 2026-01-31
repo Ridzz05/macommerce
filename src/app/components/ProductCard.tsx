@@ -307,12 +307,18 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             </h3>
                                             <div className="space-y-1.5">
                                                 {options.map((option, index) => (
-                                                    <motion.div
+                                                    <motion.button
                                                         key={index}
                                                         initial={{ opacity: 0, x: 20 }}
                                                         animate={{ opacity: 1, x: 0 }}
                                                         transition={{ delay: 0.6 + (features.length + index) * 0.1 }}
-                                                        className="flex items-center justify-between p-2 bg-white rounded-lg border border-[#EDE3CD]"
+                                                        onClick={() => setSelectedOption(option)}
+                                                        className={`w-full flex items-center justify-between p-2 rounded-lg border transition-all ${
+                                                            selectedOption === option
+                                                                ? 'border-[#5C4B37] bg-[#EDE3CD]'
+                                                                : 'border-[#EDE3CD] bg-white hover:border-[#5C4B37]'
+                                                        }`}
+                                                        whileTap={{ scale: 0.98 }}
                                                     >
                                                         <span className="text-xs text-[#5C4B37] font-medium">
                                                             {option.label}
@@ -323,7 +329,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                                 : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(option.price)
                                                             }
                                                         </span>
-                                                    </motion.div>
+                                                    </motion.button>
                                                 ))}
                                             </div>
                                         </div>
@@ -349,7 +355,14 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                         className="px-4 py-2.5 text-sm font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-all duration-200 flex items-center gap-2"
                                         onClick={() => {
                                             handleCloseDetail();
-                                            handleBeli();
+                                            // If variant already selected in detail modal, skip to marketplace
+                                            if (selectedOption) {
+                                                setShowPurchaseModal(true);
+                                                setStep('marketplace');
+                                                document.body.style.overflow = 'hidden';
+                                            } else {
+                                                handleBeli();
+                                            }
                                         }}
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
@@ -381,17 +394,33 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                             onClick={(e) => e.stopPropagation()}
                         >
                                 {step === 'options' ? (
-                                    <>
-                                        <div className="text-center mb-3">
+                                    <motion.div
+                                        key="options"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <motion.div 
+                                            className="text-center mb-3"
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.05, duration: 0.3 }}
+                                        >
                                             <h3 className="text-base font-medium text-[#5C4B37]">
                                                 Pilih Varian
                                             </h3>
                                             <p className="mt-1 text-xs text-[#8B7355]">
                                                 Pilih paket yang sesuai dengan kebutuhan Anda
                                             </p>
-                                        </div>
+                                        </motion.div>
 
-                                        <div className="space-y-1.5 mb-4 max-h-[60vh] overflow-y-auto">
+                                        <motion.div 
+                                            className="space-y-1.5 mb-4 max-h-[60vh] overflow-y-auto"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.1, duration: 0.3 }}
+                                        >
                                             {options.map((option, index) => (
                                                 <motion.button
                                                     key={index}
@@ -401,6 +430,10 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                             ? 'border-[#5C4B37] bg-[#EDE3CD]'
                                                             : 'border-[#EDE3CD] bg-white hover:border-[#5C4B37]'
                                                     }`}
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: 0.15 + index * 0.05, duration: 0.3 }}
+                                                    whileHover={{ scale: 1.01 }}
                                                     whileTap={{ scale: 0.98 }}
                                                 >
                                                     <span className="text-sm font-medium text-[#5C4B37]">{option.label}</span>
@@ -409,16 +442,23 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                     </span>
                                                 </motion.button>
                                             ))}
-                                        </div>
+                                        </motion.div>
 
-                                        <div className="flex justify-end gap-2 pt-3 border-t border-[#EDE3CD]">
-                                            <button
+                                        <motion.div 
+                                            className="flex justify-end gap-2 pt-3 border-t border-[#EDE3CD]"
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.2, duration: 0.3 }}
+                                        >
+                                            <motion.button
                                                 className="px-4 py-2 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD]"
                                                 onClick={handleClosePurchase}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
                                             >
                                                 Batal
-                                            </button>
-                                            <button
+                                            </motion.button>
+                                            <motion.button
                                                 className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors flex items-center gap-2 ${
                                                     selectedOption 
                                                         ? 'bg-[#5C4B37] hover:bg-[#3D3224]' 
@@ -426,24 +466,32 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                 }`}
                                                 onClick={() => selectedOption && setStep('marketplace')}
                                                 disabled={!selectedOption}
+                                                whileHover={selectedOption ? { scale: 1.05 } : {}}
+                                                whileTap={selectedOption ? { scale: 0.95 } : {}}
                                             >
                                                 Lanjut
-                                            </button>
-                                        </div>
-                                    </>
+                                            </motion.button>
+                                        </motion.div>
+                                    </motion.div>
                                 ) : (
-                                    <>
+                                    <motion.div
+                                        key="marketplace"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
                                         <motion.div 
                                             className="text-center mb-3"
-                                            initial={{ opacity: 0, y: 20 }}
+                                            initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 0.2 }}
+                                            transition={{ delay: 0.05, duration: 0.3 }}
                                         >
                                             <motion.h3 
                                                 className="text-base font-medium text-[#5C4B37]"
-                                                initial={{ opacity: 0, y: -10 }}
+                                                initial={{ opacity: 0, y: -5 }}
                                                 animate={{ opacity: 1, y: 0 }}
-                                                transition={{ delay: 0.3 }}
+                                                transition={{ delay: 0.1, duration: 0.3 }}
                                             >
                                                 Pilih Marketplace
                                             </motion.h3>
@@ -451,7 +499,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                 className="mt-1 text-xs text-[#8B7355]"
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
-                                                transition={{ delay: 0.4 }}
+                                                transition={{ delay: 0.15, duration: 0.3 }}
                                             >
                                                 Lanjutkan pembelian {name} {selectedOption ? `(${selectedOption.label})` : ''}
                                             </motion.p>
@@ -459,7 +507,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                 className="mt-1 text-xs font-medium text-[#5C4B37]"
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
-                                                transition={{ delay: 0.4 }}
+                                                transition={{ delay: 0.15, duration: 0.3 }}
                                             >
                                                 {selectedOption && selectedOption.price > 0 
                                                     ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price)
@@ -471,16 +519,16 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                             className="grid grid-cols-2 gap-2"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
-                                            transition={{ delay: 0.5 }}
+                                            transition={{ delay: 0.2, duration: 0.3 }}
                                         >
                                             <motion.a
                                                 href={`https://wa.me/${CONTACT_INFO.whatsapp}?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(name)}${selectedOption ? `%20-%20Varian:%20${encodeURIComponent(selectedOption.label)}${selectedOption.price > 0 ? `%20(${encodeURIComponent(new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price))})` : ''}` : ''}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex flex-col items-center p-3 rounded-xl bg-[#25D366] text-white hover:opacity-90 transition-opacity shadow-sm"
-                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                initial={{ scale: 0.9, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
-                                                transition={{ delay: 0.7 }}
+                                                transition={{ delay: 0.25, duration: 0.3 }}
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
                                             >
@@ -500,9 +548,9 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex flex-col items-center p-3 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white hover:opacity-90 transition-opacity shadow-sm"
-                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                initial={{ scale: 0.9, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
-                                                transition={{ delay: 0.8 }}
+                                                transition={{ delay: 0.3, duration: 0.3 }}
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
                                             >
@@ -520,9 +568,9 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
 
                                         <motion.div 
                                             className="mt-4 flex justify-between items-center"
-                                            initial={{ opacity: 0, y: 20 }}
+                                            initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 1 }}
+                                            transition={{ delay: 0.35, duration: 0.3 }}
                                         >
                                             {options.length > 0 && (
                                                 <button
@@ -543,7 +591,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                 Tutup
                                             </motion.button>
                                         </motion.div>
-                                    </>
+                                    </motion.div>
                                 )}
                         </motion.div>
                     </motion.div>

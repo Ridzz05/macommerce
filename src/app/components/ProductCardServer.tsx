@@ -19,6 +19,11 @@ export function ProductCardServer({ name, price, imageUrl, category, onDetailCli
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
+                {optionsCount > 0 && (
+                    <div className="absolute top-2 right-2 px-1.5 py-0.5 bg-black/50 backdrop-blur-sm rounded text-[10px] font-medium text-white shadow-sm border border-white/10">
+                        {optionsCount} Varian
+                    </div>
+                )}
             </div>
             <div className="p-2.5 sm:p-3 flex flex-col flex-1">
                 <div className="flex-1 min-h-0">
@@ -34,11 +39,6 @@ export function ProductCardServer({ name, price, imageUrl, category, onDetailCli
                         <p className="text-xs font-medium text-[#8B7355]">
                             {formattedPrice}
                         </p>
-                        {optionsCount > 0 && (
-                            <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#5C4B37]/10 text-[#5C4B37] rounded-full">
-                                {optionsCount} Varian
-                            </span>
-                        )}
                     </div>
                 </div>
                 
