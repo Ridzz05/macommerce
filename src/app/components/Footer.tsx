@@ -8,10 +8,10 @@ export default function Footer() {
         <div>
           <p className="text-sm font-semibold text-[#5C4B37]">MaCommerce</p>
           <p className="mt-2 text-xs text-[#8B7355]">
-            Smart discovery brand—curated picks, not random products.
+            Platform kurasi premium untuk Digital Product, Jasa Online, dan Growth Tools.
           </p>
           <p className="mt-2 text-xs text-[#8B7355]">
-            Kami bukan marketplace. MaCommerce adalah ruang kurasi yang mengarahkan ke toko resmi atau TikTok Shop affiliate.
+             Kami menyederhanakan proses penemuan produk berkualitas dan menghubungkan Anda langsung dengan solusi terbaik melalui WhatsApp & Instagram.
           </p>
         </div>
 
