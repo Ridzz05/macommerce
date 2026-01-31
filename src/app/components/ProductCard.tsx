@@ -481,7 +481,7 @@ const ProductCardClient = ({ name, price, imageUrl, images = [], category, demoU
                                                         src="/images/marketplace/ig.svg"
                                                         alt="Instagram"
                                                         fill
-                                                        className="object-contain invert" 
+                                                        className="object-contain" 
                                                     />
                                                 </div>
                                                 <span className="text-xs font-semibold">Instagram</span>
