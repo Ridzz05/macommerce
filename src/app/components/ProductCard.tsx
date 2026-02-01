@@ -555,7 +555,7 @@ Mohon diproses, terima kasih!`;
                                                     value={orderForm.email}
                                                     onChange={(e) => setOrderForm({...orderForm, email: e.target.value})}
                                                     className="w-full px-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37] focus:border-transparent outline-none bg-white/50"
-                                                    placeholder="email@anda.com"
+                                                    placeholder="email@kamu.com"
                                                 />
                                             </div>
 
