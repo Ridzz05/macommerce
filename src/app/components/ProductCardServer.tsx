@@ -58,20 +58,20 @@ export function ProductCardServer({ name, price, discountPrice, imageUrl, catego
                     </div>
                 </div>
                 
-                <div className="flex justify-center items-center gap-1.5 sm:gap-2 pt-2 mt-auto border-t border-[#EDE3CD]">
+                <div className="grid grid-cols-2 gap-2 pt-2 mt-auto border-t border-[#EDE3CD]">
                     <button 
-                        className="px-2 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-1 sm:gap-1.5"
+                        className="w-full px-2 py-2 text-xs sm:text-sm font-medium text-[#5C4B37] bg-transparent border border-[#5C4B37] rounded-lg hover:bg-[#5C4B37]/5 transition-all duration-200 flex items-center justify-center gap-1.5"
                         onClick={onDetailClick}
                     >
-                        <Info className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                        <span className="whitespace-nowrap">Detail</span>
+                        <Info className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                        <span>Detail</span>
                     </button>
                     <button 
-                        className="px-2 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-sm font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-all duration-200 flex items-center gap-1 sm:gap-1.5"
+                        className="w-full px-2 py-2 text-xs sm:text-sm font-bold text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm"
                         onClick={onBeliClick}
                     >
-                        <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                        <span className="whitespace-nowrap">Beli</span>
+                        <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                        <span>Beli</span>
                     </button>
                 </div>
             </div>

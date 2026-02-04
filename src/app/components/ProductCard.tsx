@@ -246,12 +246,13 @@ Mohon diproses, terima kasih!`;
                             </div>
                             
                             <motion.div 
-                                className="p-3 sm:p-4 overflow-y-auto flex-1"
+                                className="p-3 sm:p-4 overflow-y-auto w-full pb-28 md:pb-6"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.2 }}
                             >
                                 <div className="flex items-start justify-between gap-2 mb-2">
+                                    {/* ... content unchanged ... */}
                                     <div>
                                         {category && (
                                             <motion.span 
@@ -363,24 +364,27 @@ Mohon diproses, terima kasih!`;
                                         </div>
                                     )}
                                 </motion.div>
+                            </motion.div>
 
-                                <motion.div 
-                                    className="flex justify-end gap-2 mt-3 pt-3 border-t border-[#EDE3CD]"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.7 }}
-                                >
+                            {/* Sticky Bottom Bar */}
+                            <motion.div 
+                                className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-[#EDE3CD] z-20 md:static md:bg-transparent md:border-t-0 md:p-0"
+                                initial={{ opacity: 0, y: 100 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.7 }}
+                            >
+                                <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto w-full md:flex md:justify-end">
                                     <motion.button
-                                        className="px-4 py-2.5 text-sm font-medium text-[#5C4B37] bg-white border border-[#EDE3CD] rounded-lg hover:bg-[#EDE3CD] transition-all duration-200 flex items-center gap-2"
+                                        className="w-full px-4 py-3 text-sm font-medium text-[#5C4B37] bg-white border border-[#5C4B37] rounded-xl hover:bg-[#5C4B37]/5 transition-all duration-200 flex items-center justify-center gap-2"
                                         onClick={handleCloseDetail}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
                                     >
                                         <X className="w-4 h-4" />
                                         Tutup
                                     </motion.button>
                                     <motion.button
-                                        className="px-4 py-2.5 text-sm font-medium text-white bg-[#5C4B37] rounded-lg hover:bg-[#3D3224] transition-all duration-200 flex items-center gap-2"
+                                        className="w-full px-4 py-3 text-sm font-bold text-white bg-[#5C4B37] rounded-xl hover:bg-[#3D3224] transition-all duration-200 flex items-center justify-center gap-2 shadow-lg md:shadow-none"
                                         onClick={() => {
                                             handleCloseDetail();
                                             // If variant already selected in detail modal, skip to marketplace
@@ -393,13 +397,13 @@ Mohon diproses, terima kasih!`;
                                                 handleBeli();
                                             }
                                         }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
                                     >
                                         <ShoppingCart className="w-4 h-4" />
                                         Beli Sekarang
                                     </motion.button>
-                                </motion.div>
+                                </div>
                             </motion.div>
                         </div>
                     </motion.div>
