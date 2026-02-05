@@ -104,6 +104,23 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDrop
                                         Hubungi Kami
                                     </motion.div>
                                 </Link>
+                                <Link
+                                    href="/faq"
+                                    className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
+                                    onClick={onClose}
+                                    role="menuitem"
+                                >
+                                    <motion.div
+                                        initial="hidden"
+                                        animate="visible"
+                                        transition={{ delay: 0.25 }}
+                                        variants={dropdownItemVariants}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <Info className="w-4 h-4 text-[#8B7355]" />
+                                        Tanya & Jawab
+                                    </motion.div>
+                                </Link>
                                 <div className="my-1 border-t border-[#EDE3CD]" />
                                 <Link
                                     href="/admin/products"
