@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     default: "MaCommerce — Smart Picks & Curated Worlds",
   },
   description:
-    "MaCommerce adalah platform discovery berbasis affiliate: worlds tematik, rekomendasi singkat, dan link ke toko resmi atau TikTok Shop untuk transaksi.",
+    "MaCommerce: Platform belanja kurasi pilihan untuk Gadget, Setup, dan Lifestyle. Temukan produk unik, lihat detail lengkap, dan pesan langsung via WhatsApp dengan mudah.",
   keywords: [
     "macommerce",
     "rekomendasi produk",
@@ -41,6 +41,10 @@ export const metadata: Metadata = {
     },
   },
 
+  verification: {
+    google: "GOOGLE_SITE_VERIFICATION_CODE_HERE", // Ganti dengan kode dari Google Search Console
+  },
+
   openGraph: {
     type: "website",
     locale: "id_ID",
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
     siteName: "MaCommerce",
     title: "MaCommerce — Smart Picks & Curated Worlds",
     description:
-      "Platform discovery berbasis affiliate: worlds tematik, rekomendasi singkat, dan link ke toko resmi atau TikTok Shop.",
+      "MaCommerce: Platform belanja kurasi pilihan untuk Gadget, Setup, dan Lifestyle. Temukan produk unik, lihat detail lengkap, dan pesan langsung via WhatsApp dengan mudah.",
     images: [
       {
         url: "/images/og-image.jpg",
@@ -63,7 +67,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MaCommerce — Smart Picks & Curated Worlds",
     description:
-      "Platform discovery berbasis affiliate: worlds tematik, rekomendasi singkat, dan link ke toko resmi atau TikTok Shop.",
+      "MaCommerce: Platform belanja kurasi pilihan untuk Gadget, Setup, dan Lifestyle. Temukan produk unik, lihat detail lengkap, dan pesan langsung via WhatsApp dengan mudah.",
     images: ["/images/og-image.jpg"],
     creator: "@macommerce_id",
     site: "@macommerce_id",

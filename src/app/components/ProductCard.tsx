@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProductCardProps, ProductOption } from '../types/product';
 import { ProductCardServer } from './ProductCardServer';
-import { X, ShoppingCart, ChevronLeft } from 'lucide-react';
+import { X, ShoppingCart, ChevronLeft, Info, User, Phone, Mail, FileText } from 'lucide-react';
 import { CONTACT_INFO } from '../data/contact';
 
 const fullScreenVariants = {
@@ -510,16 +510,24 @@ Mohon diproses, terima kasih!`;
                                         transition={{ duration: 0.2 }}
                                         className="space-y-6"
                                     >
-                                        <div className="bg-white p-4 rounded-xl border border-[#EDE3CD] shadow-sm">
-                                            <h3 className="text-sm font-medium text-[#8B7355] mb-2">Ringkasan Pesanan</h3>
-                                             <div className="flex justify-between items-start">
-                                                <div>
-                                                    <p className="font-bold text-[#5C4B37]">{name}</p>
-                                                    {selectedOption && (
-                                                        <p className="text-sm text-[#8B7355]">{selectedOption.label}</p>
-                                                    )}
-                                                </div>
-                                                <p className="font-bold text-[#5C4B37]">
+                                        {/* Product Summary Card */}
+                                        <div className="bg-[#FDF6E3] p-4 rounded-xl border border-[#EDE3CD] flex gap-4 items-center">
+                                            <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-[#EDE3CD]">
+                                                <Image 
+                                                    src={imageUrl} 
+                                                    alt={name} 
+                                                    fill 
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h3 className="text-sm font-bold text-[#5C4B37] truncate">{name}</h3>
+                                                {selectedOption && (
+                                                    <p className="text-xs text-[#8B7355] mt-0.5 bg-white/50 px-2 py-0.5 rounded-md inline-block">
+                                                        {selectedOption.label}
+                                                    </p>
+                                                )}
+                                                <p className="text-sm font-bold text-[#D32F2F] mt-1">
                                                     {selectedOption && selectedOption.price > 0 
                                                         ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price)
                                                         : formattedPrice}
@@ -527,56 +535,94 @@ Mohon diproses, terima kasih!`;
                                             </div>
                                         </div>
 
-                                        <form onSubmit={handleOrderSubmit} className="space-y-4">
-                                            <div>
-                                                <label className="block text-sm font-medium text-[#5C4B37] mb-1">Nama Pembeli *</label>
-                                                <input
-                                                    type="text"
-                                                    required
-                                                    value={orderForm.name}
-                                                    onChange={(e) => setOrderForm({...orderForm, name: e.target.value})}
-                                                    className="w-full px-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37] focus:border-transparent outline-none bg-white/50"
-                                                    placeholder="Masukkan nama Anda"
-                                                />
+                                        <form onSubmit={handleOrderSubmit} className="space-y-6">
+                                            {/* Section: Data Diri */}
+                                            <div className="space-y-4">
+                                                <h4 className="text-sm font-semibold text-[#5C4B37] border-b border-[#EDE3CD] pb-2">
+                                                    Data Pemesan
+                                                </h4>
+                                                
+                                                <div className="space-y-3">
+                                                    <div>
+                                                        <label className="block text-xs font-medium text-[#8B7355] mb-1.5 ml-1">Nama Lengkap <span className="text-red-500">*</span></label>
+                                                        <div className="relative">
+                                                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                                                <User className="w-4 h-4 text-[#8B7355]/70" />
+                                                            </div>
+                                                            <input
+                                                                type="text"
+                                                                required
+                                                                value={orderForm.name}
+                                                                onChange={(e) => setOrderForm({...orderForm, name: e.target.value})}
+                                                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37]/20 focus:border-[#5C4B37] outline-none bg-white transition-all placeholder:text-[#8B7355]/40 text-sm"
+                                                                placeholder="Nama lengkap Anda"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="block text-xs font-medium text-[#8B7355] mb-1.5 ml-1">Nomor WhatsApp <span className="text-red-500">*</span></label>
+                                                        <div className="relative">
+                                                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                                                <Phone className="w-4 h-4 text-[#8B7355]/70" />
+                                                            </div>
+                                                            <input
+                                                                type="tel"
+                                                                required
+                                                                value={orderForm.whatsapp}
+                                                                onChange={(e) => setOrderForm({...orderForm, whatsapp: e.target.value})}
+                                                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37]/20 focus:border-[#5C4B37] outline-none bg-white transition-all placeholder:text-[#8B7355]/40 text-sm"
+                                                                placeholder="Contoh: 08123456789"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div>
-                                                <label className="block text-sm font-medium text-[#5C4B37] mb-1">Nomor WhatsApp *</label>
-                                                <input
-                                                    type="tel"
-                                                    required
-                                                    value={orderForm.whatsapp}
-                                                    onChange={(e) => setOrderForm({...orderForm, whatsapp: e.target.value})}
-                                                    className="w-full px-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37] focus:border-transparent outline-none bg-white/50"
-                                                    placeholder="Contoh: 08123456789"
-                                                />
-                                            </div>
+                                            {/* Section: Info Tambahan */}
+                                            <div className="space-y-4">
+                                                <h4 className="text-sm font-semibold text-[#5C4B37] border-b border-[#EDE3CD] pb-2">
+                                                    Info Tambahan
+                                                </h4>
 
-                                            <div>
-                                                <label className="block text-sm font-medium text-[#5C4B37] mb-1">Email (Opsional)</label>
-                                                <input
-                                                    type="email"
-                                                    value={orderForm.email}
-                                                    onChange={(e) => setOrderForm({...orderForm, email: e.target.value})}
-                                                    className="w-full px-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37] focus:border-transparent outline-none bg-white/50"
-                                                    placeholder="email@kamu.com"
-                                                />
-                                            </div>
+                                                <div className="space-y-3">
+                                                    <div>
+                                                        <label className="block text-xs font-medium text-[#8B7355] mb-1.5 ml-1">Email <span className="text-[10px] text-[#8B7355]/60">(Opsional)</span></label>
+                                                        <div className="relative">
+                                                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                                                <Mail className="w-4 h-4 text-[#8B7355]/70" />
+                                                            </div>
+                                                            <input
+                                                                type="email"
+                                                                value={orderForm.email}
+                                                                onChange={(e) => setOrderForm({...orderForm, email: e.target.value})}
+                                                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37]/20 focus:border-[#5C4B37] outline-none bg-white transition-all placeholder:text-[#8B7355]/40 text-sm"
+                                                                placeholder="email@kamu.com"
+                                                            />
+                                                        </div>
+                                                    </div>
 
-                                            <div>
-                                                <label className="block text-sm font-medium text-[#5C4B37] mb-1">Catatan Tambahan (Opsional)</label>
-                                                <textarea
-                                                    value={orderForm.note}
-                                                    onChange={(e) => setOrderForm({...orderForm, note: e.target.value})}
-                                                    rows={3}
-                                                    className="w-full px-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37] focus:border-transparent outline-none bg-white/50 resize-none"
-                                                    placeholder="Ada permintaan khusus?"
-                                                />
+                                                    <div>
+                                                        <label className="block text-xs font-medium text-[#8B7355] mb-1.5 ml-1">Catatan Pesanan <span className="text-[10px] text-[#8B7355]/60">(Opsional)</span></label>
+                                                        <div className="relative">
+                                                            <div className="absolute top-3.5 left-3.5 pointer-events-none">
+                                                                <FileText className="w-4 h-4 text-[#8B7355]/70" />
+                                                            </div>
+                                                            <textarea
+                                                                value={orderForm.note}
+                                                                onChange={(e) => setOrderForm({...orderForm, note: e.target.value})}
+                                                                rows={3}
+                                                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#EDE3CD] focus:ring-2 focus:ring-[#5C4B37]/20 focus:border-[#5C4B37] outline-none bg-white transition-all placeholder:text-[#8B7355]/40 text-sm resize-none"
+                                                                placeholder="Ada permintaan khusus?"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <button
                                                 type="submit"
-                                                className="w-full py-3.5 mt-4 text-base font-bold text-white bg-[#25D366] hover:bg-[#128C7E] rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+                                                className="w-full py-4 mt-6 text-base font-bold text-white bg-[#25D366] hover:bg-[#128C7E] rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-[0.98] flex items-center justify-center gap-2.5"
                                             >
                                                 <Image
                                                     src="/images/marketplace/wa_white.svg"
@@ -587,8 +633,8 @@ Mohon diproses, terima kasih!`;
                                                 />
                                                 Lanjut Order via WhatsApp
                                             </button>
-                                            <p className="text-center text-xs text-[#8B7355] mt-2">
-                                                Anda akan diarahkan ke WhatsApp Admin untuk konfirmasi.
+                                            <p className="text-center text-[10px] text-[#8B7355]/80 mt-2 px-4">
+                                                *Data akan dikirim ke WhatsApp Admin secara otomatis. Tidak ada pembayaran di halaman ini.
                                             </p>
                                         </form>
                                     </motion.div>
