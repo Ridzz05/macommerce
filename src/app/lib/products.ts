@@ -60,6 +60,7 @@ export function parseProductPayload(payload: unknown): { ok: true; value: Produc
   const features = toStringArray(record.features)
   const images = toStringArray(record.images)
   const demoUrl = toOptionalString(record.demoUrl)
+  const discountPrice = record.discountPrice ? (typeof record.discountPrice === 'number' ? record.discountPrice : Number(record.discountPrice)) : undefined
   // marketplace removed
   const options = toOptions(record.options)
 
@@ -95,6 +96,7 @@ export function parseProductPayload(payload: unknown): { ok: true; value: Produc
       id,
       name,
       price,
+      discountPrice,
       imageUrl,
       images: images.length > 0 ? images : undefined,
       category: category as Category,

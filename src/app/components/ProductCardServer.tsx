@@ -14,9 +14,13 @@ export function ProductCardServer({ name, price, discountPrice, imageUrl, catego
         currency: 'IDR'
     }).format(discountPrice) : null;
 
+    const discountPercentage = discountPrice && price > 0 
+        ? Math.round(((price - discountPrice) / price) * 100) 
+        : 0;
+
     return (
-        <div className="group bg-[#FDF6E3] rounded-lg border border-[#EDE3CD] overflow-hidden hover:border-[#D8C8A7] transition-all duration-300 flex flex-col h-full">
-            <div className="relative w-full aspect-square overflow-hidden">
+        <div className="group bg-[#FDF6E3] rounded-lg border border-[#EDE3CD] overflow-hidden hover:border-[#D8C8A7] transition-all duration-300 flex flex-col h-full relative">
+            <div className="relative w-full aspect-square overflow-hidden bg-[#EDE3CD]">
                 <Image
                     src={imageUrl}
                     alt={name}
@@ -24,6 +28,14 @@ export function ProductCardServer({ name, price, discountPrice, imageUrl, catego
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
+                
+                {/* Discount Badge */}
+                {discountPrice && discountPrice > 0 && discountPercentage > 0 && (
+                    <div className="absolute top-2 left-2 z-10 px-2 py-1 bg-[#D32F2F] text-white text-[10px] font-bold rounded shadow-sm">
+                        {discountPercentage}% OFF
+                    </div>
+                )}
+
                 {optionsCount > 0 && (
                     <div className="absolute top-2 right-2 px-1.5 py-0.5 bg-black/50 backdrop-blur-sm rounded text-[10px] font-medium text-white shadow-sm border border-white/10">
                         {optionsCount} Varian
@@ -37,21 +49,21 @@ export function ProductCardServer({ name, price, discountPrice, imageUrl, catego
                             {category}
                         </span>
                     )}
-                    <h3 className="text-xs font-medium text-[#5C4B37] line-clamp-2 group-hover:text-[#3D3224] mb-1 leading-tight">
+                    <h3 className="text-xs font-medium text-[#5C4B37] line-clamp-2 group-hover:text-[#3D3224] mb-1 leading-tight min-h-[2.5em]">
                         {name}
                     </h3>
                     <div className="flex flex-col gap-0.5 mt-1">
                         {discountPrice && discountPrice > 0 ? (
-                            <>
-                                <p className="text-[10px] text-[#8B7355] line-through decoration-[#8B7355]/40">
+                            <div className="flex flex-col items-start -space-y-0.5">
+                                <p className="text-[10px] sm:text-xs text-[#8B7355]/80 line-through decoration-red-500/50">
                                     {formattedPrice}
                                 </p>
-                                <p className="text-xs font-bold text-[#D32F2F]">
+                                <p className="text-sm sm:text-base font-bold text-[#D32F2F]">
                                     {formattedDiscountPrice}
                                 </p>
-                            </>
+                            </div>
                         ) : (
-                            <p className="text-xs font-medium text-[#8B7355]">
+                            <p className="text-sm font-bold text-[#5C4B37]">
                                 {formattedPrice}
                             </p>
                         )}

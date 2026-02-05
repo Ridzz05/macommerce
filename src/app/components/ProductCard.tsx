@@ -242,6 +242,13 @@ Mohon diproses, terima kasih!`;
                                             ))}
                                         </div>
                                     )}
+
+                                    {/* Discount Badge in Detail */}
+                                    {discountPrice && discountPrice > 0 && price > 0 && (
+                                        <div className="absolute top-4 left-4 z-20 px-3 py-1.5 bg-[#D32F2F] text-white text-xs font-bold rounded shadow-sm">
+                                            {Math.round(((price - discountPrice) / price) * 100)}% OFF
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             
@@ -280,14 +287,14 @@ Mohon diproses, terima kasih!`;
                                         transition={{ delay: 0.4 }}
                                     >
                                         {discountPrice && discountPrice > 0 ? (
-                                            <>
-                                                <span className="text-xs text-[#8B7355] line-through decoration-[#8B7355]/40 mb-0.5">
+                                            <div className="flex flex-col items-end -space-y-0.5">
+                                                <span className="text-xs sm:text-sm text-[#8B7355]/80 line-through decoration-red-500/50">
                                                     {formattedPrice}
                                                 </span>
-                                                <span className="text-lg font-bold text-[#D32F2F]">
+                                                <span className="text-lg sm:text-xl font-bold text-[#D32F2F]">
                                                     {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(discountPrice)}
                                                 </span>
-                                            </>
+                                            </div>
                                         ) : (
                                             <span className="text-lg font-bold text-[#8B7355]">
                                                 {formattedPrice}

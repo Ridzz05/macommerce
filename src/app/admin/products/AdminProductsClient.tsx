@@ -492,49 +492,68 @@ export default function AdminProductsClient() {
           <div className="bg-white border border-[#EDE3CD] rounded-xl p-4 sm:p-5 shadow-sm">
             <p className="text-xs font-semibold text-[#5C4B37]">Preview</p>
             <div className="mt-3 border border-[#EDE3CD] rounded-lg overflow-hidden bg-[#FDF6E3]">
-              <div className="aspect-[4/3] bg-[#EDE3CD] flex items-center justify-center text-xs text-[#8B7355]">
-                {form.imageUrl ? (
-                  <img 
-                    src={form.imageUrl} 
-                    alt="Preview" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      // Optional: show fallback text if needed, but for now just hiding broken image
-                    }}
-                  /> 
-                ) : (
-                  <div className="w-full h-full animate-pulse bg-[#E6DBC4]" />
-                )}
-              </div>
-              <div className="p-3">
-                {form.category ? (
-                  <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full">
-                    {form.category}
-                  </span>
-                ) : (
-                   <div className="h-4 w-20 bg-[#EDE3CD] animate-pulse rounded-full" />
-                )}
-                {form.name ? (
-                  <p className="mt-2 text-sm font-semibold text-[#5C4B37]">
-                    {form.name}
-                  </p>
-                ) : (
-                  <div className="mt-2 h-5 w-3/4 bg-[#EDE3CD] animate-pulse rounded" />
-                )}
-                <div className="text-xs text-[#8B7355] mt-1 flex items-center gap-2">
-                  {form.price ? (
-                     `Rp ${Number(form.price || 0).toLocaleString('id-ID')}`
+                <div className="aspect-[4/3] bg-[#EDE3CD] flex items-center justify-center text-xs text-[#8B7355] relative">
+                  {form.imageUrl ? (
+                    <img 
+                      src={form.imageUrl} 
+                      alt="Preview" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    /> 
                   ) : (
-                     <div className="h-4 w-24 bg-[#EDE3CD] animate-pulse rounded" />
+                    <div className="w-full h-full animate-pulse bg-[#E6DBC4]" />
                   )}
-                  
-                  {form.options.length > 0 && (
-                    <span className="ml-2 text-[10px] px-1.5 py-0.5 bg-[#EDE3CD] rounded text-[#5C4B37]">
-                        {form.options.length} Varian
-                    </span>
+
+                  {/* Discount Badge Preview */}
+                  {form.discountPrice && Number(form.discountPrice) > 0 && Number(form.price) > 0 && (
+                      <div className="absolute top-2 left-2 z-10 px-2 py-1 bg-[#D32F2F] text-white text-[10px] font-bold rounded shadow-sm">
+                          {Math.round(((Number(form.price) - Number(form.discountPrice)) / Number(form.price)) * 100)}% OFF
+                      </div>
                   )}
                 </div>
+                <div className="p-3">
+                  {form.category ? (
+                    <span className="inline-block px-1.5 py-0.5 text-[10px] font-medium bg-[#EDE3CD] text-[#5C4B37] rounded-full">
+                      {form.category}
+                    </span>
+                  ) : (
+                     <div className="h-4 w-20 bg-[#EDE3CD] animate-pulse rounded-full" />
+                  )}
+                  {form.name ? (
+                    <p className="mt-2 text-sm font-semibold text-[#5C4B37] line-clamp-2 leading-tight min-h-[2.5em]">
+                      {form.name}
+                    </p>
+                  ) : (
+                    <div className="mt-2 h-5 w-3/4 bg-[#EDE3CD] animate-pulse rounded" />
+                  )}
+                  <div className="mt-1 flex flex-col gap-0.5">
+                    {form.price ? (
+                      form.discountPrice && Number(form.discountPrice) > 0 ? (
+                        <div className="flex flex-col items-start -space-y-0.5">
+                            <p className="text-[10px] text-[#8B7355]/80 line-through decoration-red-500/50">
+                                Rp {Number(form.price).toLocaleString('id-ID')}
+                            </p>
+                            <p className="text-sm font-bold text-[#D32F2F]">
+                                Rp {Number(form.discountPrice).toLocaleString('id-ID')}
+                            </p>
+                        </div>
+                      ) : (
+                        <p className="text-sm font-bold text-[#5C4B37]">
+                           Rp {Number(form.price).toLocaleString('id-ID')}
+                        </p>
+                      )
+                    ) : (
+                       <div className="h-4 w-24 bg-[#EDE3CD] animate-pulse rounded" />
+                    )}
+                    
+                    {form.options.length > 0 && (
+                      <span className="text-[10px] text-[#8B7355]">
+                          + {form.options.length} Varian Lain
+                      </span>
+                    )}
+                  </div>
                 {form.description ? (
                   <p className="text-xs text-[#8B7355] mt-2 line-clamp-3">
                     {form.description}
