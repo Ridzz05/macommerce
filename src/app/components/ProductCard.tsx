@@ -534,11 +534,26 @@ Mohon diproses, terima kasih!`;
                                                         {selectedOption.label}
                                                     </p>
                                                 )}
-                                                <p className="text-sm font-bold text-[#D32F2F] mt-1">
-                                                    {selectedOption && selectedOption.price > 0 
-                                                        ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price)
-                                                        : formattedPrice}
-                                                </p>
+                                                {selectedOption && selectedOption.price > 0 ? (
+                                                    <p className="text-sm font-bold text-[#D32F2F] mt-1">
+                                                        {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price)}
+                                                    </p>
+                                                ) : (
+                                                    discountPrice && discountPrice > 0 ? (
+                                                        <div className="flex flex-col items-start mt-0.5 -space-y-0.5">
+                                                            <p className="text-[10px] text-[#8B7355]/80 line-through decoration-red-500/50">
+                                                                {formattedPrice}
+                                                            </p>
+                                                            <p className="text-sm font-bold text-[#D32F2F]">
+                                                                {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(discountPrice)}
+                                                            </p>
+                                                        </div>
+                                                    ) : (
+                                                        <p className="text-sm font-bold text-[#5C4B37] mt-1">
+                                                            {formattedPrice}
+                                                        </p>
+                                                    )
+                                                )}
                                             </div>
                                         </div>
 

@@ -69,30 +69,28 @@ const Navbar = () => {
             <AnimatePresence>
                 {isVisible && (
                     <motion.div 
-                        className="fixed top-2 left-0 right-0 z-50 px-3 sm:px-6 py-2"
+                        className="fixed top-0 left-0 right-0 z-50"
                         variants={shouldReduceMotion ? {} : navVariants}
                         initial="initial"
                         animate="animate"
                         exit="exit"
                     >
-                        <div className="max-w-7xl mx-auto">
-                            <nav className="bg-[#FDF6E3] backdrop-blur-sm bg-opacity-90 border border-[#EDE3CD] rounded-xl shadow-lg">
-                                <div className="px-3 sm:px-6 py-2 sm:py-3">
-                                    <div className="flex justify-between items-center">
-                                        <Logo />
-                                        
-                                        <div className="flex items-center gap-2 sm:gap-3">
-                                            <SearchButton onClick={() => setShowSearchModal(true)} />
-                                            <NavigationDropdown 
-                                                isOpen={isDropdownOpen}
-                                                onToggle={() => setIsDropdownOpen(!isDropdownOpen)}
-                                                onClose={() => setIsDropdownOpen(false)}
-                                            />
-                                        </div>
+                        <nav className="bg-[#FDF6E3] backdrop-blur-md bg-opacity-90 border-b border-[#EDE3CD] rounded-b-3xl shadow-sm">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+                                <div className="flex justify-between items-center">
+                                    <Logo />
+                                    
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                        <SearchButton onClick={() => setShowSearchModal(true)} />
+                                        <NavigationDropdown 
+                                            isOpen={isDropdownOpen}
+                                            onToggle={() => setIsDropdownOpen(!isDropdownOpen)}
+                                            onClose={() => setIsDropdownOpen(false)}
+                                        />
                                     </div>
                                 </div>
-                            </nav>
-                        </div>
+                            </div>
+                        </nav>
                     </motion.div>
                 )}
             </AnimatePresence>
