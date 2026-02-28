@@ -68,7 +68,12 @@ export default function ChatWidget() {
       })
 
       if (!response.ok) {
-        throw new Error('Gagal mendapatkan respons.')
+        let errorMsg = 'Gagal mendapatkan respons.'
+        try {
+          const errorData = await response.json()
+          if (errorData?.error) errorMsg = errorData.error
+        } catch {}
+        throw new Error(errorMsg)
       }
 
       const reader = response.body?.getReader()
@@ -93,15 +98,13 @@ export default function ChatWidget() {
           )
         )
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Chat error:', error)
+      const fallback = error?.message || 'Maaf, terjadi gangguan. Silakan coba lagi ya! 🙏'
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantId
-            ? {
-                ...m,
-                content: 'Maaf, terjadi gangguan. Silakan coba lagi ya! 🙏',
-              }
+            ? { ...m, content: fallback }
             : m
         )
       )

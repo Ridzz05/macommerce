@@ -111,8 +111,17 @@ export async function POST(request: Request) {
         'Cache-Control': 'no-cache',
       },
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Chat API error:', error)
+
+    // Handle Gemini rate limit errors
+    if (error?.status === 429 || error?.message?.includes('429') || error?.message?.includes('quota')) {
+      return Response.json(
+        { error: 'Maaf, layanan chat sedang sibuk. Silakan coba lagi dalam beberapa saat. 🙏' },
+        { status: 429 }
+      )
+    }
+
     return Response.json(
       { error: 'Terjadi kesalahan. Silakan coba lagi.' },
       { status: 500 }
