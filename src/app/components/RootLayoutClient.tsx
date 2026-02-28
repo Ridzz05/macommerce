@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import SearchProvider from '../context/SearchContext'
 import Footer from './Footer'
 import Navbar from './navbar/Navbar'
+import ChatWidget from './chat/ChatWidget'
 
 interface RootLayoutClientProps {
     children: React.ReactNode;
@@ -23,7 +24,9 @@ export default function RootLayoutClient({
                 {!isAdminRoute && <Navbar />}
                 {children}
                 {!isAdminRoute && <Footer />}
+                {!isAdminRoute && <ChatWidget />}
             </SearchProvider>
         </body>
     )
 } 
+
