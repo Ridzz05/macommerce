@@ -3,7 +3,17 @@ import { notFound } from 'next/navigation'
 import ProductDetail from '@/app/components/ProductDetail'
 import { getProductBySlug } from '@/app/lib/products'
 
-export const dynamic = 'force-dynamic'
+import { getProducts, slugify } from '@/app/lib/products'
+
+export const revalidate = 3600 // ISR: Revalidate caching every 1 hour
+
+export async function generateStaticParams() {
+  const products = await getProducts()
+  
+  return products.map((product) => ({
+    slug: slugify(product.name),
+  }))
+}
 
 interface Props {
   params: {

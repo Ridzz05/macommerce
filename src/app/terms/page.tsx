@@ -1,5 +1,11 @@
 import Link from 'next/link';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Syarat & Ketentuan',
+  description: 'Syarat dan ketentuan penggunaan layanan platform kurasi MaCommerce.',
+};
 
 export default function TermsPage() {
   return (

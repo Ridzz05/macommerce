@@ -3,6 +3,7 @@
 import { Product } from '../data/products'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { slugify } from '../lib/products'
 
 interface ProductDetailProps {
   product: Product
@@ -15,25 +16,47 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     currency: 'IDR'
   }).format(product.price)
 
+  const productSlug = slugify(product.name)
+
   // Schema.org markup
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    image: product.imageUrl,
-    description: product.description,
-    offers: {
-      '@type': 'Offer',
-      price: product.price,
-      priceCurrency: 'IDR',
-      availability: 'https://schema.org/InStock',
-      url: `https://macommerce.shop/product/${product.name.toLowerCase().replace(/ /g, '-')}`,
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      image: product.imageUrl,
+      description: product.description,
+      offers: {
+        '@type': 'Offer',
+        price: product.price,
+        priceCurrency: 'IDR',
+        availability: 'https://schema.org/InStock',
+        url: `https://macommerce.shop/product/${productSlug}`,
+      },
+      brand: {
+        '@type': 'Brand',
+        name: 'MaCommerce',
+      },
     },
-    brand: {
-      '@type': 'Brand',
-      name: 'MaCommerce',
-    },
-  }
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://macommerce.shop',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: product.name,
+          item: `https://macommerce.shop/product/${productSlug}`,
+        },
+      ],
+    }
+  ]
 
   return (
     <>
@@ -41,6 +64,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <motion.div 

@@ -1,6 +1,12 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
 import AboutContent from '../components/AboutContent';
+
+export const metadata: Metadata = {
+    title: 'Tentang Kami',
+    description: 'Pelajari lebih lanjut tentang MaCommerce, platform kurasi premium untuk produk digital, jasa online, dan alat pertumbuhan bisnismu.',
+};
 
 // Loading component
 function LoadingFallback() {

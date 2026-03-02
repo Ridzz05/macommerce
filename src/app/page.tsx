@@ -1,7 +1,7 @@
 import HomeClient from './components/HomeClient'
 import { getProducts } from './lib/products'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600 // ISR: Revalidate caching every 1 hour
 
 export default async function Home() {
   const products = await getProducts()

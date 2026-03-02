@@ -112,7 +112,20 @@ export async function POST(request: Request) {
       },
     })
   } catch (error: any) {
-    console.error('Chat API error:', error)
+    // Detailed error logging for Google AI Studio
+    console.error('--- START CHAT API ERROR ---')
+    console.error('Error message:', error?.message || error)
+    console.error('Error name:', error?.name)
+    console.error('Error status:', error?.status)
+    if (error?.response) {
+      console.error('Error response body:', error.response)
+    }
+    if (error?.stack) {
+      console.error('Stack trace:', error.stack)
+    }
+    // Log the raw object to inspect hidden properties
+    console.error('Raw error object:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2))
+    console.error('--- END CHAT API ERROR ---')
 
     // Handle Gemini rate limit errors
     if (error?.status === 429 || error?.message?.includes('429') || error?.message?.includes('quota')) {
