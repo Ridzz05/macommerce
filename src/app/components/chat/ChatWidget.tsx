@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import ChatMessage from './ChatMessage'
 import ChatInput from './ChatInput'
 
@@ -217,10 +218,8 @@ export default function ChatWidget() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                   </svg>
                 </button>
-                <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-2.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                  </svg>
+                <div className="w-9 h-9 rounded-full overflow-hidden shadow-sm">
+                  <Image src="/icons/macommerce_cs.png" alt="CS" width={36} height={36} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold leading-none">Live Chat</p>
@@ -271,10 +270,8 @@ export default function ChatWidget() {
               {/* Typing indicator */}
               {isLoading && (
                 <div className="flex justify-start mb-3">
-                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-[#C8956C] to-[#A67548] flex items-center justify-center mr-2 mt-1 shadow-sm">
-                    <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-2.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                    </svg>
+                  <div className="flex-shrink-0 w-7 h-7 rounded-full overflow-hidden mr-2 mt-1 shadow-sm">
+                    <Image src="/icons/macommerce_cs.png" alt="CS" width={28} height={28} className="w-full h-full object-cover" />
                   </div>
                   <div className="bg-white text-[#5C4B37] rounded-2xl rounded-bl-md shadow-sm border border-[#EDE3CD]/60 px-4 py-3">
                     <span className="flex gap-1.5">
@@ -308,18 +305,16 @@ export default function ChatWidget() {
             onClick={handleToggle}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
-            className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-[#C8956C] to-[#A67548] text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
+            className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-[#C8956C] to-[#A67548] text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow overflow-hidden"
             aria-label="Buka live chat"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-2.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-            </svg>
+            <Image
+              src="/icons/macommerce_cs.png"
+              alt="MaCommerce CS"
+              width={56}
+              height={56}
+              className="w-full h-full object-cover"
+            />
 
             {/* Notification dot */}
             {hasNewMessage && (

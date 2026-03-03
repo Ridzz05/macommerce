@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface ChatMessageProps {
   role: 'user' | 'admin'
@@ -28,10 +29,8 @@ export default function ChatMessage({ role, content, timestamp, status }: ChatMe
       className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-3`}
     >
       {!isUser && (
-        <div className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-[#C8956C] to-[#A67548] flex items-center justify-center mr-2 mt-1 shadow-sm">
-          <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-2.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-          </svg>
+        <div className="flex-shrink-0 w-7 h-7 rounded-full overflow-hidden mr-2 mt-1 shadow-sm">
+          <Image src="/icons/macommerce_cs.png" alt="CS" width={28} height={28} className="w-full h-full object-cover" />
         </div>
       )}
       <div className="flex flex-col">
