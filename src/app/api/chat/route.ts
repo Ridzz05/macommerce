@@ -1,142 +1,83 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
-import { getProducts } from '@/app/lib/products'
-import { CONTACT_INFO } from '@/app/data/contact'
+import {
+  createSession,
+  getSession,
+  addMessage,
+  getMessagesSince,
+  sendToTelegram,
+  updateSessionActivity,
+} from '@/app/lib/chat'
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-
-function buildSystemPrompt(productsContext: string): string {
-  return `Kamu adalah **MaBot**, asisten customer service AI dari **MaCommerce** (macommerce.shop) — platform kurasi pilihan untuk Digital Product, Jasa Online, dan Growth Tools.
-
-## Instruksi Utama
-- Jawab HANYA dalam **Bahasa Indonesia** yang sopan dan ramah.
-- Jawab pertanyaan HANYA seputar produk, layanan, dan cara order di MaCommerce.
-- Jika user bertanya di luar topik MaCommerce, tolak dengan sopan dan arahkan kembali.
-- Jangan pernah membuat informasi produk yang tidak ada di daftar.
-- Jawab dengan singkat, jelas, dan to-the-point. Maksimal 3-4 paragraf per respons.
-- Gunakan emoji secukupnya untuk membuat chat lebih friendly 😊
-
-## Cara Order
-Pemesanan dilakukan langsung melalui **WhatsApp** di nomor: ${CONTACT_INFO.whatsapp}
-Kamu juga bisa follow Instagram kami di: @${CONTACT_INFO.instagram}
-
-## Jika User Ingin Order
-Arahkan user untuk menghubungi via WhatsApp dengan format:
-"Halo, saya ingin order [nama produk] - [paket yang dipilih]"
-
-## Daftar Produk Tersedia
-${productsContext}
-
-## Catatan
-- Jika produk tidak ditemukan, sampaikan bahwa saat ini belum tersedia dan sarankan cek kembali nanti.
-- Selalu tawarkan bantuan lanjutan di akhir respons.`
-}
-
+// POST — User sends a message
 export async function POST(request: Request) {
   try {
-    const { messages } = await request.json()
+    const { sessionId, message } = await request.json()
 
-    if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return Response.json({ error: 'Messages diperlukan.' }, { status: 400 })
+    if (!message || typeof message !== 'string' || message.trim().length === 0) {
+      return Response.json({ error: 'Pesan tidak boleh kosong.' }, { status: 400 })
     }
 
-    if (!process.env.GEMINI_API_KEY) {
-      return Response.json({ error: 'API key tidak dikonfigurasi.' }, { status: 500 })
+    if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_ADMIN_CHAT_ID) {
+      return Response.json({ error: 'Chat service belum dikonfigurasi.' }, { status: 500 })
     }
 
-    // Fetch products from KV for context
-    const products = await getProducts()
-    const productsContext = products
-      .map((p) => {
-        let info = `- **${p.name}** (${p.category})\n  Harga: Rp${p.price.toLocaleString('id-ID')}`
-        if (p.discountPrice) {
-          info += ` → Rp${p.discountPrice.toLocaleString('id-ID')} (diskon)`
-        }
-        info += `\n  Deskripsi: ${p.description}`
-        info += `\n  Fitur: ${p.features.join(', ')}`
-        if (p.options && p.options.length > 0) {
-          info += `\n  Paket: ${p.options.map((o) => `${o.label} (Rp${o.price.toLocaleString('id-ID')})`).join(', ')}`
-        }
-        if (p.demoUrl) {
-          info += `\n  Demo: ${p.demoUrl}`
-        }
-        return info
-      })
-      .join('\n\n')
+    const trimmedMessage = message.trim()
 
-    const systemPrompt = buildSystemPrompt(productsContext)
+    // Get or create session
+    let session = sessionId ? await getSession(sessionId) : null
+    if (!session) {
+      session = await createSession()
+    }
 
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash',
-      systemInstruction: systemPrompt,
+    // Save user message
+    const savedMessage = await addMessage(session.id, 'user', trimmedMessage)
+
+    // Forward to Telegram admin
+    await sendToTelegram(session.id, trimmedMessage)
+
+    return Response.json({
+      sessionId: session.id,
+      messageId: savedMessage.id,
+      timestamp: savedMessage.timestamp,
     })
-
-    // Convert messages to Gemini format
-    const history = messages.slice(0, -1).map((msg: { role: string; content: string }) => ({
-      role: msg.role === 'user' ? 'user' : 'model',
-      parts: [{ text: msg.content }],
-    }))
-
-    const lastMessage = messages[messages.length - 1].content
-
-    const chat = model.startChat({
-      history,
-      generationConfig: {
-        maxOutputTokens: 500,
-        temperature: 0.7,
-      },
-    })
-
-    const result = await chat.sendMessageStream(lastMessage)
-
-    // Create a readable stream for the response
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of result.stream) {
-            const text = chunk.text()
-            if (text) {
-              controller.enqueue(new TextEncoder().encode(text))
-            }
-          }
-          controller.close()
-        } catch (error) {
-          controller.error(error)
-        }
-      },
-    })
-
-    return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-        'Cache-Control': 'no-cache',
-      },
-    })
-  } catch (error: any) {
-    // Detailed error logging for Google AI Studio
-    console.error('--- START CHAT API ERROR ---')
-    console.error('Error message:', error?.message || error)
-    console.error('Error name:', error?.name)
-    console.error('Error status:', error?.status)
-    if (error?.response) {
-      console.error('Error response body:', error.response)
-    }
-    if (error?.stack) {
-      console.error('Stack trace:', error.stack)
-    }
-    // Log the raw object to inspect hidden properties
-    console.error('Raw error object:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2))
-    console.error('--- END CHAT API ERROR ---')
-
-    // Handle Gemini rate limit errors
-    if (error?.status === 429 || error?.message?.includes('429') || error?.message?.includes('quota')) {
-      return Response.json(
-        { error: 'Maaf, layanan chat sedang sibuk. Silakan coba lagi dalam beberapa saat. 🙏' },
-        { status: 429 }
-      )
-    }
-
+  } catch (error) {
+    console.error('Chat POST error:', error)
     return Response.json(
       { error: 'Terjadi kesalahan. Silakan coba lagi.' },
+      { status: 500 }
+    )
+  }
+}
+
+// GET — Poll for new messages
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const sessionId = searchParams.get('sessionId')
+    const after = searchParams.get('after')
+
+    if (!sessionId) {
+      return Response.json({ error: 'Session ID diperlukan.' }, { status: 400 })
+    }
+
+    const session = await getSession(sessionId)
+    if (!session) {
+      return Response.json({ error: 'Session tidak ditemukan.' }, { status: 404 })
+    }
+
+    // Update session activity
+    await updateSessionActivity(sessionId)
+
+    const sinceTimestamp = after ? parseInt(after, 10) : 0
+    const messages = await getMessagesSince(sessionId, sinceTimestamp)
+
+    return Response.json({
+      messages,
+      sessionId: session.id,
+    })
+  } catch (error) {
+    console.error('Chat GET error:', error)
+    return Response.json(
+      { error: 'Terjadi kesalahan.' },
       { status: 500 }
     )
   }
