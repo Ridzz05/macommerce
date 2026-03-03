@@ -47,7 +47,7 @@ export const products: Product[] = [
         id: 1,
         name: "TikTok Views Booster",
         price: 15000,
-        imageUrl: "/images/products/tiktok-views.jpg", // Placeholder
+        imageUrl: "/images/products/tiktok-views.jpg",
         category: "Growth Tools",
         description: "Tingkatkan visibilitas konten TikTok Anda dengan paket views premium. Aman, cepat, dan terpercaya.",
         features: ["Proses Cepat", "High Retention", "Garansi Refill", "Support 24/7"],

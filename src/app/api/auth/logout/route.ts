@@ -1,6 +1,16 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+import { kv } from '@vercel/kv'
 
 export async function POST() {
+  // Delete session from Redis
+  const cookieStore = await cookies()
+  const token = cookieStore.get('admin_token')
+
+  if (token?.value) {
+    await kv.del(`admin:session:${token.value}`)
+  }
+
   const response = NextResponse.json(
     { message: 'Logout berhasil' },
     { status: 200 }

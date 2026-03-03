@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server'
+import { kv } from '@vercel/kv'
+import { cookies } from 'next/headers'
 
-// Simple in-memory session store (in production, use proper session management)
-const sessions = new Set<string>()
-
-// Admin password (in production, use environment variable)
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'parri100'
+const SESSION_TTL = 24 * 60 * 60 // 24 hours
 
 export async function POST(request: Request) {
   try {
@@ -17,16 +15,30 @@ export async function POST(request: Request) {
       )
     }
 
-    if (password !== ADMIN_PASSWORD) {
+    const adminPassword = process.env.ADMIN_PASSWORD
+    if (!adminPassword) {
+      console.error('ADMIN_PASSWORD environment variable is not set')
+      return NextResponse.json(
+        { error: 'Konfigurasi server bermasalah.' },
+        { status: 500 }
+      )
+    }
+
+    if (password !== adminPassword) {
       return NextResponse.json(
         { error: 'Password salah' },
         { status: 401 }
       )
     }
 
-    // Generate session token
-    const token = Buffer.from(Date.now().toString()).toString('base64')
-    sessions.add(token)
+    // Generate secure session token
+    const token = crypto.randomUUID()
+
+    // Store session in Redis with TTL
+    await kv.set(`admin:session:${token}`, {
+      createdAt: Date.now(),
+      ip: request.headers.get('x-forwarded-for') || 'unknown',
+    }, { ex: SESSION_TTL })
 
     // Set cookie with session token
     const response = NextResponse.json(
@@ -38,7 +50,7 @@ export async function POST(request: Request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 24 * 60 * 60, // 24 hours
+      maxAge: SESSION_TTL,
       path: '/',
     })
 

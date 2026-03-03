@@ -48,9 +48,9 @@ export const metadata: Metadata = {
     },
   },
 
-  verification: {
-    google: "GOOGLE_SITE_VERIFICATION_CODE_HERE", // Ganti dengan kode dari Google Search Console
-  },
+  // verification: {
+  //   google: "YOUR_GOOGLE_VERIFICATION_CODE",
+  // },
 
   openGraph: {
     type: "website",

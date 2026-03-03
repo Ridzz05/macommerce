@@ -1,7 +1,7 @@
 {
   "name": "MaCommerce — Rekomendasi Produk Cerdas",
   "short_name": "MaCommerce",
-  "description": "Kurasi produk keren & berguna: gadget, toys, dan lifestyle tools. Rekomendasi singkat + link pembelian.",
+  "description": "Platform kurasi premium untuk Digital Product, Jasa Online, dan Growth Tools. Temukan produk unik dan pesan langsung.",
   "start_url": "/?utm_source=pwa&utm_medium=homescreen&utm_campaign=launch",
   "scope": "/",
   "display": "standalone",
