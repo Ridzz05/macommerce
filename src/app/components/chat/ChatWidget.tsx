@@ -206,7 +206,7 @@ export default function ChatWidget() {
             className="fixed inset-0 z-[100] flex flex-col bg-[#FFFBF2]"
           >
             {/* Header */}
-            <div className="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3.5 bg-gradient-to-r from-[#C8956C] to-[#A67548] text-white safe-area-top">
+            <div className="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3.5 pt-[max(0.875rem,env(safe-area-inset-top,0.875rem))] bg-gradient-to-r from-[#C8956C] to-[#A67548] text-white">
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleToggle}
