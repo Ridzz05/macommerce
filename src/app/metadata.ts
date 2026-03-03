@@ -1,4 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#FDF6E3",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://macommerce.shop"),

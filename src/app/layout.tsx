@@ -3,7 +3,7 @@ import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import RootLayoutClient from './components/RootLayoutClient'
-import { metadata } from './metadata'
+import { metadata, viewport } from './metadata'
 import { AuthProvider } from './context/AuthContext'
 
 // Initialize fonts with display swap and preload
@@ -16,7 +16,7 @@ const montserrat = Montserrat({
   fallback: ['system-ui', 'arial']
 });
 
-export { metadata }
+export { metadata, viewport }
 
 export default function RootLayout({
   children,
