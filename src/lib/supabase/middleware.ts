@@ -33,8 +33,26 @@ export const updateSession = async (request: NextRequest) => {
     },
   );
 
-  // refreshing the auth token
-  await supabase.auth.getUser()
+  // refreshing the auth token and getting the user
+  const { data: { user } } = await supabase.auth.getUser();
 
-  return supabaseResponse
+  // Admin Route Protection
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (!user) {
+      // Not logged in -> redirect to /login
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+    }
+
+    const adminEmails = process.env.ADMIN_EMAILS?.split(',') || [];
+    if (!user.email || !adminEmails.includes(user.email)) {
+      // Not an admin -> redirect to /
+      const url = request.nextUrl.clone();
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
+  }
+
+  return supabaseResponse;
 };

@@ -78,6 +78,7 @@ export async function getProducts(): Promise<Product[]> {
       slug: p.slug,
       description: p.description,
       price: Number(p.base_price),
+      discountPrice: p.discount_price ? Number(p.discount_price) : undefined,
       imageUrl: p.image_url,
       category: p.category,
       features: p.features || ['Detail produk unggulan', 'Kualitas terjamin'], // Fallback if missing column

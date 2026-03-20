@@ -46,7 +46,7 @@ export async function register(prevState: any, formData: FormData) {
   }
 
   revalidatePath('/');
-  redirect('/pending-verification'); // Or auto-login if confirm is disabled setup in Supabase
+  redirect('/'); // Langsung ke Home karena auto-confirm aktif
 }
 
 export async function logout() {
