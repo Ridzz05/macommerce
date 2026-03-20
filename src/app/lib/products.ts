@@ -66,7 +66,7 @@ export async function getProducts(): Promise<Product[]> {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching products:', error);
+      console.error('Error fetching products:', error.message || error);
       return [];
     }
 

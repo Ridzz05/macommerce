@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Info, Mail, LockKeyhole } from 'lucide-react';
+import { Info, Mail, LockKeyhole, User as UserIcon, LogOut } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/app/context/AuthContext';
+import { logout } from '@/app/actions/auth';
 
 interface NavigationDropdownProps {
     isOpen: boolean;
@@ -15,6 +17,7 @@ const dropdownItemVariants = {
 
 export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDropdownProps) => {
     const menuId = 'navigation-menu';
+    const { user, isLoading } = useAuth();
 
     return (
         <div className="flex items-center">
@@ -122,23 +125,47 @@ export const NavigationDropdown = ({ isOpen, onToggle, onClose }: NavigationDrop
                                     </motion.div>
                                 </Link>
                                 <div className="my-1 border-t border-[#EDE3CD]" />
-                                <Link
-                                    href="/admin/products"
-                                    className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
-                                    onClick={onClose}
-                                    role="menuitem"
-                                >
-                                    <motion.div
-                                        initial="hidden"
-                                        animate="visible"
-                                        transition={{ delay: 0.3 }}
-                                        variants={dropdownItemVariants}
-                                        className="flex items-center gap-2"
-                                    >
-                                        <LockKeyhole className="w-4 h-4 text-[#8B7355]" />
-                                        Login Admin
-                                    </motion.div>
-                                </Link>
+                                {!isLoading && (
+                                    user ? (
+                                        <form action={logout}>
+                                            <button
+                                                type="submit"
+                                                className="w-full text-left block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
+                                                onClick={onClose}
+                                                role="menuitem"
+                                            >
+                                                <motion.div
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    transition={{ delay: 0.3 }}
+                                                    variants={dropdownItemVariants}
+                                                    className="flex items-center gap-2"
+                                                >
+                                                    <LogOut className="w-4 h-4 text-[#8B7355]" />
+                                                    Keluar
+                                                </motion.div>
+                                            </button>
+                                        </form>
+                                    ) : (
+                                        <Link
+                                            href="/login"
+                                            className="block px-4 py-2 text-sm text-[#5C4B37] hover:bg-[#F5ECD6] transition-colors"
+                                            onClick={onClose}
+                                            role="menuitem"
+                                        >
+                                            <motion.div
+                                                initial="hidden"
+                                                animate="visible"
+                                                transition={{ delay: 0.3 }}
+                                                variants={dropdownItemVariants}
+                                                className="flex items-center gap-2"
+                                            >
+                                                <UserIcon className="w-4 h-4 text-[#8B7355]" />
+                                                Login / Daftar
+                                            </motion.div>
+                                        </Link>
+                                    )
+                                )}
                             </div>
                         </motion.div>
                     )}

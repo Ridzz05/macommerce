@@ -4,7 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import RootLayoutClient from './components/RootLayoutClient'
 import { metadata, viewport } from './metadata'
-import { AuthProvider } from './context/AuthContext'
+// AuthProvider removed to RootLayoutClient
 
 // Initialize fonts with display swap and preload
 const montserrat = Montserrat({
@@ -106,10 +106,8 @@ export default function RootLayout({
       <RootLayoutClient
         montserratClass={montserrat.variable}
       >
-        <AuthProvider>
-          {children}
-          <SpeedInsights />
-        </AuthProvider>
+        {children}
+        <SpeedInsights />
       </RootLayoutClient>
     </html>
   )

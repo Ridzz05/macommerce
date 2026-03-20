@@ -2,6 +2,8 @@
 
 import { usePathname } from 'next/navigation'
 import SearchProvider from '../context/SearchContext'
+import { AuthProvider } from '../context/AuthContext'
+import { CartProvider } from '../context/CartContext'
 import Footer from './Footer'
 import Navbar from './navbar/Navbar'
 import ChatWidget from './chat/ChatWidget'
@@ -20,12 +22,16 @@ export default function RootLayoutClient({
 
     return (
         <body className={`${montserratClass} font-montserrat bg-[#FFFBF2]`}>
-            <SearchProvider>
-                {!isAdminRoute && <Navbar />}
-                {children}
-                {!isAdminRoute && <Footer />}
-                {!isAdminRoute && <ChatWidget />}
-            </SearchProvider>
+            <AuthProvider>
+                <CartProvider>
+                    <SearchProvider>
+                        {!isAdminRoute && <Navbar />}
+                        {children}
+                        {!isAdminRoute && <Footer />}
+                        {!isAdminRoute && <ChatWidget />}
+                    </SearchProvider>
+                </CartProvider>
+            </AuthProvider>
         </body>
     )
 } 

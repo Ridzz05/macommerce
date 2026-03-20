@@ -8,6 +8,7 @@ import { Logo } from './Logo';
 import { SearchButton } from './SearchButton';
 import { SearchModal } from './SearchModal';
 import { NavigationDropdown } from './NavigationDropdown';
+import { CartButton } from './CartButton';
 
 const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -82,6 +83,7 @@ const Navbar = () => {
                                     
                                     <div className="flex items-center gap-2 sm:gap-3">
                                         <SearchButton onClick={() => setShowSearchModal(true)} />
+                                        <CartButton />
                                         <NavigationDropdown 
                                             isOpen={isDropdownOpen}
                                             onToggle={() => setIsDropdownOpen(!isDropdownOpen)}

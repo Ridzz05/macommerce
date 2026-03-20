@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { syncCartFromKV } from './cart'; 
@@ -8,7 +9,8 @@ import { syncCartFromKV } from './cart';
 export async function login(prevState: any, formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  const supabase = await createClient();
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -31,7 +33,8 @@ export async function login(prevState: any, formData: FormData) {
 export async function register(prevState: any, formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  const supabase = await createClient();
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   const { error } = await supabase.auth.signUp({
     email,
@@ -47,7 +50,8 @@ export async function register(prevState: any, formData: FormData) {
 }
 
 export async function logout() {
-  const supabase = await createClient();
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
   await supabase.auth.signOut();
   redirect('/login');
 }
