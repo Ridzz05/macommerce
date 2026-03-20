@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Category } from '../data/products';
+import { Category } from '../lib/products';
 import CategorySidebar from './CategorySidebar';
 
 interface CategoryFilterClientProps {

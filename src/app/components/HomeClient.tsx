@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { categories, type Product } from '../data/products'
+import { categories, type Product } from '../lib/products'
 import { useSearch } from '../context/SearchContext'
 import { CategoryFilterClient } from './CategoryFilterClient'
 import { ProductGridClient } from './ProductGridClient'

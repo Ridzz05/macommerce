@@ -1,189 +1,111 @@
-import { kv } from '@vercel/kv'
-import { categories, products as seedProducts, type Category, type Product } from '@/app/data/products'
+import { createClient } from '@supabase/supabase-js';
 
-const PRODUCTS_KEY = 'products'
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-export type ProductInput = Omit<Product, 'id'> & { id?: number }
+// We use the basic supabase client here without cookies to avoid opting out of ISR/Static caching.
+// This is for public reads only.
+export const supabasePublic = createClient(supabaseUrl, supabaseKey);
 
-export function slugify(value: string) {
-  return value.toLowerCase().trim().replace(/\s+/g, '-')
+export type Category = 'Digital Product' | 'Jasa Online' | 'Growth Tools';
+
+export interface CategoryInfo {
+    name: Category;
+    icon: string;
 }
 
-const toString = (value: unknown) => (typeof value === 'string' ? value.trim() : '')
-
-const toOptionalString = (value: unknown) => {
-  const normalized = toString(value)
-  return normalized.length > 0 ? normalized : undefined
-}
-
-const toStringArray = (value: unknown) => {
-  if (Array.isArray(value)) {
-    return value
-      .filter((item): item is string => typeof item === 'string')
-      .map((item) => item.trim())
-      .filter(Boolean)
-  }
-
-  if (typeof value === 'string') {
-    return value
-      .split('\n')
-      .map((item) => item.trim())
-      .filter(Boolean)
-  }
-
-  return []
-}
-
-// marketplace helper removed
-
-const toOptions = (value: unknown) => {
-    if (!Array.isArray(value)) return undefined;
-    
-    return value.map((item: any) => ({
-        label: toString(item.label),
-        price: typeof item.price === 'number' ? item.price : Number(item.price) || 0,
-        value: toString(item.value)
-    })).filter(opt => opt.label && opt.value);
-}
-
-export function parseProductPayload(payload: unknown): { ok: true; value: ProductInput } | { ok: false; error: string } {
-  if (!payload || typeof payload !== 'object') {
-    return { ok: false, error: 'Payload tidak valid.' }
-  }
-
-  const record = payload as Record<string, unknown>
-  const name = toString(record.name)
-  const description = toString(record.description)
-  const imageUrl = toString(record.imageUrl)
-  const category = toString(record.category)
-  const price = typeof record.price === 'number' ? record.price : Number(record.price)
-  const features = toStringArray(record.features)
-  const images = toStringArray(record.images)
-  const demoUrl = toOptionalString(record.demoUrl)
-  const discountPrice = record.discountPrice ? (typeof record.discountPrice === 'number' ? record.discountPrice : Number(record.discountPrice)) : undefined
-  // marketplace removed
-  const options = toOptions(record.options)
-
-  if (!name) {
-    return { ok: false, error: 'Nama produk wajib diisi.' }
-  }
-
-  if (!description) {
-    return { ok: false, error: 'Deskripsi wajib diisi.' }
-  }
-
-  if (!imageUrl) {
-    return { ok: false, error: 'Image URL wajib diisi.' }
-  }
-
-  if (!Number.isFinite(price) || price < 0) {
-    return { ok: false, error: 'Harga tidak valid.' }
-  }
-
-  if (!category || !categories.includes(category as Category)) {
-    return { ok: false, error: 'Kategori tidak valid.' }
-  }
-
-  if (features.length === 0) {
-    return { ok: false, error: 'Minimal satu fitur wajib diisi.' }
-  }
-
-  const id = typeof record.id === 'number' ? record.id : undefined
-
-  return {
-    ok: true,
-    value: {
-      id,
-      name,
-      price,
-      discountPrice,
-      imageUrl,
-      images: images.length > 0 ? images : undefined,
-      category: category as Category,
-      description,
-      features,
-      demoUrl,
-      options,
+export const categoryInfo: CategoryInfo[] = [
+    {
+        name: 'Digital Product',
+        icon: 'M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z'
     },
-  }
+    {
+        name: 'Jasa Online',
+        icon: 'M8.25 6.75h7.5a1.5 1.5 0 011.5 1.5v7.5a1.5 1.5 0 01-1.5 1.5h-7.5a1.5 1.5 0 01-1.5-1.5v-7.5a1.5 1.5 0 011.5-1.5z'
+    },
+    {
+        name: 'Growth Tools',
+        icon: 'M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z'
+    }
+];
+
+export const categories: Category[] = categoryInfo.map(cat => cat.name);
+
+export interface ProductOption {
+    id?: string;
+    label: string;
+    price: number;
+    value?: string | number;
+    sku?: string;
+    stock?: number;
 }
 
-export async function getProducts() {
-  try {
-    const stored = await kv.get<Product[]>(PRODUCTS_KEY)
+export interface Product {
+    id: string | number;
+    name: string;
+    slug?: string;
+    price: number;
+    discountPrice?: number;
+    imageUrl: string;
+    images?: string[];
+    category: Category;
+    description: string;
+    features: string[];
+    demoUrl?: string;
+    options?: ProductOption[];
+}
 
-    if (stored === null) {
-      await kv.set(PRODUCTS_KEY, seedProducts)
-      return seedProducts
+export async function getProducts(): Promise<Product[]> {
+  try {
+    const { data: products, error } = await supabasePublic
+      .from('products')
+      .select(`
+        *,
+        product_variants (*)
+      `)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching products:', error);
+      return [];
     }
 
-    return stored
-  } catch (_error) {
-    return seedProducts
+    if (!products) return [];
+
+    return products.map((p: any) => ({
+      id: p.id,
+      name: p.name,
+      slug: p.slug,
+      description: p.description,
+      price: Number(p.base_price),
+      imageUrl: p.image_url,
+      category: p.category,
+      features: p.features || ['Detail produk unggulan', 'Kualitas terjamin'], // Fallback if missing column
+      images: p.images || [],
+      options: (p.product_variants || []).map((v: any) => ({
+        id: v.id,
+        label: v.name,
+        price: Number(v.additional_price),
+        sku: v.sku,
+        stock: v.stock_quantity
+      }))
+    }));
+  } catch (err) {
+    console.error('Fatal fetch error:', err);
+    return [];
   }
 }
 
-export async function saveProducts(nextProducts: Product[]) {
-  await kv.set(PRODUCTS_KEY, nextProducts)
-  return nextProducts
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  const products = await getProducts();
+  return products.find(p => p.slug === slug || slugify(p.name) === slug) || null;
 }
 
-export async function getProductById(id: number) {
-  const products = await getProducts()
-  return products.find((product) => product.id === id) ?? null
+export async function getProductById(id: string | number): Promise<Product | null> {
+    const products = await getProducts();
+    return products.find(p => p.id === id) || null;
 }
 
-export async function getProductBySlug(slug: string) {
-  const products = await getProducts()
-  return products.find((product) => slugify(product.name) === slug) ?? null
-}
-
-export async function createProduct(input: ProductInput) {
-  const products = await getProducts()
-  const nextId = input.id ?? (products.length > 0 ? Math.max(...products.map((product) => product.id)) + 1 : 1)
-
-  if (products.some((product) => product.id === nextId)) {
-    throw new Error('ID produk sudah digunakan.')
-  }
-
-  const created: Product = {
-    ...input,
-    id: nextId,
-  }
-
-  await saveProducts([...products, created])
-  return created
-}
-
-export async function updateProduct(id: number, input: ProductInput) {
-  const products = await getProducts()
-  const index = products.findIndex((product) => product.id === id)
-
-  if (index === -1) {
-    return null
-  }
-
-  const updated: Product = {
-    ...products[index],
-    ...input,
-    id,
-  }
-
-  const nextProducts = [...products]
-  nextProducts[index] = updated
-
-  await saveProducts(nextProducts)
-  return updated
-}
-
-export async function deleteProduct(id: number) {
-  const products = await getProducts()
-  const nextProducts = products.filter((product) => product.id !== id)
-
-  if (nextProducts.length === products.length) {
-    return false
-  }
-
-  await saveProducts(nextProducts)
-  return true
+export function slugify(value: string) {
+  return value.toLowerCase().trim().replace(/\\s+/g, '-');
 }

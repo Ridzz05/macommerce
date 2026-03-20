@@ -1,4 +1,4 @@
-import { Product } from '../data/products'
+import { Product } from '../lib/products'
 import ProductCardClient from './ProductCard'
 import { ProductGridClient } from './ProductGridClient'
 

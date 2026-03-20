@@ -6,12 +6,16 @@ export function ProductCardServer({ name, price, discountPrice, imageUrl, catego
     // Format price to IDR currency - moved to server side for better performance
     const formattedPrice = new Intl.NumberFormat('id-ID', {
         style: 'currency',
-        currency: 'IDR'
+        currency: 'IDR',
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0
     }).format(price);
 
     const formattedDiscountPrice = discountPrice ? new Intl.NumberFormat('id-ID', {
         style: 'currency',
-        currency: 'IDR'
+        currency: 'IDR',
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0
     }).format(discountPrice) : null;
 
     const discountPercentage = discountPrice && price > 0 

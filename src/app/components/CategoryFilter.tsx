@@ -1,4 +1,4 @@
-import { Category, categories } from '../data/products';
+import { Category, categories } from '../lib/products';
 import { CategoryFilterClient } from './CategoryFilterClient';
 
 interface CategoryFilterProps {

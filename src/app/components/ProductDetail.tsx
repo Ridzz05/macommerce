@@ -1,6 +1,6 @@
 'use client'
 
-import { Product } from '../data/products'
+import { Product } from '../lib/products'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { slugify } from '../lib/products'
@@ -13,7 +13,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   // Format price to IDR
   const formattedPrice = new Intl.NumberFormat('id-ID', {
     style: 'currency',
-    currency: 'IDR'
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
   }).format(product.price)
 
   const productSlug = slugify(product.name)

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Category } from '../data/products';
+import { Category } from '../lib/products';
 import { 
   XMarkIcon, 
   Squares2X2Icon, 

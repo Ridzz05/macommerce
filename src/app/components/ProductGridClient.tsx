@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Product } from '../data/products';
+import { Product } from '../lib/products';
 import ProductCardClient from './ProductCard';
 import { useSearch } from '../context/SearchContext';
 

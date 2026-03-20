@@ -81,7 +81,9 @@ const ProductCardClient = ({ name, price, discountPrice, imageUrl, images = [], 
     // Format price to IDR currency
     const formattedPrice = new Intl.NumberFormat('id-ID', {
         style: 'currency',
-        currency: 'IDR'
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
     }).format(price);
 
     const paginate = (newDirection: number) => {
@@ -130,7 +132,7 @@ const ProductCardClient = ({ name, price, discountPrice, imageUrl, images = [], 
 *Produk*  : ${name}
 ${selectedOption ? `*Varian*  : ${selectedOption.label}` : ''}
 *Harga*   : ${selectedOption && selectedOption.price > 0 
-    ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price)
+    ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(selectedOption.price)
     : formattedPrice}
 
 *DATA PEMBELI*
@@ -292,7 +294,7 @@ Mohon diproses, terima kasih!`;
                                                     {formattedPrice}
                                                 </span>
                                                 <span className="text-lg sm:text-xl font-bold text-[#D32F2F]">
-                                                    {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(discountPrice)}
+                                                    {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(discountPrice)}
                                                 </span>
                                             </div>
                                         ) : (
@@ -362,7 +364,7 @@ Mohon diproses, terima kasih!`;
                                                         <span className="text-xs text-[#8B7355]">
                                                             {option.price === 0 
                                                                 ? 'Hubungi Admin' 
-                                                                : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(option.price)
+                                                                : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(option.price)
                                                             }
                                                         </span>
                                                     </motion.button>
@@ -484,7 +486,7 @@ Mohon diproses, terima kasih!`;
                                                 >
                                                     <span className="text-base font-semibold text-[#5C4B37]">{option.label}</span>
                                                     <span className="text-sm font-medium text-[#8B7355]">
-                                                        {option.price === 0 ? 'Hubungi Admin' : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(option.price)}
+                                                        {option.price === 0 ? 'Hubungi Admin' : new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(option.price)}
                                                     </span>
                                                 </motion.button>
                                             ))}
@@ -536,7 +538,7 @@ Mohon diproses, terima kasih!`;
                                                 )}
                                                 {selectedOption && selectedOption.price > 0 ? (
                                                     <p className="text-sm font-bold text-[#D32F2F] mt-1">
-                                                        {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(selectedOption.price)}
+                                                        {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(selectedOption.price)}
                                                     </p>
                                                 ) : (
                                                     discountPrice && discountPrice > 0 ? (
@@ -545,7 +547,7 @@ Mohon diproses, terima kasih!`;
                                                                 {formattedPrice}
                                                             </p>
                                                             <p className="text-sm font-bold text-[#D32F2F]">
-                                                                {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(discountPrice)}
+                                                                {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(discountPrice)}
                                                             </p>
                                                         </div>
                                                     ) : (

@@ -1,8 +1,4 @@
-export interface ProductOption {
-    label: string;
-    price: number;
-    value: string | number;
-}
+import { ProductOption } from '../lib/products';
 
 export interface ProductCardProps {
     name: string;
